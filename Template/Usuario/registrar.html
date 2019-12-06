@@ -1,0 +1,308 @@
+{% extends 'index.html' %}
+  {% block content %}      
+        <div class="app-main">
+                 
+                <div class="app-main__outer">
+                    <div class="app-main__inner">
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+                                <div class="page-title-heading">
+                                    <div class="page-title-icon">
+                                        <i class="lnr-picture text-danger">
+                                        </i>
+                                    </div>
+                                    <div>Form Validation
+                                        <div class="page-title-subheading">Inline validation is very easy to implement using the Architect Framework.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="page-title-actions">
+                                    <button type="button" data-toggle="tooltip" title="Example Tooltip" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
+                                        <i class="fa fa-star"></i>
+                                    </button>
+                                    <div class="d-inline-block dropdown">
+                                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
+                                            <span class="btn-icon-wrapper pr-2 opacity-7">
+                                                <i class="fa fa-business-time fa-w-20"></i>
+                                            </span>
+                                            Buttons
+                                        </button>
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        <i class="nav-link-icon lnr-inbox"></i>
+                                                        <span>
+                                                            Inbox
+                                                        </span>
+                                                        <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        <i class="nav-link-icon lnr-book"></i>
+                                                        <span>
+                                                            Book
+                                                        </span>
+                                                        <div class="ml-auto badge badge-pill badge-danger">5</div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        <i class="nav-link-icon lnr-picture"></i>
+                                                        <span>
+                                                            Picture
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a disabled href="javascript:void(0);" class="nav-link disabled">
+                                                        <i class="nav-link-icon lnr-file-empty"></i>
+                                                        <span>
+                                                            File Disabled
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>  
+                        
+                        <!-- formulario -->
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3" style="margin-bottom: 50px;">Registre a un nuevo Usuario</h5>
+                                <h6 style="margin-bottom: 30px; color: rgb(161, 17, 17);">(*) Obligatorio</h6>
+                                <form class="needs-validation" novalidate method="POST">
+                                 {% csrf_token %}
+                                    <div class="form-row">
+                                        
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationCustom01">Código de Usuario (*)</label>
+                                                        {{form.cod_usuario}}                                                       
+                                                    <div class="valid-feedback">
+                                                        Bien!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationCustom01">Número de Documento (*)</label>
+                                                        {{form.numero_doc_usuario}}                                                       
+                                                    <div class="valid-feedback">
+                                                        Bien!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationCustom01">Nombre Final del Usuario (*)</label>
+                                                        {{form.nom_final_usuario}}                                                       
+                                                    <div class="valid-feedback">
+                                                        Bien!
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="validationCustom01">Apellido Paterno del Usuario (*)</label>
+                                                        {{form.ap_pat_usuario}}                                                       
+                                                    <div class="valid-feedback">
+                                                        Bien!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="validationCustom01">Apellido Materno del Usuario (*)</label>
+                                                        {{form.ap_mat_usuario}}                                                       
+                                                    <div class="valid-feedback">
+                                                        Bien!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="validationCustom01">Nombre del Usuario (*)</label>
+                                                        {{form.nom_usuario}}                                                       
+                                                    <div class="valid-feedback">
+                                                        Bien!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="validationCustom01">Observaciones del Usuario</label>
+                                                        {{form.obs_usuario}}                                                       
+                                                    <div class="valid-feedback">
+                                                        Bien!
+                                                    </div>
+                                                </div>
+                           
+                                        <div class="col-6">
+                                                <div class="col-md-12 mb-3">
+                                                        <label for="validationCustom01">Tipo de Documento (*)</label>
+                                                        {{form.t_doc_usuario}}                                                       
+                                                        <div class="valid-feedback">
+                                                            Bien!
+                                                        </div>
+                                                    </div>
+                                                    <div class="container form-row">
+                                                            <div class="col-md-6 mb-3">
+                                                                    <label for="validationCustom02">Sede (*)</label>
+                                                                    {{form.sed}}    
+                                                                    <div class="valid-feedback">
+                                                                        Looks good!
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                    <label for="validationCustomUsername">Piso (*)</label>
+                                                                    <div class="input-group">
+                                                                       
+                                                                        {{form.pis}}    
+                                                                      <div class="invalid-feedback">
+                                                                            Please choose a username.
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                    </div>
+                                                 <div class="col-md-12 mb-3">
+                                                        <label for="validationCustom01">Ambiente (*)</label>
+                                                        {{form.ambi}}    
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                </div>
+
+                                                 <div class="col-md-12 mb-3">
+                                                        <label for="validationCustom01">Departamento (*)</label>
+                                                        {{form.depa}}    
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                </div>
+                                                 <div class="container form-row">
+                                                            <div class="col-md-12 mb-3">
+                                                                    <label for="validationCustom02">Provincia (*)</label>
+                                                                    {{form.provi}}    
+                                                                    <div class="valid-feedback">
+                                                                        Looks good!
+                                                                    </div>
+                                                            </div>
+                                                     
+                                                    </div>
+                                                    
+                                        </div>
+
+                                        <div class="col-6">
+                                                <div class="col-md-12 mb-3">
+                                                        <label for="validationCustom01">Distrito (*)</label>
+                                                        {{form.distri}}    
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 mb-3">
+                                                            <label for="validationCustom01">Dirección/Gerencia (*)</label>
+                                                            {{form.dire_gere}}    
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                   
+                                                 <div class="col-md-12 mb-3">
+                                                        <label for="validationCustom01">Oficina (*)</label>
+                                                        {{form.ofi}}    
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                </div>
+
+                                                 <div class="col-md-12 mb-3">
+                                                        <label for="">Sub Oficina (*)</label>
+                                                        {{form.subofi}}    
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                </div>
+
+                                                <div class="col-md-12 mb-3">
+                                                        <label for="">Sub Oficina (*)</label>
+                                                        {{form.moda_usuario}}    
+                                                         <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                </div>
+                                               
+                                                    
+                                        </div>
+                                        
+                                    </div>
+                      
+
+                                <div class="col-6" style="float: right;">
+                                    <input class="btn btn-primary mb-3 form-control" type="submit" value="Registrar" style="margin-top: 20px;">
+                                </div>
+                                
+
+                                    
+                                </form>
+            
+                                <script>
+                                    // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                    (function() {
+                                        'use strict';
+                                        window.addEventListener('load', function() {
+                                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                            var forms = document.getElementsByClassName('needs-validation');
+                                            // Loop over them and prevent submission
+                                            var validation = Array.prototype.filter.call(forms, function(form) {
+                                                form.addEventListener('submit', function(event) {
+                                                    if (form.checkValidity() === false) {
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                    }
+                                                    form.classList.add('was-validated');
+                                                }, false);
+                                            });
+                                        }, false);
+                                    })();
+                                </script>
+                            </div>
+                        </div>
+
+                        <!--fin de formulario-->
+                      
+                    </div>
+                    <div class="app-wrapper-footer">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 1
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 2
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="app-footer-right">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 3
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                <div class="badge badge-success mr-1 ml-0">
+                                                    <small>NEW</small>
+                                                </div>
+                                                Footer Link 4
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+        </div>
+{% endblock%}
+

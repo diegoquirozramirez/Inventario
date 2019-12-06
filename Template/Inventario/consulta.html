@@ -1,0 +1,172 @@
+
+{% extends 'index.html' %}
+{% block content %}        
+<div class="app-main">             
+    <div class="app-main__outer">
+                        <div class="app-main__inner">
+                            <div class="app-page-title">
+                                <div class="page-title-wrapper">
+                                    <div class="page-title-heading">
+                                        <div class="page-title-icon">
+                                            <i class="pe-7s-drawer icon-gradient bg-happy-itmeo">
+                                            </i>
+                                        </div>
+                                        <div>Regular Tables
+                                            <div class="page-title-subheading">Tables are the backbone of almost all web applications.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="page-title-actions">
+                                        <button type="button" data-toggle="tooltip" title="Example Tooltip" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
+                                            <i class="fa fa-star"></i>
+                                        </button>
+                                        <div class="d-inline-block dropdown">
+                                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
+                                                <span class="btn-icon-wrapper pr-2 opacity-7">
+                                                    <i class="fa fa-business-time fa-w-20"></i>
+                                                </span>
+                                                Buttons
+                                            </button>
+                                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                <ul class="nav flex-column">
+                                                    <li class="nav-item">
+                                                        <a href="javascript:void(0);" class="nav-link">
+                                                            <i class="nav-link-icon lnr-inbox"></i>
+                                                            <span>
+                                                                Inbox
+                                                            </span>
+                                                            <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="javascript:void(0);" class="nav-link">
+                                                            <i class="nav-link-icon lnr-book"></i>
+                                                            <span>
+                                                                Book
+                                                            </span>
+                                                            <div class="ml-auto badge badge-pill badge-danger">5</div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="javascript:void(0);" class="nav-link">
+                                                            <i class="nav-link-icon lnr-picture"></i>
+                                                            <span>
+                                                                Picture
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a disabled href="javascript:void(0);" class="nav-link disabled">
+                                                            <i class="nav-link-icon lnr-file-empty"></i>
+                                                            <span>
+                                                                File Disabled
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                 </div>
+                            </div>           
+                             <div class="row">
+                                
+                                <div class="col-lg-12">
+                                    <div class="main-card mb-3 card">
+                                        <div class="card-body"><h5 class="card-title">Cabecera</h5>
+                                            <table class="mb-0 table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th colspan="4">Datos</th>
+                                                   
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <th scope="row">Usuario</th>
+                                                    <td colspan="3">{{usu.ap_pat_usuario}} {{usu.ap_mat_usuario}}, {{usu.nom_usuario}}</td>
+                                                    <th scope="row" >Departamento</th>
+                                                    <td colspan="">{{usu.depa}}</td>
+                                                </tr>
+                                           
+                                                    <tr>
+                                                        <th scope="row">DNI</th>
+                                                        <td>{{usu.numero_doc_usuario}}</td>
+                                                        <th scope="row">Modalidad</th>
+                                                        <td>{{usu.moda_usuario}}</td>
+                                                        <th scope="row">Provincia</th>
+                                                        <td>{{usu.provi}}</td>
+                                                    </tr> 
+                                                   
+                                                  
+                                             
+                                                
+                                                <tr>
+                                                    <th scope="row">Sede</th>
+                                                    <td colspan="3">{{usu.sed}}</td>
+                                                    <th scope="row">Distrito</th>
+                                                    <td>{{usu.distri}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Piso</th>
+                                                    <td colspan="3">{{usu.pis}}</td>
+                                                    <th scope="row">Direccion/Gerencia</th>
+                                                    <td colspan="3">{{usu.dire_gere}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Codigo Ambiente</th>
+                                                    <td>{{usu.ambi.cod_ambiente}}</td>
+                                                    <th scope="row">Nombre Ambiente</th>
+                                                    <td>{{usu.ambi.nom_ambiente}} <a href="{% url 'asignar-ambiente' usu.ambi.id idu %}" style="background-color: darkslateblue; height: 5px; width: 35px; color: white; padding: 3px; margin-left; float: right: " >Asginar Ambiente</a></td>                                                    
+                                                    <th scope="row">Oficina</th>
+                                                    <td>{{usu.ofi}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+  
+                            </div>
+                        </div>
+                        <div class="app-wrapper-footer">
+                            <div class="app-footer">
+                                <div class="app-footer__inner">
+                                    <div class="app-footer-left">
+                                        <ul class="nav">
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    Footer Link 1
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    Footer Link 2
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="app-footer-right">
+                                        <ul class="nav">
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    Footer Link 3
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    <div class="badge badge-success mr-1 ml-0">
+                                                        <small>NEW</small>
+                                                    </div>
+                                                    Footer Link 4
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+    </div>
+</div>
+{% endblock %}  
