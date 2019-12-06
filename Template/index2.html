@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Proyectos UNFV .:. Intranet</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto:300,400|Yellowtail" rel="stylesheet">
+    
+    <link href="../../static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+   
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    
+</head>
+<body>
+ 
+    
+    <div class="rela-block container">
+       
+
+
+
+
+<div class="container">
+       
+    <a class="btn btn-info" href="">PMO</a>
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <h3>AÑADIR PROYECTOS</h3>
+            <form id="addUser" action="">
+                <strong>Proyectos 2019</strong>
+                <hr>
+                <div class="form-group">                      
+                    <input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Nombre del Proyecto" required>
+                </div>  
+
+                <div class="form-group">                            
+                    <input type="text" name="address" class="form-control" id="formGroupExampleInput3" placeholder="Director de Proyecto" required>
+                </div>
+
+                <div class="form-group">                            
+                    <input type="submit" class="btn btn-primary form-control" value="Añadir">
+                </div>
+            </form>
+            
+            
+          </div>
+          <div class="col-md-8 col-xs-12">
+            <h3>PROYECTOS Externos</h3>
+            <table id="userTable" class="table table-striped">
+              <tr>
+                <th>Nombre</th>
+                <th>Director de Proyecto</th>
+                <th colspan="2" ><p align="center">Acciones</p></th>
+              </tr>
+             
+              <tr id="user-{{py.id}}">
+                  <td class="userName userData" name="name">{{py.nombre}}</td>
+                  <td class="userAddress userData" name="address">{{py.dp}}</td>
+                  
+                  <!--td align="center">
+                      <button class="btn btn-success form-control" onClick="editUser({{ py.id }})" data-toggle="modal" data-target="#myModal" >EDITAR</button>
+                      <button class="btn btn-danger form-control" onClick="deleteUser({{ py.id }})">ELIMINAR</button>
+                  </td-->                 
+                  
+              </tr>
+          
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Actualizar Usuarios</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              
+            </div>
+            <form id="updateUser" action="">
+            <div class="modal-body">
+                <input class="form-control" id="form-id" type="hidden" name="formId"/>
+                <label for="name">Nombre </label>
+                <input class="form-control" id="form-name" type="text" name="formName"/>
+                <label for="address">Director de Proyecto</label>
+                <input class="form-control" id="form-address" type="text" name="formAddress"/>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" >Guardar cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <script type="text/javascript">
+     // Create Django Ajax Call
+  $("form#addUser").submit(function() {
+      var nameInput = $('input[name="name"]').val().trim();
+      var addressInput = $('input[name="address"]').val().trim();
+      
+      if (nameInput && addressInput) {
+          // Create Ajax Call
+          $.ajax({
+              url: '',// 
+              data: {
+                  'nombre': nameInput,
+                  'dp': addressInput,
+                  
+              },
+              dataType: 'json',
+              success: function (data) {
+                  if (data.proyecto) {
+                    appendToUsrTable(data.proyecto);
+                  }
+              }
+          });
+        } else {
+          alert("All fields must have a valid value.");
+      }
+      $('form#addUser').trigger("reset");
+      return false;
+  });
+  function appendToUsrTable(proyecto) {
+    $("#userTable > tbody:last-child").append(`
+          <tr id="user-${proyecto.id}">
+              <td class="userName" name="name">${proyecto.nombre}</td>
+              '<td class="userAddress" name="address">${proyecto.dp}</td>
+              
+              '<td align="center">
+                  <button class="btn btn-success form-control" onClick="editUser(${proyecto.id})" data-toggle="modal" data-target="#myModal">EDIT</button>
+                  <button class="btn btn-danger form-control" onClick="deleteUser(${proyecto.id})">DELETE</button>
+              </td>              
+          </tr>
+      `);
+  }
+
+
+ // Create Django Ajax Call
+$("form#updateUser").submit(function() {
+    var idInput = $('input[name="formId"]').val().trim();
+    var nameInput = $('input[name="formName"]').val().trim();
+    var addressInput = $('input[name="formAddress"]').val().trim();
+
+    if (nameInput && addressInput) {
+        // Create Ajax Call
+        $.ajax({
+            url: '',//
+            data: {
+                'id': idInput,
+                'nombre': nameInput,
+                'dp': addressInput,
+                
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.proyecto) {
+                  updateToUserTabel(data.proyecto);
+                }
+            }
+        });
+       } else {
+        alert("All fields must have a valid value.");
+    }
+    $('form#updateUser').trigger("reset");
+    $('#myModal').modal('hide');
+    return false;
+});
+
+
+
+
+
+
+
+// Update Django Ajax Call
+function editUser(id) {
+  if (id) {
+    tr_id = "#user-" + id;
+    name = $(tr_id).find(".userName").text();
+    address = $(tr_id).find(".userAddress").text();
+    
+    $('#form-id').val(id);
+    $('#form-name').val(name);
+    $('#form-address').val(address);
+
+   }
+}
+function updateToUserTabel(proyecto){
+    $("#userTable #user-" + proyecto.id).children(".userData").each(function() {
+        var attr = $(this).attr("name");
+        if (attr == "name") {
+          $(this).text(proyecto.nombre);
+        } else if (attr == "address") {
+          $(this).text(proyecto.dp);
+        } 
+      });
+}
+
+
+// Delete Django Ajax Call
+function deleteUser(id) {
+  
+  Swal.fire({
+  title: '¿Estás seguro?',
+  text: "No podrás revertir esto",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Si, ¡borrar!'
+}).then((result) => {
+  if (result.value) {
+    $.ajax({
+        url: '',//
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.deleted) {
+              $("#userTable #user-" + id).remove();
+              Swal.fire({
+                  //position: 'top-end',
+                  type: 'success',
+                  title: 'Registro Eliminado',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              /*Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success',
+               
+              )*/
+            }
+        }
+    });
+    /*Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )*/
+  }
+})
+}
+    </script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+   
+    <script type="text/javascript">
+    var array = new Array();
+        $(document).ready(function(){
+            
+            let nombre = document.getElementById('field_name').value; 
+            array.push(nombre);  
+  
+            var maxField = 10; //Input fields increment limitation
+            var addButton = $('.add_button'); //Add button selector
+            var wrapper = $('.field_wrapper'); //Input field wrapper
+            
+            var fieldHTML ='<div>ohh<a href="javascript:void(0);" class="remove_button" title="Remove field"><img src="https://image.flaticon.com/icons/png/512/59/59254.png" style="width: 2%;"/></a></div>'; //New input field html 
+            var x = 1; //Initial field counter is 1
+            $(addButton).click(function(){ //Once add button is clicked
+                //if(x < maxField){ //Check maximum number of input fields
+                //    x++; //Increment field counter
+                $(wrapper).append(fieldHTML); // Add field html
+               // }
+            });
+            $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
+                e.preventDefault();
+                $(this).parent('div').remove(); //Remove field html
+               // x--; //Decrement field counter
+            });
+        });
+        </script>
+</head>
+<body>
+
+            <div class="field_wrapper">
+                    <div>
+                        <input type="text" name="field_name" id="field_name" value=""/>
+                        <a href="javascript:void(0);" class="add_button" title="Add field"><img src="https://img.icons8.com/cotton/2x/add.png" style="width: 2%;"/></a>
+                    </div>
+                    
+                </div>
+                <button onclick="addArray()" class="add_button">Agregar</button>
+                <button onclick="recorrerArray()">recorrerArray</button>
+ 
+  
+        
+<div id="demo">
+
+</div>
+<script>
+        var array = new Array();
+
+        function addArray(){
+            let nombre = document.getElementById('field_name').value;           
+            array.push(nombre);
+            document.getElementById('field_name').value = '';
+            console.log(array.length);
+            
+        }
+
+        function recorrerArray(){
+            for(i=0; i<array.length; i++){
+                console.log(array[i])
+                document.getElementById("demo").innerHTML = array[i];
+            }
+           
+        }
+        
+       
+       /** if(array == null){
+            console.log("arrreglo vacio")
+        }else{
+            for(var i=0; i<=array.length; i++){
+                console.log(array[i])
+            }
+        }*/
+        
+
+      
+       // var cars = ["Saab", "Volvo", "BMW"];
+        //document.getElementById("demo").innerHTML = cars[0];
+    </script>
+
+
+
+</body>
+</html>
