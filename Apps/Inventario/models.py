@@ -222,3 +222,10 @@ class estado(models.Model):
     deta_es = models.CharField(max_length=60, blank=True)
     obs_es = models.CharField(max_length=60, blank=True)
 
+
+class base0(models.Model):
+    codigo_sbn =models.CharField(max_length=12)
+    codigo_interno = models.CharField(max_length=5)
+    sede_base0 = models.ForeignKey(sede, on_delete=models.CASCADE)
+    piso_base0 = models.ForeignKey(piso, on_delete=models.CASCADE)
+    usuario_base0 = models.ForeignKey(usuario, on_delete=models.CASCADE)

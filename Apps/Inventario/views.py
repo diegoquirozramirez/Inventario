@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from Apps.Inventario.models import usuario, ambiente
+from Apps.Inventario.models import usuario, ambiente, base0
 from Apps.Inventario.forms import usuarioForm, ambienteForm
 from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
@@ -72,3 +72,15 @@ def listadoUsuario(request):
     context = {'usu':usu}
     template = 'Usuario/listado.html'
     return render(request, template, context)
+
+def base0Consulta(request, idu):
+    codigo = request.GET['codigo_sbn']
+    usuario = request.GET['idu']
+    codigo_sbn_base0 = base0.objects.filter(codigo_sbn=codigo).filter(usuario_base0_id=idu)
+    if codigo_sbn_base0.exists():
+        context = {'codigo_sbn_base0':codigo_sbn_base0}
+        template = 'Inventario/base0.html'
+        return render(request, template, context)
+    else:
+        print("No Existe")
+        return redirect('consultar', idu=idu)

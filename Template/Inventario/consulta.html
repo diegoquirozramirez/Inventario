@@ -118,7 +118,7 @@
                                                     <th scope="row">Codigo Ambiente</th>
                                                     <td>{{ambi.cod_ambiente}}</td>
                                                     <th scope="row">Nombre Ambiente</th> 
-                                                    <td>{{ambi.nom_ambiente}} <a href="{% url 'actualizar-ambiente' ambi.id idu %}" style="background-color: darkslateblue; height: 5px; width: 35px; color: white; padding: 5px; margin-left: 20px; text-decoration: none;" >Actualizar Ambiente</a></td>                                                    
+                                                    <td>{{ambi.nom_ambiente}} <a href="{% url 'actualizar-ambiente' idu ambi.id  %}" style="background-color: darkslateblue; height: 5px; width: 35px; color: white; padding: 5px; margin-left: 20px; text-decoration: none;" >Actualizar Ambiente</a></td>                                                    
                                                     <th scope="row">Oficina</th>
                                                     <td>{{usu.ofi}}</td>
                                                 </tr>
@@ -140,6 +140,40 @@
 
   
                             </div>
+
+                            <div class="row">
+                                
+                                    <div class="col-lg-12">
+                                        <div class="main-card mb-3 card">
+                                            <div class="card-body"><h5 class="card-title">Detalle</h5>
+                                                <table class="mb-0 table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th colspan="4">Datos</th>
+                                                       
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <form action="{% url 'base0-consultar' idu %}" >
+                                                            
+                                                            <input type="text" id="codigo_sbn" name="codigo_sbn">
+                                                            <input type="hidden" name="idu" value="{{idu}}">
+                                                            <input type="submit" name="" id="" value="Consultar">
+                                                        </form>                                                     
+                                                     
+                                                    </tr>
+                                                   
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+      
+                                </div>
+
+
                         </div>
                         <div class="app-wrapper-footer">
                             <div class="app-footer">

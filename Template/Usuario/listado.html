@@ -92,8 +92,8 @@
                                                         <td >{{usuario.nom_usuario}}</td>                                          
                                                         <td colspan="">{{usuario.ap_pat_usuario}} {{usuario.ap_mat_usuario}} </td>
                                                         <td>{{usuario.numero_doc_usuario}} </td>
-                                                        <td><a href="" class="btn btn-primary form-control">Detalles</a></td>
-                                                        <td><a href="" class="btn btn-success form-control">Hacer Inventario</a></td>
+                                                        <td><a href="#" class="btn btn-primary form-control">Detalles</a></td>
+                                                        <td><a href="{% url 'consultar' usuario.id %}" class="btn btn-success form-control">Hacer Inventario</a></td>
                                                     </tr>
                                                 {% endfor %}
                                                 {% endif %}

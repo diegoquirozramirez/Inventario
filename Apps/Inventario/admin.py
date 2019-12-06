@@ -2,6 +2,7 @@ from django.contrib import admin
 from Apps.Inventario.models import ambiente,color,departamento,direccionGerencia,distrito,edificio,estado,etiquetado,ficha,jefeUsuario,marca,modalidad,oficina,operatividad,piso,provincia,recurso,sector,sede,situacion,suboficina,tipoDoc,usuario
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
+from Apps.Inventario import models
 # Register your models here.
 admin.site.register(ambiente)
 #admin.site.register(cabecera)
@@ -41,4 +42,4 @@ admin.site.register(situacion)
 admin.site.register(suboficina)
 admin.site.register(tipoDoc)
 admin.site.register(usuario)
-
+admin.site.register(models.base0)

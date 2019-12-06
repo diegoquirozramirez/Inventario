@@ -29,5 +29,6 @@ urlpatterns = [
     path('MIMP/consultar/<int:idu>', inventario.cabecera, name="consultar"),
     path('MIMP/asignar-ambiente/<int:idu>', inventario.asignarCodAmbiente, name="asignar-ambiente"),
     path('MIMP/actualizar-ambiente/<int:idu>/<int:ida>', inventario.updateAsignarCodAmbiente, name="actualizar-ambiente"),
-    path('MIMP/listado-usuario', inventario.listadoUsuario, name="listado-usuario")
+    path('MIMP/listado-usuario', inventario.listadoUsuario, name="listado-usuario"),
+    path('MIMP/base0/<int:idu>', inventario.base0Consulta, name="base0-consultar")
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
