@@ -21,7 +21,7 @@ class usuarioForm(forms.ModelForm):
             #"""    
             'sed',
             'pis',
-            'ambi',
+            #'ambi',
             'depa' ,
             'provi',
             'distri',
@@ -46,7 +46,7 @@ class usuarioForm(forms.ModelForm):
             #"""    
             'sed': '',
             'pis': '',
-            'ambi': '',
+            #'ambi': '',
             'depa' : '',
             'provi': '',
             'distri': '',
@@ -71,7 +71,7 @@ class usuarioForm(forms.ModelForm):
             #"""    
             'sed': forms.Select(attrs={'class':'form-control'}),
             'pis': forms.Select(attrs={'class':'form-control'}),
-            'ambi': forms.Select(attrs={'class':'form-control'}),
+            #'ambi': forms.Select(attrs={'class':'form-control'}),
             'depa' : forms.Select(attrs={'class':'form-control'}),
             'provi': forms.Select(attrs={'class':'form-control'}),
             'distri': forms.Select(attrs={'class':'form-control'}),
@@ -85,19 +85,33 @@ class ambienteForm(forms.ModelForm):
         model = ambiente
 
         fields = [
-            #'cod_ambiente',
+            #'cod_ambiente',            
+            'sector_ambiente',
+            'num_ambiente',
+            'nom_ambiente',
+            'obs_ambiente',
             'sede_ambiente',
             'piso_ambiente',
+            #'usuario_ambiente'
         ]
 
         labels = {
             #'cod_ambiente':'',
             'sede_ambiente':'',
             'piso_ambiente':'',
+            'sector_ambiente':'',
+            'num_ambiente':'',
+            'nom_ambiente':'',
+            'obs_ambiente':'',
         }
 
         widgets = {
             #'cod_ambiente': forms.TextInput(),
-            'sede_ambiente': forms.Select(),
-            'piso_ambiente': forms.Select(),
+            'sector_ambiente':forms.Select(attrs={'class':'form-control'}),
+            'num_ambiente':forms.TextInput(attrs={'class':'form-control'}),
+            'nom_ambiente':forms.TextInput(attrs={'class':'form-control'}),
+            'obs_ambiente':forms.TextInput(attrs={'class':'form-control'}),
+            'sede_ambiente': forms.Select(attrs={'class':'form-control'}),
+            'piso_ambiente': forms.Select(attrs={'class':'form-control'}),
+            
         }

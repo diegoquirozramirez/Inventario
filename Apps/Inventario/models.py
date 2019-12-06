@@ -75,19 +75,7 @@ class edificio(models.Model):
     def __str__(self):
         return '{}, {}'.format(self.id, self.nom_edificio)
 
-class ambiente(models.Model):
-    #""" FK (nombre de Sede) """
-    sede_ambiente = models.ForeignKey(sede, on_delete=models.CASCADE)
-    #""" FK (piso) """
-    piso_ambiente = models.ForeignKey(piso, on_delete=models.CASCADE)
-    #""" FK (sector) """
-    sector_ambiente = models.ForeignKey(sector, on_delete=models.CASCADE)
-    num_ambiente = models.CharField(max_length=4)
-    nom_ambiente = models.CharField(max_length=60)
-    cod_ambiente = models.CharField(max_length=9)
-    obs_ambiente = models.CharField(max_length=60, blank=True)
-    def __str__(self):
-        return '{}, {}'.format(self.id, self.nom_ambiente)
+
 
 class tipoDoc(models.Model):
     cod_documento = models.CharField(max_length=1)
@@ -161,7 +149,7 @@ class usuario(models.Model):
     #"""    
     sed = models.ForeignKey(sede, on_delete=models.CASCADE)
     pis = models.ForeignKey(piso, on_delete=models.CASCADE)
-    ambi = models.ForeignKey(ambiente, on_delete=models.CASCADE)
+    #ambi = models.ForeignKey(ambiente, on_delete=models.CASCADE)
     depa = models.ForeignKey(departamento, on_delete=models.CASCADE)
     provi = models.ForeignKey(provincia, on_delete=models.CASCADE)
     distri = models.ForeignKey(distrito, on_delete=models.CASCADE)
@@ -171,6 +159,22 @@ class usuario(models.Model):
 
     def __str__(self):
         return '{}, {}'.format(self.id, self.cod_usuario)
+
+class ambiente(models.Model):
+    # FK (usuario)
+    usuario_ambiente = models.ForeignKey(usuario, on_delete=models.CASCADE)
+    #""" FK (nombre de Sede) """
+    sede_ambiente = models.ForeignKey(sede, on_delete=models.CASCADE)
+    #""" FK (piso) """
+    piso_ambiente = models.ForeignKey(piso, on_delete=models.CASCADE)
+    #""" FK (sector) """
+    sector_ambiente = models.ForeignKey(sector, on_delete=models.CASCADE)
+    num_ambiente = models.CharField(max_length=4)
+    nom_ambiente = models.CharField(max_length=60)
+    cod_ambiente = models.CharField(max_length=9)
+    obs_ambiente = models.CharField(max_length=60, blank=True)
+    def __str__(self):
+        return '{}, {}'.format(self.id, self.nom_ambiente)
 
 """class cabecera(models.Model):
     usu = models.ForeignKey(usuario, on_delete=models.CASCADE)
