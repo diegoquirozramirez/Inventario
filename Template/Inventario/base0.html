@@ -89,14 +89,14 @@
                                                     <form action="{% url 'addBase12019cint' base0.id idu cod_interno %}">
                                                         
                                                         <input type="submit" style="float: right;" class="btn btn-primary" value="Registrar">
-                                                        <span style="float: right; margin: 15px; color: rgb(204, 43, 43);">No Registrado</span>
+                                                        <span style="float: right; margin: 15px; color: rgb(204, 43, 43);">{% if mensaje %}{{mensaje}}{% endif %}</span>
                                                    
                                                     </form> 
                                                     {% else %} 
                                                     <form action="{% url 'addBase12019sbn' base0.id idu codigo %}">
                                                         
                                                         <input type="submit" style="float: right;" class="btn btn-primary" value="Registrar">
-                                                        <span style="float: right; margin: 15px; color: rgb(204, 43, 43);">No Registrado</span>
+                                                        <span style="float: right; margin: 15px; color: rgb(204, 43, 43);">{% if mensaje %}{{mensaje}}{% endif %}</span>
                                                    
                                                     </form> 
                                                     {% endif %}

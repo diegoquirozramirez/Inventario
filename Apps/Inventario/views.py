@@ -80,8 +80,14 @@ def base0Consulta(request, idu):
     #usuario = request.GET['idu']
     if codigo != '' and cod_interno == '':        
         codigo_sbn_base0 = base0.objects.filter(codigo_sbn=codigo).filter(usuario_base0_id=idu)
+       
         if codigo_sbn_base0.exists():
-            context = {'codigo_sbn_base0':codigo_sbn_base0, 'idu':idu,'codigo':codigo, 'cod_interno':cod_interno}
+            if base12019.objects.filter(base0_fk = codigo_sbn_base0[0].id).exists():
+                mensaje = "Registrado"
+            else:
+                mensaje = "No registrado"
+        
+            context = {'codigo_sbn_base0':codigo_sbn_base0, 'idu':idu,'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje}
             template = 'Inventario/base0.html'
             return render(request, template, context)
         else:
@@ -90,8 +96,13 @@ def base0Consulta(request, idu):
     else:
         if codigo == '' and cod_interno != '':
             codigo_sbn_base0 = base0.objects.filter(codigo_interno=cod_interno).filter(usuario_base0_id=idu)
+            
             if codigo_sbn_base0.exists():
-                context = {'codigo_sbn_base0':codigo_sbn_base0, 'idu':idu,'codigo':codigo, 'cod_interno':cod_interno}
+                if base12019.objects.filter(base0_fk = codigo_sbn_base0[0].id).exists():
+                    mensaje = "Registrado"
+                else:
+                    mensaje = "No registrado"
+                context = {'codigo_sbn_base0':codigo_sbn_base0, 'idu':idu,'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje}
                 template = 'Inventario/base0.html'
                 return render(request, template, context)
             else:
@@ -100,8 +111,14 @@ def base0Consulta(request, idu):
         else:
             if codigo != '' and cod_interno != '':
                 codigo_sbn_base0 = base0.objects.filter(codigo_sbn=codigo).filter(codigo_interno=cod_interno).filter(usuario_base0_id=idu)
+                                
                 if codigo_sbn_base0.exists():
-                    context = {'codigo_sbn_base0':codigo_sbn_base0, 'idu':idu,'codigo':codigo, 'cod_interno':cod_interno}
+                    if base12019.objects.filter(base0_fk = codigo_sbn_base0[0].id).exists():
+                        mensaje = "Registrado"
+                    else:
+                        mensaje = "No registrado"
+
+                    context = {'codigo_sbn_base0':codigo_sbn_base0, 'idu':idu,'codigo':codigo, 'cod_interno':cod_interno,'mensaje':mensaje}
                     template = 'Inventario/base0.html'
                     return render(request, template, context)
                 else:

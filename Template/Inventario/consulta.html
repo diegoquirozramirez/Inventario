@@ -84,7 +84,7 @@
                                                 <tbody>
                                                 <tr>
                                                     <th scope="row">Usuario</th>
-                                                    <td colspan="3">{{usu.ap_pat_usuario}} {{usu.ap_mat_usuario}}, {{usu.nom_usuario}}</td>
+                                                    <td colspan="4">{{usu.ap_pat_usuario}} {{usu.ap_mat_usuario}}, {{usu.nom_usuario}}</td>
                                                     <th scope="row" >Departamento</th>
                                                     <td colspan="">{{usu.depa}}</td>
                                                 </tr>
@@ -93,7 +93,7 @@
                                                         <th scope="row">DNI</th>
                                                         <td>{{usu.numero_doc_usuario}}</td>
                                                         <th scope="row">Modalidad</th>
-                                                        <td>{{usu.moda_usuario}}</td>
+                                                        <td colspan="2">{{usu.moda_usuario}}</td>
                                                         <th scope="row">Provincia</th>
                                                         <td>{{usu.provi}}</td>
                                                     </tr> 
@@ -103,13 +103,13 @@
                                                 
                                                 <tr>
                                                     <th scope="row">Sede</th>
-                                                    <td colspan="3">{{usu.sed}}</td>
+                                                    <td colspan="4">{{usu.sed}}</td>
                                                     <th scope="row">Distrito</th>
                                                     <td>{{usu.distri}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Piso</th>
-                                                    <td colspan="3">{{usu.pis}}</td>
+                                                    <td colspan="4">{{usu.pis}}</td>
                                                     <th scope="row">Direccion/Gerencia</th>
                                                     <td colspan="3">{{usu.dire_gere}}</td>
                                                 </tr>
@@ -118,7 +118,8 @@
                                                     <th scope="row">Codigo Ambiente</th>
                                                     <td>{{ambi.cod_ambiente}}</td>
                                                     <th scope="row">Nombre Ambiente</th> 
-                                                    <td>{{ambi.nom_ambiente}} <a href="{% url 'actualizar-ambiente' idu ambi.id  %}" style="background-color: darkslateblue; height: 5px; width: 35px; color: white; padding: 5px; margin-left: 20px; text-decoration: none;" >Actualizar Ambiente</a></td>                                                    
+                                                    <td>{{ambi.nom_ambiente}} </td>
+                                                    <td><form action="{% url 'actualizar-ambiente' idu ambi.id  %}"><input type="submit" class="form-control" value="Actualizar Ambiente" style="background-color: darkslateblue; width: 90%; color: white; " ></form></td>                                                    
                                                     <th scope="row">Oficina</th>
                                                     <td>{{usu.ofi}}</td>
                                                 </tr>
@@ -127,7 +128,8 @@
                                                     <th scope="row">Codigo Ambiente</th>
                                                     <td>Sin código asignado</td>
                                                     <th scope="row">Nombre Ambiente</th> 
-                                                    <td>Sin Nombre asignado <a href="{% url 'asignar-ambiente' idu %}" style="background-color: darkslateblue; height: 5px; width: 35px; color: white; padding: 5px; margin-left: 20px; text-decoration: none;" >Asginar Ambiente</a></td>                                                    
+                                                    <td>Sin Nombre asignado </td>
+                                                    <td><form action="{% url 'asignar-ambiente' idu  %}"><input type="submit" class="form-control" value="Actualizar Ambiente" style="background-color: darkslateblue; width: 90%; color: white;" ></form></td>      
                                                     <th scope="row">Oficina</th>
                                                     <td>{{usu.ofi}}</td>
                                                 </tr>
