@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class ficha(models.Model):
     cod_ficha = models.CharField(max_length=3)
@@ -229,3 +229,17 @@ class base0(models.Model):
     sede_base0 = models.ForeignKey(sede, on_delete=models.CASCADE)
     piso_base0 = models.ForeignKey(piso, on_delete=models.CASCADE)
     usuario_base0 = models.ForeignKey(usuario, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'SBN: {} | Interno: {}'.format(self.codigo_sbn, self.codigo_interno)
+
+class base12019(models.Model):
+    id = models.AutoField(primary_key=True, max_length=12)    
+    base0_fk = models.ForeignKey(base0, on_delete=models.CASCADE)  
+    user = models.ForeignKey(User, on_delete=models.CASCADE)      
+
+    class Meta:
+        unique_together = ['base0_fk','user']
+
+    def __str__(self):
+        return 'Base0: {} {} {}'.format(self.base0_fk,self.id, self.user)

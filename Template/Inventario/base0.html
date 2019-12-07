@@ -74,6 +74,8 @@
                                     <div class="col-lg-12">
                                         <div class="main-card mb-3 card">
                                             <div class="card-body"><h5 class="card-title">Cabecera</h5>
+                                                
+                                                
                                                 <table class="mb-0 table table-bordered">
                                                     <thead>
                                                     <tr>
@@ -82,8 +84,24 @@
                                                     </tr>
                                                     </thead>
                                                     {% if codigo_sbn_base0 %}
-                                                    {% for base0 in codigo_sbn_base0 %}
-                                                    <tbody>
+                                                    {% for base0 in codigo_sbn_base0 %} 
+                                                    {% if codigo == '' %} 
+                                                    <form action="{% url 'addBase12019cint' base0.id idu cod_interno %}">
+                                                        
+                                                        <input type="submit" style="float: right;" class="btn btn-primary" value="Registrar">
+                                                        <span style="float: right; margin: 15px; color: rgb(204, 43, 43);">No Registrado</span>
+                                                   
+                                                    </form> 
+                                                    {% else %} 
+                                                    <form action="{% url 'addBase12019sbn' base0.id idu codigo %}">
+                                                        
+                                                        <input type="submit" style="float: right;" class="btn btn-primary" value="Registrar">
+                                                        <span style="float: right; margin: 15px; color: rgb(204, 43, 43);">No Registrado</span>
+                                                   
+                                                    </form> 
+                                                    {% endif %}
+                                                    
+                                                     <tbody>
                                                     <tr>
                                                         <th scope="row">Codigo</th>
                                                         <td colspan="">{{base0.codigo_sbn}}</td>
