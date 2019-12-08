@@ -20,7 +20,7 @@ class piso(models.Model):
     deta_piso = models.CharField(max_length=60, blank=True, null=True)
     obs_piso = models.CharField(max_length=60, blank=True, null=True)
     def __str__(self):
-        return '{}, {}'.format(self.id, self.nom_psio)
+        return '{}, {}'.format(self.id, self.cod_piso)
 
 class sector(models.Model):
     cod_sector = models.CharField(max_length=2)
@@ -156,6 +156,9 @@ class usuario(models.Model):
     dire_gere = models.ForeignKey(direccionGerencia, on_delete=models.CASCADE)
     ofi = models.ForeignKey(oficina, on_delete=models.CASCADE)
     subofi = models.ForeignKey(suboficina, on_delete=models.CASCADE)
+    edifi = models.ForeignKey(edificio, on_delete=models.CASCADE)
+    sect = models.ForeignKey(sector, on_delete=models.CASCADE)
+    jef =  models.ForeignKey(jefeUsuario, on_delete=models.CASCADE)
 
     def __str__(self):
         return '{}, {}'.format(self.id, self.cod_usuario)
@@ -197,6 +200,10 @@ class operatividad(models.Model):
     nom_ope = models.CharField(max_length=1)
     deta_ope = models.CharField(max_length=2)
     obs_ope = models.CharField(max_length=60, blank=True)
+    
+    def __str__(self):
+        return '{} {} {}'.format(self.cod_ope, self.nom_ope, self.deta_ope)
+    
 
 class etiquetado(models.Model):
     cod_eti = models.CharField(max_length=1)
@@ -206,15 +213,24 @@ class marca(models.Model):
     cod_marca = models.CharField(max_length=3)
     marca = models.CharField(max_length=60)
 
+    def __str__(self):
+        return '{} {}'.format(self.cod_marca, self.marca)
+
 class recurso(models.Model):
     cod_re = models.CharField(max_length=2)
     nom_re = models.CharField(max_length=60)
     deta_re = models.CharField(max_length=60, blank=True)
     obs_re = models.CharField(max_length=60, blank=True)
 
+    def __str__(self):
+        return '{} {}'.format(self.cod_re, self.nom_re)
+
 class color(models.Model):
     cod_color = models.CharField(max_length=3)
     nom_color = models.CharField(max_length=60)
+
+    def __str__(self):
+        return '{} {}'.format(self.cod_color, self.nom_color)
 
 class estado(models.Model):
     cod_es = models.CharField(max_length=1)
@@ -222,12 +238,35 @@ class estado(models.Model):
     deta_es = models.CharField(max_length=60, blank=True)
     obs_es = models.CharField(max_length=60, blank=True)
 
+    def __str__(self):
+        return '{} {} {}'.format(self.cod_es, self.nom_es, self.deta_es)
+
 
 class base0(models.Model):
-    codigo_sbn =models.CharField(max_length=12)
-    codigo_interno = models.CharField(max_length=5)
-    sede_base0 = models.ForeignKey(sede, on_delete=models.CASCADE)
-    piso_base0 = models.ForeignKey(piso, on_delete=models.CASCADE)
+    #situ = models.ForeignKey(situacion, on_delete=models.CASCADE)
+    mar = models.ForeignKey(marca, on_delete=models.CASCADE) #obligatorio
+    col = models.ForeignKey(color, on_delete=models.CASCADE) #obligatorio
+    est = models.ForeignKey(estado, on_delete=models.CASCADE) #obligatorio
+    op = models.ForeignKey(operatividad, on_delete=models.CASCADE) #obligatorio
+
+    codigo_sbn =models.CharField(max_length=12, blank=True)
+    codigo_interno = models.CharField(max_length=5, blank=True)    
+    descripcion = models.CharField(max_length=60, default='') #obligatorio
+    detalle = models.CharField(max_length=60,default='')  #obligatorio
+    modelo = models.CharField(max_length=60,default='')  #obligatorio
+    serie =  models.CharField(max_length=60,default='') #obligatorio
+    medida = models.CharField(max_length=60,default='') #obligatorio
+    placa = models.CharField(max_length=60, blank=True, null=True) 
+    motor = models.CharField(max_length=60, blank=True, null=True) 
+    chasis =  models.CharField(max_length=60, blank=True, null=True)
+    a_fabri = models.DateField(blank=True, null=True)
+    puertas = models.IntegerField(blank=True, null=True)
+    tar_propiedad = models.CharField(max_length=50, blank=True, null=True)
+    observacion1 = models.CharField(max_length=60, blank=True, null=True)
+    observacion2 = models.CharField(max_length=60, blank=True, null=True)
+    observacion3 = models.CharField(max_length=60, blank=True, null=True)
+
+
     usuario_base0 = models.ForeignKey(usuario, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -7,7 +7,7 @@ from django.db import IntegrityError
 def cabecera(request, idu):
     usu = usuario.objects.get(id=idu)
     try:
-        ambi = ambiente.objects.get(usuario_ambiente_id=idu)
+        ambi = ambiente.objects.filter(usuario_ambiente_id=idu)
     except ObjectDoesNotExist:
         ambi = ''
     context = {'usu':usu,'idu':idu, 'ambi':ambi}

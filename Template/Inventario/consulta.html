@@ -114,15 +114,17 @@
                                                     <td colspan="3">{{usu.dire_gere}}</td>
                                                 </tr>
                                                 {% if ambi %}
+                                                {% for ambi in ambi %}
                                                 <tr>
                                                     <th scope="row">Codigo Ambiente</th>
                                                     <td>{{ambi.cod_ambiente}}</td>
                                                     <th scope="row">Nombre Ambiente</th> 
                                                     <td>{{ambi.nom_ambiente}} </td>
-                                                    <td><form action="{% url 'actualizar-ambiente' idu ambi.id  %}"><input type="submit" class="form-control" value="Actualizar Ambiente" style="background-color: darkslateblue; width: 90%; color: white; " ></form></td>                                                    
+                                                    <td><form action="{% url 'actualizar-ambiente' idu ambi.id  %}"><input type="submit" class="form-control" value="Actualizar Ambiente" style="background-color: darkslateblue; width: 100%; color: white; " ></form></td>                                                   
                                                     <th scope="row">Oficina</th>
                                                     <td>{{usu.ofi}}</td>
                                                 </tr>
+                                                {% endfor %}
                                                 {% else %}
                                                 <tr>
                                                     <th scope="row">Codigo Ambiente</th>
