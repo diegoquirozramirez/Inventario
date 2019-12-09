@@ -64,7 +64,7 @@ class sede(models.Model):
     provi_sede = models.ForeignKey(provincia, on_delete=models.CASCADE)#Provincia se convirtio en Tabla    
     dis_sede = models.ForeignKey(distrito, on_delete=models.CASCADE)  #Distrito se convirtio en Tabla  
     def __str__(self):
-        return '{}, {}'.format(self.id, self.nom_sede)
+        return '{}'.format(self.nom_sede)
 
 
 class edificio(models.Model):
@@ -133,7 +133,7 @@ class suboficina(models.Model):
         return '{}, {}'.format(self.id, self.nom_suboficina)
 
 
-class usuario(models.Model):
+"""class usuario(models.Model):
     cod_usuario = models.CharField(max_length=8)
     numero_doc_usuario = models.CharField(max_length=8)
     nom_final_usuario = models.CharField(max_length=60)
@@ -141,44 +141,52 @@ class usuario(models.Model):
     ap_mat_usuario = models.CharField(max_length=60)
     nom_usuario = models.CharField(max_length=60)
     obs_usuario   = models.CharField(max_length=60, blank=True) 
+    # 
+    #FK (tipo documentos)
+    t_doc_usuario = models.ForeignKey(tipoDoc, on_delete=models.CASCADE)
+    #FK (modalidad)
+    moda_usuario = models.ForeignKey(modalidad, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return '{}, {}'.format(self.id, self.cod_usuario)
+        """
+
+class Usuario(models.Model):
+    cod_usuario = models.CharField(max_length=8)
+    numero_doc_usuario = models.CharField(max_length=8)
+    nom_final_usuario = models.CharField(max_length=60,blank=True)
+    ap_pat_usuario = models.CharField(max_length=60, blank=True)
+    ap_mat_usuario = models.CharField(max_length=60, blank=True)
+    nom_usuario = models.CharField(max_length=60, blank=True)
+    obs_usuario   = models.CharField(max_length=60, blank=True) 
     #""" 
     #FK (tipo documentos)
     t_doc_usuario = models.ForeignKey(tipoDoc, on_delete=models.CASCADE)
     #FK (modalidad)
     moda_usuario = models.ForeignKey(modalidad, on_delete=models.CASCADE)
-    #"""    
-    sed = models.ForeignKey(sede, on_delete=models.CASCADE)
-    pis = models.ForeignKey(piso, on_delete=models.CASCADE)
-    #ambi = models.ForeignKey(ambiente, on_delete=models.CASCADE)
-    depa = models.ForeignKey(departamento, on_delete=models.CASCADE)
-    provi = models.ForeignKey(provincia, on_delete=models.CASCADE)
-    distri = models.ForeignKey(distrito, on_delete=models.CASCADE)
-    dire_gere = models.ForeignKey(direccionGerencia, on_delete=models.CASCADE)
-    ofi = models.ForeignKey(oficina, on_delete=models.CASCADE)
-    subofi = models.ForeignKey(suboficina, on_delete=models.CASCADE)
-    edifi = models.ForeignKey(edificio, on_delete=models.CASCADE)
-    sect = models.ForeignKey(sector, on_delete=models.CASCADE)
-    jef =  models.ForeignKey(jefeUsuario, on_delete=models.CASCADE)
+
 
     def __str__(self):
-        return '{}, {}'.format(self.id, self.cod_usuario)
+        return '{}'.format(self.cod_usuario)
 
 class ambiente(models.Model):
     # FK (usuario)
-    usuario_ambiente = models.ForeignKey(usuario, on_delete=models.CASCADE)
+    #usuario_ambiente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     #""" FK (nombre de Sede) """
     sede_ambiente = models.ForeignKey(sede, on_delete=models.CASCADE)
     #""" FK (piso) """
     piso_ambiente = models.ForeignKey(piso, on_delete=models.CASCADE)
     #""" FK (sector) """
-    sector_ambiente = models.ForeignKey(sector, on_delete=models.CASCADE)
+    #sector_ambiente = models.ForeignKey(sector, on_delete=models.CASCADE)
+    #depart = models.ForeignKey(departamento, on_delete=models.CASCADE)
     num_ambiente = models.CharField(max_length=4)
     nom_ambiente = models.CharField(max_length=60)
     cod_ambiente = models.CharField(max_length=9)
     obs_ambiente = models.CharField(max_length=60, blank=True)
-    cod_correlativo = models.CharField(max_length=4, default='')
+    #cod_correlativo = models.CharField(max_length=4, default='')
     def __str__(self):
-        return '{}, {}'.format(self.id, self.nom_ambiente)
+        return 'Codigo: {}, Nombre : {}, Sede: {}, Departamento: {}, Piso: {}'.format(self.cod_ambiente, self.nom_ambiente, self.sede_ambiente.nom_sede, self.sede_ambiente.depa_sede.nom_departamento, self.piso_ambiente.cod_piso)
 
 """class cabecera(models.Model):
     usu = models.ForeignKey(usuario, on_delete=models.CASCADE)
@@ -203,7 +211,7 @@ class operatividad(models.Model):
     obs_ope = models.CharField(max_length=60, blank=True)
     
     def __str__(self):
-        return '{} {} {}'.format(self.cod_ope, self.nom_ope, self.deta_ope)
+        return '{}'.format( self.deta_ope)
     
 
 class etiquetado(models.Model):
@@ -215,7 +223,7 @@ class marca(models.Model):
     marca = models.CharField(max_length=60)
 
     def __str__(self):
-        return '{} {}'.format(self.cod_marca, self.marca)
+        return ' {}'.format( self.marca)
 
 class recurso(models.Model):
     cod_re = models.CharField(max_length=2)
@@ -231,7 +239,7 @@ class color(models.Model):
     nom_color = models.CharField(max_length=60)
 
     def __str__(self):
-        return '{} {}'.format(self.cod_color, self.nom_color)
+        return ' {}'.format( self.nom_color)
 
 class estado(models.Model):
     cod_es = models.CharField(max_length=1)
@@ -240,7 +248,7 @@ class estado(models.Model):
     obs_es = models.CharField(max_length=60, blank=True)
 
     def __str__(self):
-        return '{} {} {}'.format(self.cod_es, self.nom_es, self.deta_es)
+        return ' {} '.format(  self.deta_es)
 
 
 class base0(models.Model):
@@ -268,7 +276,7 @@ class base0(models.Model):
     observacion3 = models.CharField(max_length=60, blank=True, null=True)
 
 
-    usuario_base0 = models.ForeignKey(usuario, on_delete=models.CASCADE)
+    #usuario_base0 = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
         return 'SBN: {} | Interno: {}'.format(self.codigo_sbn, self.codigo_interno)

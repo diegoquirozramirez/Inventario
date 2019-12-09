@@ -30,7 +30,13 @@ urlpatterns = [
     path('MIMP/asignar-ambiente/<int:idu>', inventario.asignarCodAmbiente, name="asignar-ambiente"),
     path('MIMP/actualizar-ambiente/<int:idu>/<int:ida>', inventario.updateAsignarCodAmbiente, name="actualizar-ambiente"),
     path('MIMP/listado-usuario', inventario.listadoUsuario, name="listado-usuario"),
-    path('MIMP/base0/<int:idu>', inventario.base0Consulta, name="base0-consultar"),
-    path('MIMP/register-base2019/<int:idbase0>/<int:idu>/<str:cod>/sbn', inventario.addBase12019sbn, name="addBase12019sbn"),
+    path('MIMP/base0/', inventario.base0Consulta, name="base0-consultar"),
+    #path('MIMP/register-base2019/<int:idbase0>/<int:idu>/<str:cod>/sbn', inventario.addBase12019sbn, name="addBase12019sbn"),
     path('MIMP/register-base2019/<int:idbase0>/<int:idu>/<str:cod>/cint', inventario.addBase12019cint, name="addBase12019cint"),
+
+    #sprint 2
+    path('MIMP/buscar-usuario', inventario.buscarUsuario, name="buscar-usuario"),
+    path('MIMP/register-base2019/', inventario.addBase12019sbn, name="addBase12019sbn"),
+    path('MIMP/register-base2019/capture', inventario.captureBase0, name="capture-base0"),
+    path('delete/<int:id>', inventario.deleteRegister, name="delete")
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

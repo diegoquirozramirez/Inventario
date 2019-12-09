@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Apps.Inventario.models import ambiente,color,departamento,direccionGerencia,distrito,edificio,estado,etiquetado,ficha,jefeUsuario,marca,modalidad,oficina,operatividad,piso,provincia,recurso,sector,sede,situacion,suboficina,tipoDoc,usuario
+from Apps.Inventario.models import ambiente,color,departamento,direccionGerencia,distrito,edificio,estado,etiquetado,ficha,jefeUsuario,marca,modalidad,oficina,operatividad,piso,provincia,recurso,sector,sede,situacion,suboficina,tipoDoc,Usuario
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from Apps.Inventario import models
@@ -98,11 +98,11 @@ admin.site.register(suboficina)
 admin.site.register(tipoDoc)
 class usuarioResource(resources.ModelResource):
     class Meta:
-        model = usuario
+        model = Usuario
 
 class usuarioAdmin(ImportExportModelAdmin):
     resources_class = usuarioResource
-admin.site.register(usuario, usuarioAdmin)
+admin.site.register(Usuario, usuarioAdmin)
 
 class base0Resource(resources.ModelResource):
     class Meta:

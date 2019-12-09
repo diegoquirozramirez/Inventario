@@ -76,194 +76,60 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-3" style="margin-bottom: 50px;">Registre a un nuevo Usuario</h5>
                                 <h6 style="margin-bottom: 30px; color: rgb(161, 17, 17);">(*) Obligatorio</h6>
-                                <form class="needs-validation" novalidate method="POST">
-                                 {% csrf_token %}
+                                
+                                <form class="needs-validation" novalidate action="{% url 'buscar-usuario' %}">                              
+                                 
                                     <div class="form-row">
                                         
-                                                <div class="col-md-4 mb-3">
-                                                    <label for="validationCustom01">Código de Usuario (*)</label>
-                                                        {{form.cod_usuario}}                                                       
-                                                    <div class="valid-feedback">
-                                                        Bien!
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 mb-3">
+                                         
+                                                <div class="col-md-2 mb-3">
                                                     <label for="validationCustom01">Número de Documento (*)</label>
-                                                        {{form.numero_doc_usuario}}                                                       
+                                                        <input type="text" name="dni" required class="form-control">                                                      
                                                     <div class="valid-feedback">
                                                         Bien!
                                                     </div>
                                                 </div>
+                                         
+
                                                 <div class="col-md-4 mb-3">
-                                                    <label for="validationCustom01">Nombre Final del Usuario (*)</label>
-                                                        {{form.nom_final_usuario}}                                                       
+                                                    <label for="validationCustom01">Nombre Completo del Usuario (*)</label>
+                                                    <input type="text" name="nombres" required class="form-control">                                                      
                                                     <div class="valid-feedback">
                                                         Bien!
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom01">Apellido Paterno del Usuario (*)</label>
-                                                        {{form.ap_pat_usuario}}                                                       
+                                                <div class="col-md-2 mb-3">
+                                                    <label for="validationCustom01">Tipo de Documento (*)</label>
+                                                    <select class="form-control" name="tipo">
+                                                        <option value="1">DNI</option>
+                                                        <option value="2">PASAPORTE</option>
+                                                    </select>                                              
                                                     <div class="valid-feedback">
                                                         Bien!
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom01">Apellido Materno del Usuario (*)</label>
-                                                        {{form.ap_mat_usuario}}                                                       
+
+                                                <div class="col-md-2 mb-3">
+                                                    <label for="validationCustom01">Modalidad (*)</label>
+                                                    <select class="form-control" name="modalidad">                                                        
+                                                        <option value="1">CAS</option>
+                                                        <option value="2">CONTRATADO</option>
+                                                    </select>
+                                                                                                      
                                                     <div class="valid-feedback">
                                                         Bien!
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom01">Nombre del Usuario (*)</label>
-                                                        {{form.nom_usuario}}                                                       
-                                                    <div class="valid-feedback">
-                                                        Bien!
-                                                    </div>
+
+                                                <div class="col-md-2 mb-3">
+                                                    <label ></label>
+                                                    <input type="submit" value="Buscar" class="btn btn-primary form-control" style="height: 50px;">                                                     
+                                                  
                                                 </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="validationCustom01">Observaciones del Usuario</label>
-                                                        {{form.obs_usuario}}                                                       
-                                                    <div class="valid-feedback">
-                                                        Bien!
-                                                    </div>
-                                                </div>
-                           
-                                        <div class="col-6">
-                                                <div class="col-md-12 mb-3">
-                                                        <label for="validationCustom01">Tipo de Documento (*)</label>
-                                                        {{form.t_doc_usuario}}                                                       
-                                                        <div class="valid-feedback">
-                                                            Bien!
-                                                        </div>
-                                                    </div>
-                                                    <div class="container form-row">
-                                                            <div class="col-md-6 mb-3">
-                                                                    <label for="validationCustom02">Sede (*)</label>
-                                                                    {{form.sed}}    
-                                                                    <div class="valid-feedback">
-                                                                        Looks good!
-                                                                    </div>
-                                                            </div>
-                                                            <div class="col-md-6 mb-3">
-                                                                    <label for="validationCustomUsername">Piso (*)</label>
-                                                                    <div class="input-group">
-                                                                       
-                                                                        {{form.pis}}    
-                                                                      <div class="invalid-feedback">
-                                                                            Please choose a username.
-                                                                        </div>
-                                                                    </div>
-                                                            </div>
-                                                    </div>
-                                                 <!--div class="col-md-12 mb-3">
-                                                        <label for="validationCustom01">Ambiente (*)</label>
-                                                        {{form.ambi}}    
-                                                        <div class="valid-feedback">
-                                                            Looks good!
-                                                        </div>
-                                                </div-->
-
-                                                 <div class="col-md-12 mb-3">
-                                                        <label for="validationCustom01">Departamento (*)</label>
-                                                        {{form.depa}}    
-                                                        <div class="valid-feedback">
-                                                            Looks good!
-                                                        </div>
-                                                </div>
-                                                 <div class="container form-row">
-                                                            <div class="col-md-12 mb-3">
-                                                                    <label for="validationCustom02">Provincia (*)</label>
-                                                                    {{form.provi}}    
-                                                                    <div class="valid-feedback">
-                                                                        Looks good!
-                                                                    </div>
-                                                            </div>
-                                                            <div class="col-md-12 mb-3">
-                                                                <label for="validationCustom02">Edificio (*)</label>
-                                                                {{form.edifi}}    
-                                                                <div class="valid-feedback">
-                                                                    Looks good!
-                                                                </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-3">
-                                                            <label for="validationCustom02">Jefe (*)</label>
-                                                            {{form.jef}}    
-                                                            <div class="valid-feedback">
-                                                                Looks good!
-                                                            </div>
-                                                    </div>
-                                                     
-                                                    </div>
-
-                                                    
-                                                 
-
-                                                <div class="container form-row">
-                                                            <div class="col-md-12 mb-3">
-                                                                    
-                                                                    <input class="btn btn-primary mb-3 form-control" type="submit" value="Registrar" style="margin-top: 20px;">
-                                                                    <div class="valid-feedback">
-                                                                        Looks good!
-                                                                    </div>
-                                                            </div>
-                                                     
-                                                    </div>
-                                                    
-                                        </div>
-
-                                        <div class="col-6">
-                                                <div class="col-md-12 mb-3">
-                                                        <label for="validationCustom01">Distrito (*)</label>
-                                                        {{form.distri}}    
-                                                        <div class="valid-feedback">
-                                                            Looks good!
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mb-3">
-                                                            <label for="validationCustom01">Dirección/Gerencia (*)</label>
-                                                            {{form.dire_gere}}    
-                                                            <div class="valid-feedback">
-                                                                Looks good!
-                                                            </div>
-                                                        </div>
-                                                   
-                                                 <div class="col-md-12 mb-3">
-                                                        <label for="validationCustom01">Oficina (*)</label>
-                                                        {{form.ofi}}    
-                                                        <div class="valid-feedback">
-                                                            Looks good!
-                                                        </div>
-                                                </div>
-
-                                                 <div class="col-md-12 mb-3">
-                                                        <label for="">Sub Oficina (*)</label>
-                                                        {{form.subofi}}    
-                                                        <div class="valid-feedback">
-                                                            Looks good!
-                                                        </div>
-                                                </div>
-
-                                                <div class="col-md-12 mb-3">
-                                                        <label for="">Modalidad (*)</label>
-                                                        {{form.moda_usuario}}    
-                                                         <div class="valid-feedback">
-                                                            Looks good!
-                                                        </div>
-                                                </div>
-                                                <div class="col-md-12 mb-3">
-                                                    <label for="">Sector (*)</label>
-                                                    {{form.sect}}    
-                                                     <div class="valid-feedback">
-                                                        Looks good!
-                                                    </div>
-                                            </div>
-                                               
-                                                    
-                                        </div>
+                                        
+                                     
+                             
                                         
                                     </div>
                       

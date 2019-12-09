@@ -4,132 +4,159 @@
 <div class="app-main">             
         <div class="app-main__outer">
                             <div class="app-main__inner">
-                                <div class="app-page-title">
-                                    <div class="page-title-wrapper">
-                                        <div class="page-title-heading">
-                                            <div class="page-title-icon">
-                                                <i class="pe-7s-drawer icon-gradient bg-happy-itmeo">
-                                                </i>
-                                            </div>
-                                            <div>Registro 
-                                                <div class="page-title-subheading">
-                                                    Se registrara en base1
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="page-title-actions">
-                                            <button type="button" data-toggle="tooltip" title="Example Tooltip" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
-                                                <i class="fa fa-star"></i>
-                                            </button>
-                                            <div class="d-inline-block dropdown">
-                                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
-                                                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                                                        <i class="fa fa-business-time fa-w-20"></i>
-                                                    </span>
-                                                    Opciones
-                                                </button>
-                                                <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                                    <!--ul class="nav flex-column">
-                                                        <li class="nav-item">
-                                                            <a href="javascript:void(0);" class="nav-link">
-                                                                <i class="nav-link-icon lnr-inbox"></i>
-                                                                <span>
-                                                                    Inbox
-                                                                </span>
-                                                                <div class="ml-auto badge badge-pill badge-secondary">86</div>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a href="javascript:void(0);" class="nav-link">
-                                                                <i class="nav-link-icon lnr-book"></i>
-                                                                <span>
-                                                                    Book
-                                                                </span>
-                                                                <div class="ml-auto badge badge-pill badge-danger">5</div>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a href="javascript:void(0);" class="nav-link">
-                                                                <i class="nav-link-icon lnr-picture"></i>
-                                                                <span>
-                                                                    Picture
-                                                                </span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a disabled href="javascript:void(0);" class="nav-link disabled">
-                                                                <i class="nav-link-icon lnr-file-empty"></i>
-                                                                <span>
-                                                                    File Disabled
-                                                                </span>
-                                                            </a>
-                                                        </li>
-                                                    </ul-->
-                                                </div>
-                                            </div>
-                                        </div>   
-                                     </div>
-                                </div>           
+                                         
                                  <div class="row">
                                     
                                     <div class="col-lg-12">
                                         <div class="main-card mb-3 card">
                                             <div class="card-body"><h5 class="card-title">Cabecera</h5>
                                                 
-                                                
+                                                <form action="{% url 'capture-base0'  %}">
+                                                        <table class="mb-0 table table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th colspan="4">Datos</th>
+                                                                    <input type="hidden" name="dni" value="{{dni}}"> 
+                                                                    <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                                    <input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                                    <input type="hidden" name="modalidad" value="{{modalidad}}"> 
+                                                                    <input type="hidden" name="usuario" value="{{usu}}">
+                                                                </tr>
+                                                                </thead>
+                
+                                                                <tbody>
+                                                                <tr>
+                                                                    <th scope="row">Usuario</th>
+                                                                    <td colspan="">{{usu.nom_final_usuario}}</td>
+                                                                    <th scope="row">Tipo de Documento</th>
+                                                                    <td colspan="">{{usu.t_doc_usuario.tipo_doc}}</td>
+                                                               
+                                                                </tr>
+                                                           
+                                                                    <tr>
+                                                                        <th scope="row">DNI</th>
+                                                                        <td>{{usu.numero_doc_usuario}}</td>
+                                                                        <th scope="row">Modalidad</th>
+                                                                        <td colspan="2">{{usu.moda_usuario.modalidad_contratacion}}</td>
+                                                                        
+                                                                    </tr> 
+                                                                    <tr>
+                                                                        <th>Ambiente</th>
+                                                                        <td colspan="3">
+                                                                            {% if ambi %}
+                                                                            <select name="ambiente" id="" class="form-control">
+                                                                                {% for ambi in ambi %}
+                                                                                    <option value="{{ambi.sede_ambiente}}">{{ambi}}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                                
+                                                                            {% endif %}
+                                                                        </td>
+                                                                    </tr>
+                                                            </tbody>
+                                                        </table>
                                                 <table class="mb-0 table table-bordered">
                                                     <thead>
                                                     <tr>
-                                                        <th colspan="8">Resultado</th>
-                                                       
+                                                        <th colspan="8">Resultado</th> <!--input type="hidden" name="codigo_interno" value="{{cod_interno}}"> <input type="hidden" value="{{codigo}}" name="codigo_sbn"--> 
+                                                        <input type="hidden" name="dni" value="{{dni}}"> 
+                                                        <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                        <input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                        <input type="hidden" name="modalidad" value="{{modalidad}}"> 
                                                     </tr>
                                                     </thead>
                                                     {% if codigo_sbn_base0 %}
                                                     {% for base0 in codigo_sbn_base0 %} 
-                                                    {% if codigo == '' %} 
-                                                    <form action="{% url 'addBase12019cint' base0.id idu cod_interno %}">
-                                                        
-                                                        <input type="submit" style="float: right;" class="btn btn-primary" value="Registrar">
-                                                        <span style="float: right; margin: 15px; color: rgb(204, 43, 43);">{% if mensaje %}{{mensaje}}{% endif %}</span>
-                                                   
-                                                    </form> 
-                                                    {% else %} 
-                                                    <form action="{% url 'addBase12019sbn' base0.id idu codigo %}">
-                                                        
-                                                        <input type="submit" style="float: right;" class="btn btn-primary" value="Registrar">
-                                                        <span style="float: right; margin: 15px; color: rgb(204, 43, 43);">{% if mensaje %}{{mensaje}}{% endif %}</span>
-                                                   
-                                                    </form> 
-                                                    {% endif %}
+                                                    
                                                     
                                                      <tbody>
+                                                
                                                     <tr>
-                                                        <th scope="row">Codigo</th>
-                                                        <td colspan="">{{base0.codigo_sbn}}</td>
+                                                        <th scope="row">Codigo SBN</th>
+                                                        <td colspan="2">{{base0.codigo_sbn}}</td>
                                                         <th scope="row" >Código Interno</th>
-                                                        <td colspan="">{{base0.codigo_interno}}</td>
-                                                        <th scope="row">Sede</th>
-                                                        <td colspan="">{{base0.sede_base0}}</td>
-                                                        <th scope="row">Piso</th>
-                                                        <td colspan="">{{base0.piso_base0}}</td>
+                                                        <td colspan="2">{{base0.codigo_interno}}</td>
+                                                      
                                                     </tr>    
-                                                    
+                                               <tr>
+                                                  <td colspan="4"><br></td>
+                                               </tr>
+                                             
                                                     <tr>
-                                                        <th scope="row">Descripcion</th>
-                                                        <td colspan="">{{base0.descripcion}}</td>
-                                                        <th scope="row" >Marca</th>
-                                                        <td colspan="">{{base0.mar.marca}}</td>
-                                                        <th scope="row">Estado</th>
-                                                        <td colspan="">{{base0.est.deta_es}}</td>
-                                                        <th scope="row">Operativodad</th>
-                                                        <td colspan="">{{base0.op.deta_ope}}</td>
-                                                    </tr>  
-                                                 
+                                                        <th>Descripcion</th>
+                                                        <td colspan="2">
+                                                            {{form.descripcion}}
+                                                            <!--input type="text" name="" value="{{base0.descripcion}}" class="form-control"-->
+                                                        </td>
+                                                        <th>Observacion 1</th>
+                                                        <td colspan="4">
+                                                            {{form.observacion1}}
+                                                            <!--input type="text" name="" value="{{base0.observacion1}}" class="form-control"-->
+                                                        </td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th>Detalle</th>
+                                                        <td colspan="2">{{form.detalle}}<!--input type="text" name="" value="{{base0.detalle}}" class="form-control"--></td>
+                                                        <th>Observacion 2</th>
+                                                        <td colspan="4">{{form.observacion2}}<!--input type="text" name="" value="{{base0.observacion2}}" class="form-control"--></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Marca</th> 
+                                                        <td colspan="2">
+                                                                {{form.mar}}   
+                                                            <!--input type="text" name="" value="{{base0.mar}}"class="form-control"--></td>
+                                                        <th>Observacion 3</th>
+                                                        <td colspan="4">{{form.observacion3}}  <!--input type="text" name="" value="{{base0.observacion3}}" class="form-control"--></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Modelo</th>
+                                                        <td colspan="2">{{form.modelo}}   <!--input type="text" name="" value="{{base0.modelo}}" class="form-control"--></td>
+                                                        <th>Estado</th>
+                                                        <td colspan="3">{{form.est}}   <!--input type="text" name="" value="{{base0.est}}" class="form-control"--></td>
+                                                       
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Serie</th>
+                                                        <td colspan="2">
+                                                                {{form.serie}}   
+                                                            <!--input type="text" name="" value="{{base0.serie}}" class="form-control"--></td>
+                                                        <th>Operatividad</th>
+                                                        <td colspan="3">{{form.op}}   <!--input type="text" name="" value="{{base0.op}}" class="form-control"--></td>
+                                                       
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Medida</th>
+                                                        <td colspan="2">{{form.medida}}   <!--input type="text" name="" value="{{base0.medida}}" class="form-control"--></td>
+                                                        <th>Placa</th>
+                                                        <td colspan="3">{{form.placa}}   <!--input type="text" name="" value="{{base0.placa}}" class="form-control"--></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Color</th>
+                                                        <td colspan="2">{{form.col}}   <!--input type="text" name="" value="{{base0.col}}" class="form-control"--></td>
+                                                        <th>Motor</th>
+                                                        <td colspan="3">{{form.motor}}   <!--input type="text" name="" value="{{base0.motor}}" class="form-control"--></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <input type="hidden" name="id" value="{{base0.id}}">
+                                                        </td>
+                                                    </tr>
+                                                        <tr>
+                                                            <input type="submit" value="Actulizar / Registrar" style="float: right;" class="btn btn-primary">  
+                                                        </tr>
+                                            
                                            
                                                     </tbody>
                                                     {% endfor %}
                                                     {% endif %}
+
+                                              
+                                                     
+                                                    
+                                             
                                                 </table>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
