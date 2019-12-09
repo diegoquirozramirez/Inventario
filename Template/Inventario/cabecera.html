@@ -156,7 +156,7 @@
                                                     <tbody>
                                                         {% for base1 in base1 %}
                                                     <tr>
-                                                     
+                                                      
                                                         <td>{{base1.base0_fk.descripcion}}</td>
                                                         <td>{{base1.base0_fk.detalle}}</td>
                                                         <td>{{base1.base0_fk.mar}}</td>
@@ -168,14 +168,19 @@
                                                         <td>{{base1.base0_fk.op}}</td>
                                                         <td>{{base1.base0_fk.placa}}</td>
                                                         <td>{{base1.base0_fk.motor}}</td>
-                                                        <td>{{base1.base0_fk.obs1}}</td>                                                        
-                                                        <td>{{base1.base0_fk.obs2}}</td>                                                      
-                                                        <td>{{base1.base0_fk.obs3}}</td>
+                                                        <td>{{base1.base0_fk.observacion1}}</td>                                                        
+                                                        <td>{{base1.base0_fk.observacion2}}</td>                                                      
+                                                        <td>{{base1.base0_fk.observacion3}}</td>
                                                         <td>
-                                                            <!--form action="#">
+                                                            <form action="{% url 'update' base1.id %}">
+                                                                <input type="hidden" name="codigo_sbn" value="{{base1.base0_fk.codigo_sbn}}" id="">
+                                                                <input type="hidden" name="dni" value="{{dni}}"> 
+                                                                <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                                <input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                                <input type="hidden" name="modalidad" value="{{modalidad}}"> 
                                                                 <input type="submit" value="Editar"  class="btn btn-success">
-                                                            </form-->
-                                                            <a href="#"  class="btn btn-success">Editar</a>
+                                                            </form>
+                                                            
                                                   
                                                         </td>
                                                         <td>

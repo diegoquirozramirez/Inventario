@@ -1,5 +1,5 @@
 from django import forms
-from Apps.Inventario.models import Usuario, ambiente, base0
+from Apps.Inventario.models import Usuario, ambiente, base0, base12019
 
 class usuarioForm(forms.ModelForm):
     class Meta:
@@ -171,3 +171,57 @@ class base0Form(forms.ModelForm):
             'observacion2':forms.TextInput(attrs={'class':'form-control'}),
             'observacion3':forms.TextInput(attrs={'class':'form-control'}),
         }
+
+"""class base12019Form(forms.ModelForm):
+    class Meta:
+        model = base12019
+
+        fields = [
+            'mar', 
+            'col', 
+            'est' ,
+            'op',  
+            'descripcion', 
+            'detalle' ,
+            'modelo', 
+            'serie' ,
+            'medida', 
+            'placa', 
+            'motor', 
+            'observacion1', 
+            'observacion2',
+            'observacion3', 
+        ]
+        labels= {
+            'mar': '', 
+            'col': '', 
+            'est': '' ,
+            'op': '',  
+            'descripcion': '', 
+            'detalle' : '',
+            'modelo': '', 
+            'serie' : '',
+            'medida': '', 
+            'placa': '', 
+            'motor': '', 
+            'observacion1': '', 
+            'observacion2': '',
+            'observacion3': '', 
+        }
+
+        widgets = {
+            'mar': forms.Select(), 
+            'col': forms.Select(), 
+            'est' : forms.Select(),
+            'op': forms.Select(),  
+            'descripcion':forms.TextInput(attrs={'class':'form-control'}), 
+            'detalle' :forms.TextInput(attrs={'class':'form-control'}),
+            'modelo':forms.TextInput(attrs={'class':'form-control'}), 
+            'serie':forms.TextInput(attrs={'class':'form-control'}) ,
+            'medida':forms.TextInput(attrs={'class':'form-control'}), 
+            'placa':forms.TextInput(attrs={'class':'form-control'}), 
+            'motor':forms.TextInput(attrs={'class':'form-control'}), 
+            'observacion1':forms.TextInput(attrs={'class':'form-control'}), 
+            'observacion2':forms.TextInput(attrs={'class':'form-control'}),
+            'observacion3':forms.TextInput(attrs={'class':'form-control'}), 
+        }"""

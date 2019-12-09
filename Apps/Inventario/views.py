@@ -282,3 +282,86 @@ def deleteRegister(request,id):
     tipo = request.GET.get('tipo', None)
     modalidad= request.GET.get('modalidad', None)
     return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre)+'&tipo='+str(tipo)+'&modalidad='+str(modalidad))
+
+def editRegister(request, id):    
+    base = base12019.objects.get(id=id)
+    print(base.base0_fk.id)
+    base1 = base0.objects.get(id=base.base0_fk_id)
+    
+    if request.method == 'POST':
+        dni = request.GET.get('dni', None)
+        
+        nombre = request.GET.get('nombre', None)
+        tipo = request.GET.get('tipo', None)
+        modalidad= request.GET.get('modalidad', None)
+        codigo_sbn = request.GET.get('codigo_sbn', None)
+        
+        
+        form = base0Form(request.POST, instance=base1)
+        if form.is_valid():
+            form.save()
+        return redirect('home')
+    else:
+        form = base0Form(instance=base1)
+        dni = request.GET.get('dni', None)
+        
+        nombre = request.GET.get('nombre', None)
+        tipo = request.GET.get('tipo', None)
+        modalidad= request.GET.get('modalidad', None)
+        codigo_sbn = request.GET.get('codigo_sbn', None)
+
+    template= 'Inventario/update.html'    
+    usu = Usuario.objects.get(numero_doc_usuario=dni)
+    codigo_sbn_base0 = base0.objects.get(codigo_sbn=codigo_sbn)
+    ambi = ambiente.objects.all()
+    context = {'form':form, 'id':base.base0_fk_id, 'dni':dni, 'nombre':nombre, 'tipo':tipo,'modalidad':modalidad, 'usu':usu, 'ambi':ambi, 'codigo_sbn_base0':codigo_sbn_base0 }
+
+    return render(request, template, context)
+
+def updateOneRegister(request):
+    des = request.GET.get('descripcion', None)
+    obs1 = request.GET.get('observacion1', None)
+    det = request.GET.get('detalle', None)
+    obs2 = request.GET.get('observacion2', None)
+    mar = request.GET.get('mar', None)
+    obs3 = request.GET.get('observacion3', None)
+    mod = request.GET.get('modelo', None)
+    est = request.GET.get('est', None)
+    ser = request.GET.get('serie', None)
+    op = request.GET.get('op', None)
+    med = request.GET.get('medida', None)
+    placa = request.GET.get('placa', None)
+    col = request.GET.get('col', None)
+    mot = request.GET.get('motor', None)
+    id = request.GET.get('id', None)
+
+    #codigo_interno = request.GET.get('codigo_interno', None)
+    #codigo_sbn = request.GET.get('codigo_sbn', None)
+    dni = request.GET.get('dni', None)
+    nombre = request.GET.get('nombre', None)
+    tipo = request.GET.get('tipo', None)
+    modalidad= request.GET.get('modalidad', None)
+    base0.objects.filter(id=id).update(
+        
+        mar = mar ,
+        col = col ,
+        est = est,
+        op = op ,
+
+        
+        descripcion = des,
+        detalle = det ,
+        modelo = mod,
+        serie = ser,
+        medida = med ,
+        placa = placa ,
+        motor = mot ,
+       
+        observacion1 = obs1,
+        observacion2 = obs2,
+        observacion3 = obs3,
+    )
+
+    messages.add_message(request, messages.INFO, 'Se actualizo correctamente')
+    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre)+'&tipo='+str(tipo)+'&modalidad='+str(modalidad))
+
