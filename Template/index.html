@@ -18,7 +18,8 @@
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
-                <div class="logo-src"></div>
+                <!--div class="logo-src"></div-->
+                <div><h4>INVENTARIO PERÚ</h4></div>
                 <div class="header__pane ml-auto">
                     <div>
                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -82,7 +83,7 @@
                                 <div class="widget-content-left">
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="{% static 'style/assets/images/avatars/1.jpg' %}" alt="">
+                                            <img width="42" class="rounded-circle" src="{% static 'style/assets/images/avatars/2.jpg' %}" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
@@ -97,10 +98,10 @@
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        Alina Mclourd
+                                       Hernán Bernal
                                     </div>
                                     <div class="widget-subheading">
-                                        VP People Manager
+                                        {{request.user}}
                                     </div>
                                 </div>
                                 <div class="widget-content-right header-user-info ml-3">
@@ -461,11 +462,12 @@
                             <div class="page-title-wrapper">
                                 <div class="page-title-heading">
                                     <div class="page-title-icon">
-                                        <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                                        <i class="pe-7s icon-gradient bg-mean-fruit">
                                         </i>
                                     </div>
-                                    <div>Analytics Dashboard
-                                        <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
+                                    <div>Inventario Dashboard
+                                        <div class="page-title-subheading">
+                                            Componentes Principales de Sistema de Inventariado
                                         </div>
                                     </div>
                                 </div>
@@ -478,10 +480,10 @@
                                             <span class="btn-icon-wrapper pr-2 opacity-7">
                                                 <i class="fa fa-business-time fa-w-20"></i>
                                             </span>
-                                            Buttons
+                                            Opciones
                                         </button>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                            <ul class="nav flex-column">
+                                            <!--ul class="nav flex-column">
                                                 <li class="nav-item">
                                                     <a href="javascript:void(0);" class="nav-link">
                                                         <i class="nav-link-icon lnr-inbox"></i>
@@ -516,7 +518,7 @@
                                                         </span>
                                                     </a>
                                                 </li>
-                                            </ul>
+                                            </ul-->
                                         </div>
                                     </div>
                                 </div>    </div>

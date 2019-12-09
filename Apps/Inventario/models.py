@@ -176,6 +176,7 @@ class ambiente(models.Model):
     nom_ambiente = models.CharField(max_length=60)
     cod_ambiente = models.CharField(max_length=9)
     obs_ambiente = models.CharField(max_length=60, blank=True)
+    cod_correlativo = models.CharField(max_length=4, default='')
     def __str__(self):
         return '{}, {}'.format(self.id, self.nom_ambiente)
 

@@ -27,7 +27,10 @@ class usuarioForm(forms.ModelForm):
             'distri',
             'dire_gere',
             'ofi',
-            'subofi',
+            'subofi',           
+            'edifi',
+            'sect',
+            'jef',
         ]
 
         labels = {
@@ -53,6 +56,9 @@ class usuarioForm(forms.ModelForm):
             'dire_gere': '',
             'ofi': '',
             'subofi': '',
+            'edifi': '',
+            'sect': '',
+            'jef': '',
         }
 
         widgets = {
@@ -78,6 +84,9 @@ class usuarioForm(forms.ModelForm):
             'dire_gere': forms.Select(attrs={'class':'form-control'}),
             'ofi': forms.Select(attrs={'class':'form-control'}),
             'subofi': forms.Select(attrs={'class':'form-control'}),
+            'edifi': forms.Select(attrs={'class':'form-control'}),
+            'sect': forms.Select(attrs={'class':'form-control'}),
+            'jef': forms.Select(attrs={'class':'form-control'}),
         }
 
 class ambienteForm(forms.ModelForm):
@@ -93,6 +102,7 @@ class ambienteForm(forms.ModelForm):
             'sede_ambiente',
             'piso_ambiente',
             #'usuario_ambiente'
+            'cod_correlativo',
         ]
 
         labels = {
@@ -103,6 +113,7 @@ class ambienteForm(forms.ModelForm):
             'num_ambiente':'',
             'nom_ambiente':'',
             'obs_ambiente':'',
+            'cod_correlativo':'',
         }
 
         widgets = {
@@ -113,5 +124,6 @@ class ambienteForm(forms.ModelForm):
             'obs_ambiente':forms.TextInput(attrs={'class':'form-control'}),
             'sede_ambiente': forms.Select(attrs={'class':'form-control'}),
             'piso_ambiente': forms.Select(attrs={'class':'form-control'}),
+            'cod_correlativo': forms.TextInput(attrs={'class':'form-control'}),
             
         }

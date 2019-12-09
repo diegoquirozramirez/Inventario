@@ -3,6 +3,8 @@ from Apps.Inventario.models import usuario, ambiente, base0, base12019
 from Apps.Inventario.forms import usuarioForm, ambienteForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
+from django.contrib import messages 
+
 # Create your views here.
 def cabecera(request, idu):
     usu = usuario.objects.get(id=idu)
@@ -32,15 +34,15 @@ def registraUsuario(request):
 #funcion especial para general codigo de ambiente concatenado
 
 def asignarCodAmbiente(request, idu):  
-    correlativo = '0001'
+    #correlativo = '0001'
     #ambi = ambiente.objects.get(id=ida)
     if request.method == 'POST':
         form = ambienteForm(request.POST or None)
         if form.is_valid():
             form_aux = form.save(commit = False)
-            form_aux.cod_ambiente = str(form_aux.sede_ambiente.cod_sede)+str(form_aux.piso_ambiente.cod_piso)+str(correlativo)
+            form_aux.cod_ambiente = str(form_aux.sede_ambiente.cod_sede)+str(form_aux.piso_ambiente.cod_piso)+str(form_aux.cod_correlativo)
             form_aux.usuario_ambiente_id = idu
-            print(form_aux.usuario_ambiente_id)
+            
             form_aux.save()
             return redirect('consultar', idu=idu)
     else:
@@ -51,13 +53,13 @@ def asignarCodAmbiente(request, idu):
     return render(request, template, context)  
 
 def updateAsignarCodAmbiente(request, idu, ida):  
-    correlativo = '0001'
+    #correlativo = '0001'
     ambi = ambiente.objects.get(id=ida)
     if request.method == 'POST':
         form = ambienteForm(request.POST, instance=ambi)
         if form.is_valid():
             form_aux = form.save(commit = False)
-            form_aux.cod_ambiente = str(form_aux.sede_ambiente.cod_sede)+str(form_aux.piso_ambiente.cod_piso)+str(correlativo)
+            form_aux.cod_ambiente = str(form_aux.sede_ambiente.cod_sede)+str(form_aux.piso_ambiente.cod_piso)+str(form_aux.cod_correlativo)
             form_aux.usuario_ambiente_id = idu            
             form_aux.save()
             return redirect('consultar', idu=idu)
@@ -78,6 +80,10 @@ def base0Consulta(request, idu):
     codigo = request.GET.get('codigo_sbn', None)
     cod_interno = request.GET.get('cod_interno', None)
     #usuario = request.GET['idu']
+    #if codigo == '' and cod_interno == '':
+     #   messages.add_message(request, messages.INFO, 'Ingrese código SBN o código interno')
+      #  return redirect('consultar', idu=idu)
+
     if codigo != '' and cod_interno == '':        
         codigo_sbn_base0 = base0.objects.filter(codigo_sbn=codigo).filter(usuario_base0_id=idu)
        
@@ -86,12 +92,12 @@ def base0Consulta(request, idu):
                 mensaje = "Registrado"
             else:
                 mensaje = "No registrado"
-        
+
             context = {'codigo_sbn_base0':codigo_sbn_base0, 'idu':idu,'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje}
             template = 'Inventario/base0.html'
             return render(request, template, context)
         else:
-            print("No Existe")
+            messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo SBN '+str(codigo))
             return redirect('consultar', idu=idu)
     else:
         if codigo == '' and cod_interno != '':
@@ -106,7 +112,7 @@ def base0Consulta(request, idu):
                 template = 'Inventario/base0.html'
                 return render(request, template, context)
             else:
-                print("No Existe")
+                messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo interno '+str(cod_interno))
                 return redirect('consultar', idu=idu)
         else:
             if codigo != '' and cod_interno != '':
@@ -122,7 +128,6 @@ def base0Consulta(request, idu):
                     template = 'Inventario/base0.html'
                     return render(request, template, context)
                 else:
-                    print("No Existe")
                     return redirect('consultar', idu=idu)
         
 
