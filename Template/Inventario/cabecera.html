@@ -128,13 +128,14 @@
                                                       <!-- fin de form par grabar-->
                                                     {% if estado == True %}                                                        
                                                     <tr>
-                                                            <th colspan="4">Buscar Bien</th>
+                                                            <th colspan="4">Buscar Bien</th> 
                                                     </tr>
                                                   
                                                     <tr>
                                                         <!-- form para consultar -->
                                                         <td colspan="7">
                                                              <form action="{% url 'base0-consultar'  %}"  method="GET" >
+                                                         
                                                                 <input type="hidden" name="dni" value="{{dni}}"> 
                                                                 <input type="hidden" name="nombre" value="{{nombre}}"> 
                                                                 <!--input type="hidden" name="tipo" value="{{tipo}}"> 
@@ -212,6 +213,8 @@
                                                 <table class="mb-0 table table-bordered">
                                                     <thead>
                                                     <tr>
+                                                        <th>Codigo Interno</th>
+                                                        <th>Codigo SBN</th>
                                                         <th colspan="">Descripcion</th>
                                                         <th colspan="">Detalle</th>
                                                         <th colspan="">Marca</th>
@@ -232,7 +235,8 @@
                                                     <tbody>
                                                         {% for base1 in base1 %}
                                                     <tr>
-                                                      
+                                                        <td>{{base1.base0_fk.codigo_interno}}</td>
+                                                        <td>{{base1.base0_fk.codigo_sbn}}</td>
                                                         <td>{{base1.base0_fk.descripcion}}</td>
                                                         <td>{{base1.base0_fk.detalle}}</td>
                                                         <td>{{base1.base0_fk.mar}}</td>
@@ -240,8 +244,8 @@
                                                         <td>{{base1.base0_fk.serie}}</td>
                                                         <td>{{base1.base0_fk.medida}}</td>
                                                         <td>{{base1.base0_fk.col}}</td>
-                                                        <td>{{base1.base0_fk.est}}</td>
-                                                        <td>{{base1.base0_fk.op}}</td>
+                                                        <td>{{base1.base0_fk.est.nom_es}}</td>
+                                                        <td>{{base1.base0_fk.op.nom_ope}}</td>
                                                   
                                                         <td>{{base1.base0_fk.observacion1}}</td>                                                        
                                                    

@@ -302,10 +302,11 @@ class base0(models.Model):
 class base12019(models.Model):
     id = models.AutoField(primary_key=True, max_length=12)    
     base0_fk = models.ForeignKey(base0, on_delete=models.CASCADE)  
-    user = models.ForeignKey(User, on_delete=models.CASCADE)      
+    user = models.ForeignKey(User, on_delete=models.CASCADE)    
+    idficha = models.ForeignKey(ficha, on_delete=models.CASCADE)  
 
     class Meta:
-        unique_together = ['base0_fk','user']
+        unique_together = ['base0_fk']
 
     def __str__(self):
         return 'Base0: {} {} {}'.format(self.base0_fk,self.id, self.user)

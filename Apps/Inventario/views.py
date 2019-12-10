@@ -119,7 +119,10 @@ def base0Consulta(request):
             else:
                 form = base0Form(instance=_base0)
 
-            context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form, 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad , 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep}
+            usu = Usuario.objects.get(numero_doc_usuario=dni)
+            fich = ficha.objects.get(idusuario_id=usu.id)           
+
+            context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form, 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad , 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id}
             template = 'Inventario/base0.html'
             return render(request, template, context)
         else:
@@ -146,8 +149,10 @@ def base0Consulta(request):
                 else:
                     form = base0Form(instance=_base0)
 
+                usu = Usuario.objects.get(numero_doc_usuario=dni)
+                fich = ficha.objects.get(idusuario_id=usu.id) 
                 
-                context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form , 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad,  'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep}
+                context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form , 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad,  'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep,'ficha':fich.id}
                 template = 'Inventario/base0.html'
                 return render(request, template, context)
             else:
@@ -226,6 +231,7 @@ def buscarUsuario(request):
         if existencia_ficha.exists():
             mensaje = "¡Ficha Grabada y Generada!"
             estado = True
+                 
         else:
             mensaje = ""
             estado = False
@@ -266,6 +272,8 @@ def captureBase0(request):
     nombre = request.GET.get('nombre', None)
     tipo = request.GET.get('tipo', None)
     modalidad= request.GET.get('modalidad', None)
+    ficha = request.GET.get('ficha', None)
+
     base0.objects.filter(id=id).update(
         
         mar = mar ,
@@ -286,18 +294,20 @@ def captureBase0(request):
         observacion2 = obs2,
         observacion3 = obs3,
     )
-    
+   
+
     try:
 
         base12019.objects.create(
             base0_fk_id = id,
-            user = request.user
+            user = request.user,
+            idficha_id = ficha,
         )
         messages.add_message(request, messages.INFO, 'Se registro correctamente')
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
     except IntegrityError:
-        messages.add_message(request, messages.INFO, 'Ya se registró')
+        messages.add_message(request, messages.INFO, 'Ya se registró a esta Ficha')
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
 
