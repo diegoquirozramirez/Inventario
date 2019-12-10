@@ -222,6 +222,13 @@ def buscarUsuario(request):
     modalidad = request.GET.get('modalidad', None)
     try:
         usu = Usuario.objects.get(numero_doc_usuario=dni)
+        existencia_ficha = ficha.objects.filter(idusuario_id=usu.id)
+        if existencia_ficha.exists():
+            mensaje = "¡Ficha Grabada y Generada!"
+            estado = True
+        else:
+            mensaje = ""
+            estado = False
     except ObjectDoesNotExist:
         messages.add_message(request, messages.INFO, 'No existe este Usuario con dni: '+str(dni))
         return redirect('registar-usuario')
@@ -231,7 +238,7 @@ def buscarUsuario(request):
     ambi = ambiente.objects.all()
     sed = sede.objects.all()
     base1 = base12019.objects.filter(user=request.user)
-    contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed}
+    contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado}
     template = 'Inventario/cabecera.html'
     return render(request, template, contexto)
 
@@ -406,17 +413,23 @@ def grabarGenerarFicha(request):
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
     else:
 
-        ficha.objects.create(
-            num_ficha =num_ficha,
-        
-            idusuario_id = id_usuario,
-            #datos libres
-            ambiente = ambiente,
-            piso = piso,
-            dependencia = str(dependencia), 
-            sede = str(sede),
+        try:
 
-        )
+            ficha.objects.create(
+                num_ficha =num_ficha,
+            
+                idusuario_id = id_usuario,
+                #datos libres
+                ambiente = ambiente,
+                piso = piso,
+                dependencia = str(dependencia), 
+                sede = str(sede),
+
+            )
+        except IntegrityError:
+            nu_ficha = ficha.objects.get(idusuario_id=id_usuario)
+            messages.add_message(request, messages.INFO, 'Usuario con dni '+str(dni)+' ya se encuentra asociada a la ficha '+str(nu_ficha.num_ficha))
+            return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
 
     #para el redirect
    

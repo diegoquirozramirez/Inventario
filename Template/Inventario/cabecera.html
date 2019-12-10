@@ -51,6 +51,9 @@
                                                             <td>
                                                                 <input type="submit" value="Grabar y Generar Número de Ficha" class="btn btn-success form-control">
                                                             </td>
+                                                            <td>
+                                                                <span style="color: rgba(184, 48, 48, 0.904); float: right; margin: 15px;"><strong>{{mensaje}}</strong></span>
+                                                            </td>
                                                         </tr>
                                                        
                                                        
@@ -123,6 +126,7 @@
                                                     </tr>
                                                     </form>
                                                       <!-- fin de form par grabar-->
+                                                    {% if estado == True %}                                                        
                                                     <tr>
                                                             <th colspan="4">Buscar Bien</th>
                                                     </tr>
@@ -163,7 +167,13 @@
                                                          
                                                     </tr>
                                                     
-                                              
+                                                    
+                                                    {% else %}
+                                                    <tr style="height: 70px;">
+                                                            <th colspan="7"><span style="color: rgba(184, 48, 48, 0.904); align-content: center;"><strong>Debe generar la Ficha para Buscar un Bien</strong></span> </th>
+                                                    </tr>
+                                                  
+                                                    {% endif %}
                                                    
                                            <!--
                                                 {% if ambi %}

@@ -179,6 +179,9 @@ class ficha(models.Model):
     def __str__(self):
         return '{}, {} {}'.format(self.id, self.num_ficha, self.fecha_ficha)
 
+    class Meta:
+        unique_together = ['idusuario']
+
 class ambiente(models.Model):
     # FK (usuario)
     #usuario_ambiente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
