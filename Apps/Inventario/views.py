@@ -231,22 +231,36 @@ def buscarUsuario(request):
         if existencia_ficha.exists():
             mensaje = "¡Ficha Grabada y Generada!"
             estado = True
+            exist_ficha = ficha.objects.get(idusuario_id=usu.id)
+            base1 = base12019.objects.filter(idficha_id=exist_ficha.id)
+
+            pis = piso.objects.all()
+            dep = direccionGerencia.objects.all()
+            ambi = ambiente.objects.all()
+            sed = sede.objects.all()
+            print(base1)
+            #base1 = base12019.objects.filter(user=request.user)
+            contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado}
+            template = 'Inventario/cabecera.html'
+            return render(request, template, contexto)
                  
         else:
             mensaje = ""
             estado = False
+            pis = piso.objects.all()
+            dep = direccionGerencia.objects.all()
+            ambi = ambiente.objects.all()
+            sed = sede.objects.all()
+            base1 = ''
+            #base1 = base12019.objects.filter(user=request.user)
+            contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado}
+            template = 'Inventario/cabecera.html'
+            return render(request, template, contexto)
+
     except ObjectDoesNotExist:
         messages.add_message(request, messages.INFO, 'No existe este Usuario con dni: '+str(dni))
         return redirect('registar-usuario')
 
-    pis = piso.objects.all()
-    dep = direccionGerencia.objects.all()
-    ambi = ambiente.objects.all()
-    sed = sede.objects.all()
-    base1 = base12019.objects.filter(user=request.user)
-    contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado}
-    template = 'Inventario/cabecera.html'
-    return render(request, template, contexto)
 
 def captureBase0(request):
     
@@ -307,7 +321,7 @@ def captureBase0(request):
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
     except IntegrityError:
-        messages.add_message(request, messages.INFO, 'Ya se registró a esta Ficha')
+        messages.add_message(request, messages.INFO, 'Ya se registró a una ficha Ficha')
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
 
