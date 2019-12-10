@@ -84,7 +84,13 @@ def base0Consulta(request):
     nombre = request.GET.get('nombre', None)
     tipo = request.GET.get('tipo', None)
     modalidad= request.GET.get('modalidad', None)
-    usu = Usuario.objects.get(numero_doc_usuario=dni)
+
+    try:
+        usu = Usuario.objects.get(numero_doc_usuario=dni)
+    except ObjectDoesNotExist:
+        messages.add_message(request, messages.INFO, 'No se encontró un Usuario con dni '+str(dni)+' | Advertencia: NO Manipular la URL')
+        return redirect('registar-usuario')
+
     ambi = ambiente.objects.all()
     print(cod_interno)
     #usuario = request.GET['idu']
@@ -153,6 +159,7 @@ def base0Consulta(request):
                         mensaje = "Registrado"
                     else:
                         mensaje = "No registrado"
+                        
 
                     _base0 = base0.objects.get(codigo_sbn=codigo)
                     if request.method == 'POST':
@@ -209,7 +216,12 @@ def buscarUsuario(request):
     nombre = request.GET.get('nombres', None)
     tipo = request.GET.get('tipo', None)
     modalidad = request.GET.get('modalidad', None)
-    usu = Usuario.objects.get(numero_doc_usuario=dni)
+    try:
+        usu = Usuario.objects.get(numero_doc_usuario=dni)
+    except ObjectDoesNotExist:
+        messages.add_message(request, messages.INFO, 'No existe este Usuario con dni: '+str(dni))
+        return redirect('registar-usuario')
+
     ambi = ambiente.objects.all()
     base1 = base12019.objects.filter(user=request.user)
     contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad}
@@ -268,11 +280,11 @@ def captureBase0(request):
             user = request.user
         )
         messages.add_message(request, messages.INFO, 'Se registro correctamente')
-        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre)+'&tipo='+str(tipo)+'&modalidad='+str(modalidad))
+        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
     except IntegrityError:
         messages.add_message(request, messages.INFO, 'Ya se registró')
-        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre)+'&tipo='+str(tipo)+'&modalidad='+str(modalidad))
+        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
 
 def deleteRegister(request,id):
@@ -281,7 +293,7 @@ def deleteRegister(request,id):
     nombre = request.GET.get('nombre', None)
     tipo = request.GET.get('tipo', None)
     modalidad= request.GET.get('modalidad', None)
-    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre)+'&tipo='+str(tipo)+'&modalidad='+str(modalidad))
+    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
 def editRegister(request, id):    
     base = base12019.objects.get(id=id)
@@ -363,5 +375,5 @@ def updateOneRegister(request):
     )
 
     messages.add_message(request, messages.INFO, 'Se actualizo correctamente')
-    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre)+'&tipo='+str(tipo)+'&modalidad='+str(modalidad))
+    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 

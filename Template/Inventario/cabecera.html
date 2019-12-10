@@ -31,8 +31,8 @@
                                                     <th colspan="4">Datos</th>
                                                     <input type="hidden" name="dni" value="{{dni}}"> 
                                                     <input type="hidden" name="nombre" value="{{nombre}}"> 
-                                                    <input type="hidden" name="tipo" value="{{tipo}}"> 
-                                                    <input type="hidden" name="modalidad" value="{{modalidad}}"> 
+                                                    <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                    <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
                                                     <input type="hidden" name="usuario" value="{{usu}}">
                                                 </tr>
                                                 </thead>
@@ -73,23 +73,23 @@
                                                     <tr>
                                                         <td colspan="4">
                                                                 <div class="form-row">
-                                                                        <div class="col-4">
-                                                                            <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12" minlength="12" />
-                                                                        </div>
-                                                                        <div class="col-4">
+                                                                          <div class="col-3">
                                                                             <input type="text" id="cod_interno" name="cod_interno" placeholder="Codigo Interno" class="form-control" maxlength="5" minlength="5" >
                                                                         </div>
-                                                                        <div class="col-4">
-                                                                            <input type="text" id="" name="" placeholder="Sin Codigo" class="form-control">
+
+                                                                        <div class="col-3">
+                                                                            <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12" minlength="12" />
+                                                                        </div>
+                                                                      
+                                                                        <div class="col-3">
+                                                                            <input type="text" id="" name="" placeholder="Sin Codigo - Catálogo" class="form-control">
+                                                                        </div>
+                                                                          <div class="col-3">                                                                            
+                                                                            <input type="submit" name="" id="" value="Consultar" class="form-control btn btn-primary" >
                                                                         </div>
                                                                         
                                                                     </div>
-                                                                    <div class="form-row">
-                                                                        <div class="col-4">
-                                                                            
-                                                                            <input type="submit" name="" id="" value="Consultar" class="form-control btn btn-primary" style="margin-top: 15px;">
-                                                                        </div>
-                                                                    </div>
+                                                                
                                                         </td>
                                                  
                                                          
@@ -143,11 +143,9 @@
                                                         <th colspan="">Color</th>
                                                         <th colspan="">Estado</th>
                                                         <th colspan="">Operatividad</th>
-                                                        <th colspan="">Placa</th>
-                                                        <th colspan="">Motor</th>
+                                                 
                                                         <th colspan="">Observacion 1</th>
-                                                        <th colspan="">Observacion 2</th>
-                                                        <th colspan="">Observacion 3</th>
+                                                  
                                                         <th colspan="2">Acciones</th>
                                                        
                                                     </tr>
@@ -166,18 +164,16 @@
                                                         <td>{{base1.base0_fk.col}}</td>
                                                         <td>{{base1.base0_fk.est}}</td>
                                                         <td>{{base1.base0_fk.op}}</td>
-                                                        <td>{{base1.base0_fk.placa}}</td>
-                                                        <td>{{base1.base0_fk.motor}}</td>
+                                                  
                                                         <td>{{base1.base0_fk.observacion1}}</td>                                                        
-                                                        <td>{{base1.base0_fk.observacion2}}</td>                                                      
-                                                        <td>{{base1.base0_fk.observacion3}}</td>
+                                                   
                                                         <td>
                                                             <form action="{% url 'update' base1.id %}">
                                                                 <input type="hidden" name="codigo_sbn" value="{{base1.base0_fk.codigo_sbn}}" id="">
                                                                 <input type="hidden" name="dni" value="{{dni}}"> 
                                                                 <input type="hidden" name="nombre" value="{{nombre}}"> 
-                                                                <input type="hidden" name="tipo" value="{{tipo}}"> 
-                                                                <input type="hidden" name="modalidad" value="{{modalidad}}"> 
+                                                                <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                                <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
                                                                 <input type="submit" value="Editar"  class="btn btn-success">
                                                             </form>
                                                             
@@ -187,8 +183,8 @@
                                                             <form action="{% url 'delete' base1.id %}">
                                                                 <input type="hidden" name="dni" value="{{dni}}"> 
                                                                 <input type="hidden" name="nombre" value="{{nombre}}"> 
-                                                                <input type="hidden" name="tipo" value="{{tipo}}"> 
-                                                                <input type="hidden" name="modalidad" value="{{modalidad}}"> 
+                                                                <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                                <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
                                                                 <input type="submit" value="Elimar" class="btn btn-danger">
                                                             </form>
                                                           
