@@ -27,7 +27,7 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <th scope="row">Usuario</th>
-                                                                    <td colspan="">{{usu.nom_final_usuario}}</td>
+                                                                    <td colspan="4">{{usu.nom_final_usuario}}</td>
                                                                     <th scope="row">Tipo de Documento</th>
                                                                     <td colspan="">{{usu.t_doc_usuario.tipo_doc}}</td>
                                                                
@@ -37,12 +37,12 @@
                                                                         <th scope="row">DNI</th>
                                                                         <td>{{usu.numero_doc_usuario}}</td>
                                                                         <th scope="row">Modalidad</th>
-                                                                        <td colspan="2">{{usu.moda_usuario.modalidad_contratacion}}</td>
+                                                                        <td colspan="4">{{usu.moda_usuario.modalidad_contratacion}}</td>
                                                                         
                                                                     </tr> 
                                                                     <tr>
                                                                         <th>Ambiente</th>
-                                                                        <td colspan="3">
+                                                                        <td colspan="6">
                                                                             {% if ambi %}
                                                                             <select name="ambiente" id="" class="form-control">
                                                                                 {% for ambi in ambi %}
@@ -53,6 +53,43 @@
                                                                             {% endif %}
                                                                         </td>
                                                                     </tr>
+                                                                     <tr >
+                                                        <th >Piso</th>
+                                                        <td colspan="2" >
+                                                           {% if pis %}
+                                                            <select name="ambiente" id="" class="form-control">
+                                                                {% for piso in pis %}
+                                                                    <option value="{{piso}}" style="color: black;">{{piso.cod_piso}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                                
+                                                            {% endif %}
+                                                        </td>
+                                                        <th>
+                                                            Dependencia
+                                                        </th>
+                                                        <td>
+                                                             {% if dep %}
+                                                            <select name="ambiente" id="" class="form-control">
+                                                                {% for dependencia in dep %}
+                                                                    <option value="{{dependencia}}" style="color: black;">{{dependencia.nom_dirger}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                                
+                                                            {% endif %}
+                                                        </td>
+                                                        <th>Sede</th>
+                                                        <td colspan="1">
+                                                             {% if sed %}
+                                                            <select name="ambiente" id="" class="form-control">
+                                                                {% for sede in sed %}
+                                                                    <option value="{{sede}}" style="color: black;">{{sede}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                                
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
                                                             </tbody>
                                                         </table>
                                                 <table class="mb-0 table table-bordered">
@@ -120,7 +157,7 @@
                                                         <td colspan="2">
                                                                 {{form.serie}}   
                                                             <!--input type="text" name="" value="{{base0.serie}}" class="form-control"--></td>
-                                                        <th>Operatividad</th>
+                                                        <th>Uso</th>
                                                         <td colspan="3">{{form.op}}   <!--input type="text" name="" value="{{base0.op}}" class="form-control"--></td>
                                                        
                                                     </tr>

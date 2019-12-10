@@ -1,11 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
-class ficha(models.Model):
-    cod_ficha = models.CharField(max_length=3)
-    num_ficha = models.CharField(max_length=9)
-    def __str__(self):
-        return '{}, {}'.format(self.id, self.num_ficha)
+
 
 class situacion(models.Model):
     cod_situ = models.CharField(max_length=2)
@@ -20,7 +16,7 @@ class piso(models.Model):
     deta_piso = models.CharField(max_length=60, blank=True, null=True)
     obs_piso = models.CharField(max_length=60, blank=True, null=True)
     def __str__(self):
-        return '{}, {}'.format(self.id, self.cod_piso)
+        return '{}, {}'.format(self.id, self.nom_psio)
 
 class sector(models.Model):
     cod_sector = models.CharField(max_length=2)
@@ -170,6 +166,19 @@ class Usuario(models.Model):
     def __str__(self):
         return '{}'.format(self.cod_usuario)
 
+class ficha(models.Model):    
+    num_ficha = models.IntegerField(blank=False, null= False)
+    fecha_ficha = models.DateField(auto_now_add=True)
+    idusuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    #datos libres
+    ambiente = models.CharField(max_length=60, default="")
+    piso = models.CharField(max_length=5, default="") #deberia ser 2
+    dependencia = models.CharField(max_length=60, default="")
+    sede = models.CharField(max_length=60, default="")
+
+    def __str__(self):
+        return '{}, {} {}'.format(self.id, self.num_ficha, self.fecha_ficha)
+
 class ambiente(models.Model):
     # FK (usuario)
     #usuario_ambiente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
@@ -240,6 +249,10 @@ class color(models.Model):
 
     def __str__(self):
         return ' {}'.format( self.nom_color)
+    
+    def colors(self):
+        col = self.nom_color        
+        return '{}'.format(col)
 
 class estado(models.Model):
     cod_es = models.CharField(max_length=1)
@@ -281,6 +294,8 @@ class base0(models.Model):
     def __str__(self):
         return 'SBN: {} | Interno: {}'.format(self.codigo_sbn, self.codigo_interno)
 
+    
+
 class base12019(models.Model):
     id = models.AutoField(primary_key=True, max_length=12)    
     base0_fk = models.ForeignKey(base0, on_delete=models.CASCADE)  
@@ -291,3 +306,4 @@ class base12019(models.Model):
 
     def __str__(self):
         return 'Base0: {} {} {}'.format(self.base0_fk,self.id, self.user)
+    

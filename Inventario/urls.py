@@ -41,4 +41,7 @@ urlpatterns = [
     path('delete/<int:id>', inventario.deleteRegister, name="delete"),
     path('actualizar/<int:id>', inventario.editRegister, name="update"),
     path('actualizar-one/', inventario.updateOneRegister, name="update-one"),
+
+    #sprint 3
+    path('generar-ficha/', inventario.grabarGenerarFicha, name="generar-ficha"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
