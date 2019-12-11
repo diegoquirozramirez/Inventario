@@ -44,4 +44,9 @@ urlpatterns = [
 
     #sprint 3
     path('generar-ficha/', inventario.grabarGenerarFicha, name="generar-ficha"),
+    path('buscar-ficha/', inventario.buscarFicha, name="buscar-ficha"),
+    path('consultar-ficha/', inventario.consultarFicha, name="consultar-ficha"),
+    path('update-ficha/', inventario.updateFicha, name="update-ficha"),
+    path('delete-ficha/', inventario.deleteFicha, name="delete-ficha"),
+    path('catalogo', inventario.catalogo, name="catalogo"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

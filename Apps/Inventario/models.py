@@ -164,7 +164,7 @@ class Usuario(models.Model):
 
 
     def __str__(self):
-        return '{}'.format(self.cod_usuario)
+        return '{}'.format(self.nom_final_usuario)
 
 class ficha(models.Model):    
     num_ficha = models.CharField(max_length=7, blank=False, null= False)

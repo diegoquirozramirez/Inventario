@@ -53,10 +53,12 @@
                                                                <span style="color: rgba(184, 48, 48, 0.904); float: left; margin: 15px;"><strong>{{mensaje}}</strong></span>
                                                                 
                                                             </td>
+                                                            {%  if estado == True %}
                                                             <th>Número de Ficha</th>
                                                             <td>
                                                                     {{num_ficha.num_ficha}}
                                                             </td>
+                                                            {% endif %}
                                                         </tr>
                                                        
                                                        
@@ -161,14 +163,19 @@
                                                                           <div class="col-3">                                                                            
                                                                             <input type="submit" name="" id="" value="Consultar" class="form-control btn btn-primary" >
                                                                         </div>
+                                                                        <div class="col-3">
+                                                                              <a href="{% url 'catalogo' %}" class="btn btn-info form-control">Catálogo</a>
+                                                                        </div>
                                                                         
                                                                     </div>
                                                                 
                                                         </td>
                                                         </form>
                                                         <!-- fin de form para consultar-->
+                                                    
                                                          
                                                     </tr>
+                                                    
                                                     
                                                     
                                                     {% else %}

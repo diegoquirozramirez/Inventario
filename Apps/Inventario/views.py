@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from Apps.Inventario.models import Usuario, ambiente, base0, base12019, piso, direccionGerencia, sede, ficha
-from Apps.Inventario.forms import usuarioForm, ambienteForm, base0Form
+from Apps.Inventario.forms import usuarioForm, ambienteForm, base0Form, fichaForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.contrib import messages 
@@ -468,3 +468,55 @@ def grabarGenerarFicha(request):
     #print(num_ficha+" ,"+id_usuario+" ,"+ambiente+" ,"+piso+" ,"+str(dependencia)+" ,"+str(sede)+" ,"+dni+" ,"+nombres)
 
     return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+
+def buscarFicha(request):
+    template = 'Ficha/buscar.html'
+    return render(request, template)
+
+#con ajax
+from django.core import serializers
+from django.http import HttpResponse
+"""def consultarFicha(request):
+    fich = request.GET.get('ficha', None)
+    data = ficha.objects.filter(num_ficha=fich)
+    datas = serializers.serialize('json', data, fields=('num_ficha','fecha_ficha','ambiente','piso','dependencia','sede'))  
+    return HttpResponse(datas, content_type='application/json')"""
+
+def updateFicha(request):
+    num_ficha = request.GET.get('num_ficha', None)
+    fich = ficha.objects.get(num_ficha=num_ficha)
+    if request.method == 'POST':
+        form = fichaForm(request.POST, instance=fich)
+        if form.is_valid():
+            form.save()
+        return redirect('/consultar-ficha/?num_ficha='+str(num_ficha))
+    else:
+        form = fichaForm(instance=fich)
+    context = {'form':form, 'num_ficha':num_ficha}
+    template = 'Ficha/update.html'
+    return render(request, template, context)
+
+def consultarFicha(request):
+    fich = request.GET.get('num_ficha', None)
+    if fich == '':
+        messages.add_message(request, messages.INFO, 'Ingrese el Número de Ficha '+str(fich))
+        return redirect('buscar-ficha')
+
+    try:
+        data = ficha.objects.get(num_ficha=fich)
+    except ObjectDoesNotExist:
+        messages.add_message(request, messages.INFO, 'No existe la ficha con Número '+str(fich))
+        return redirect('buscar-ficha')
+
+    template = 'Ficha/ficha.html'
+    context = {'data':data}
+    return render(request, template, context)
+
+def deleteFicha(request):
+    fich = request.GET.get('num_ficha', None)
+    ficha.objects.get(num_ficha=fich).delete()
+    return redirect('buscar-ficha')
+
+def catalogo(request):
+    template = 'Catalogo/catalogo.html'
+    return render(request, template)

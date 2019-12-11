@@ -1,0 +1,348 @@
+
+{% extends 'index.html' %}
+{% block content %}        
+<div class="app-main">             
+    <div class="app-main__outer">
+                        <div class="app-main__inner">
+                                <div class="row" style="margin-top: -70px;">
+                                        <div class="col-lg-12">
+                                                <div class="page-title-subheading col-lg-12">
+                                                        {% if messages %}
+                                                        <div class="messages alert alert-danger form-control col-lg-12" role="alert" style="height: 50px;">
+                                                            {% for message in messages %}
+                                                            <center>
+                                                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                                                            </center>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                        </div>
+                                    </div>
+                             <div class="row">
+                                
+                                <div class="col-lg-12">
+                                    <div class="main-card mb-3 card">
+                                        <div class="card-body"><h5 class="card-title">Catalogo</h5>
+                                            <!--form action="{% url 'base0-consultar'  %}"  method="GET" -->
+                                            <table class="mb-0 table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th colspan="5">Datos</th>
+                                                    <input type="hidden" name="dni" value="{{dni}}"> 
+                                                    <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                    <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                    <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
+                                                    <input type="hidden" name="usuario" value="{{usu}}">
+                                               
+                                                </tr>
+
+                                                </thead>
+
+                                                <tbody>
+                                                <!-- inicio de form para grabar-->
+                                                <form action="{% url 'generar-ficha' %}">
+                                                        <input type="hidden" name="dni" value="{{dni}}"> 
+                                                        <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <!--input type="number" name="ficha" style="margin: 5px" class="form-control" placeholder="Número de Ficha"-->
+                                                                <input type="submit" value="Grabar y Generar Número de Ficha" class="btn btn-success form-control">    
+                                                            </td>
+                                                            <td colspan="2">
+                                                               <span style="color: rgba(184, 48, 48, 0.904); float: left; margin: 15px;"><strong>{{mensaje}}</strong></span>
+                                                                
+                                                            </td>
+                                                            {%  if estado == True %}
+                                                            <th>Número de Ficha</th>
+                                                            <td>
+                                                                    {{num_ficha.num_ficha}}
+                                                            </td>
+                                                            {% endif %}
+                                                        </tr>
+                                                       
+                                                       
+                                                <tr>
+                                                    <th scope="row">Usuario</th>
+                                                    <td colspan="4">{{usu.nom_final_usuario}}</td>
+                                                    <th scope="row">Tipo de Documento</th>
+                                                    <td colspan="">{{usu.t_doc_usuario.tipo_doc}}</td>
+                                               
+                                                </tr>
+                                           
+                                                    <tr>
+                                                        <th scope="row">DNI</th>
+                                                        <td colspan="">{{usu.numero_doc_usuario}}</td>
+                                                        <th scope="row">Modalidad</th>
+                                                        <td colspan="4">{{usu.moda_usuario.modalidad_contratacion}}</td>
+                                                        
+                                                    </tr> 
+                                         <input type="hidden" name="usuario" value="{{usu.id}}">
+                                                    <tr>
+                                                        <th>Ambiente</th>
+                                                        <td colspan="6">
+                                                            {% if ambi %}
+                                                            <select name="ambiente" id="" class="form-control">
+                                                                {% for ambi in ambi %}
+                                                                    <option value="{{ambi.sede_ambiente}}">{{ambi}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                                
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr >
+                                                        <th >Piso</th>
+                                                        <td colspan="2" >
+                                                           {% if pis %}
+                                                            <select name="piso" id="" class="form-control">
+                                                                {% for piso in pis %}
+                                                                    <option value="{{piso.cod_piso}}" style="color: black;">{{piso.cod_piso}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                                
+                                                            {% endif %}
+                                                        </td>
+                                                        <th>
+                                                            Dependencia
+                                                        </th>
+                                                        <td>
+                                                             {% if dep %}
+                                                            <select name="dependencia" id="" class="form-control">
+                                                                {% for dependencia in dep %}
+                                                                    <option value="{{dependencia.nom_dirger}}" style="color: black;">{{dependencia.nom_dirger}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                                
+                                                            {% endif %}
+                                                        </td>
+                                                        <th>Sede</th>
+                                                        <td colspan="1">
+                                                             {% if sed %}
+                                                            <select name="sede" id="" class="form-control">
+                                                                {% for sede in sed %}
+                                                                    <option value="{{sede.id}}" style="color: black;">{{sede.nom_sede}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                                
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                   
+                                                    </form>
+                                                      <!-- fin de form par grabar-->
+                                                    {% if estado == True %}                                                        
+                                                    <tr>
+                                                            <th colspan="4">Buscar Bien</th> 
+                                                    </tr>
+                                                  
+                                                    <tr>
+                                                        <!-- form para consultar -->
+                                                        <td colspan="7">
+                                                             <form action="{% url 'base0-consultar'  %}"  method="GET" >
+                                                         
+                                                                <input type="hidden" name="dni" value="{{dni}}"> 
+                                                                <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                                <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                                <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
+                                                                <input type="hidden" name="usuario" value="{{usu}}">
+                                                                <div class="form-row">
+                                                                          <div class="col-3">
+                                                                            <input type="text" id="cod_interno" name="cod_interno" placeholder="Codigo Interno" class="form-control" maxlength="5" minlength="5" >
+                                                                        </div>
+                                                                        <script type="text/javascript">
+                                                                            document.getElementById('cod_interno').focus()
+                                                                        </script>
+
+                                                                        <div class="col-3">
+                                                                            <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12" minlength="12" />
+                                                                        </div>
+                                                                      
+                                                                       
+                                                                          <div class="col-3">                                                                            
+                                                                            <input type="submit" name="" id="" value="Consultar" class="form-control btn btn-primary" >
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                              <a href="{% url 'catalogo' %}" class="btn btn-info form-control">Catálogo</a>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                
+                                                        </td>
+                                                        </form>
+                                                        <!-- fin de form para consultar-->
+                                                    
+                                                         
+                                                    </tr>
+                                                    
+                                                    
+                                                    
+                                                    {% else %}
+                                                    <tr style="height: 70px;">
+                                                            <th colspan="7"><span style="color: rgba(184, 48, 48, 0.904); align-content: center;"><strong>Debe generar la Ficha para Buscar un Bien</strong></span> </th>
+                                                    </tr>
+                                                  
+                                                    {% endif %}
+                                                   
+                                           <!--
+                                                {% if ambi %}
+                                                {% for ambi in ambi %}
+                                                <tr>
+                                                    <th scope="row">Codigo Ambiente</th>
+                                                    <td>{{ambi.cod_ambiente}}</td>
+                                                    <th scope="row">Nombre Ambiente</th> 
+                                                    <td>{{ambi.nom_ambiente}} </td>
+                                                    <td><form action=""><input type="submit" class="form-control" value="Actualizar Ambiente" style="background-color: darkslateblue; width: 100%; color: white; " ></form></td>                                                   
+                                             
+                                                </tr>
+                                                {% endfor %}
+                                                {% else %}
+                                                <tr>
+                                                    <th scope="row">Codigo Ambiente</th>
+                                                    <td>Sin código asignado</td>
+                                                    <th scope="row">Nombre Ambiente</th> 
+                                                    <td>Sin Nombre asignado </td>
+                                                    <td><form action=""><input type="submit" class="form-control" value="Asignar Ambiente" style="background-color: darkslateblue; width: 100%; color: white;" ></form></td>      
+                                               
+                                                </tr>
+                                                {% endif %} -->
+                                                </tbody>
+                                            </table>
+                                        <!--/form-->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% if base1 %}
+                                <div class="col-lg-12">
+                                        <div class="main-card mb-3 card">
+                                            <div class="card-body"><h5 class="card-title">Registrados por el usuario: {{request.user}}</h5>
+                                                
+                                                <table class="mb-0 table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Codigo Interno</th>
+                                                        <th>Codigo SBN</th>
+                                                        <th colspan="">Descripcion</th>
+                                                        <th colspan="">Detalle</th>
+                                                        <th colspan="">Marca</th>
+                                                        <th colspan="">Modelo</th>
+                                                        <th colspan="">Serie</th>
+                                                        <th colspan="">Medida</th>
+                                                        <th colspan="">Color</th>
+                                                        <th colspan="">Estado</th>
+                                                        <th colspan="">Operatividad</th>
+                                                 
+                                                        <th colspan="">Observacion 1</th>
+                                                        <th>Codigo de Verificación</th>
+                                                  
+                                                        <th colspan="2">Acciones</th>
+                                                       
+                                                    </tr>
+                                                    </thead>
+    
+                                                    <tbody>
+                                                        {% for base1 in base1 %}
+                                                    <tr>
+                                                        <td>{{base1.base0_fk.codigo_interno}}</td>
+                                                        <td>{{base1.base0_fk.codigo_sbn}}</td>
+                                                        <td>{{base1.base0_fk.descripcion}}</td>
+                                                        <td>{{base1.base0_fk.detalle}}</td>
+                                                        <td>{{base1.base0_fk.mar}}</td>
+                                                        <td>{{base1.base0_fk.modelo}}</td>
+                                                        <td>{{base1.base0_fk.serie}}</td>
+                                                        <td>{{base1.base0_fk.medida}}</td>
+                                                        <td>{{base1.base0_fk.col}}</td>
+                                                        <td>{{base1.base0_fk.est.nom_es}}</td>
+                                                        <td>{{base1.base0_fk.op.nom_ope}}</td>
+                                                  
+                                                        <td>{{base1.base0_fk.observacion1}}</td>  
+                                                        <td><span style="color: rgb(177, 21, 21); text-align: center; font: bold;"><strong>{{base1.codigo_conformidad}}</strong></span</td>                                                      
+                                                   
+                                                        <td>
+                                                            <form action="{% url 'update' base1.id %}">
+                                                                <input type="hidden" name="codigo_sbn" value="{{base1.base0_fk.codigo_sbn}}" id="">
+                                                                <input type="hidden" name="dni" value="{{dni}}"> 
+                                                                <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                                <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                                <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
+                                                                <input type="submit" value="Editar"  class="btn btn-success">
+                                                            </form>
+                                                            
+                                                  
+                                                        </td>
+                                                        <td>
+                                                            <form action="{% url 'delete' base1.id %}">
+                                                                <input type="hidden" name="dni" value="{{dni}}"> 
+                                                                <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                                <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                                <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
+                                                                <input type="submit" value="Elimar" class="btn btn-danger">
+                                                            </form>
+                                                          
+                                                        </td>
+                                                      
+                                                   
+                                                    </tr>
+                                                    <tr>
+                                                         
+                                                    </tr>
+                                               
+                                                  {% endfor %}
+                                              
+                                          
+                                                    </tbody>
+                                                </table>
+                                      
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+  
+                            </div>
+                          
+                   
+
+                        </div>
+                        <div class="app-wrapper-footer">
+                            <div class="app-footer">
+                                <div class="app-footer__inner">
+                                    <div class="app-footer-left">
+                                        <ul class="nav">
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    Footer Link 1
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    Footer Link 2
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="app-footer-right">
+                                        <ul class="nav">
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    Footer Link 3
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    <div class="badge badge-success mr-1 ml-0">
+                                                        <small>NEW</small>
+                                                    </div>
+                                                    Footer Link 4
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+    </div>
+</div>
+{% endblock %}  

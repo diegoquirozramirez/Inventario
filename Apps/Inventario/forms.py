@@ -1,5 +1,5 @@
 from django import forms
-from Apps.Inventario.models import Usuario, ambiente, base0, base12019
+from Apps.Inventario.models import Usuario, ambiente, base0, base12019, ficha
 
 class usuarioForm(forms.ModelForm):
     class Meta:
@@ -225,3 +225,40 @@ class base0Form(forms.ModelForm):
             'observacion2':forms.TextInput(attrs={'class':'form-control'}),
             'observacion3':forms.TextInput(attrs={'class':'form-control'}), 
         }"""
+
+class fichaForm(forms.ModelForm):
+    class Meta:
+        model = ficha
+
+        fields = [
+            #'num_ficha' ,
+            #'fecha_ficha' ,
+            'idusuario',
+            #datos libres
+            'ambiente',
+            'piso',
+            'dependencia' ,
+            'sede' ,
+        ]
+
+        labels = {
+            #'num_ficha': '' ,
+            #'fecha_ficha': '' ,
+            'idusuario' : '',
+            #datos libres
+            'ambiente':'',
+            'piso': '',
+            'dependencia':'' ,
+            'sede' :'',
+        }
+
+        widgets ={
+            #'num_ficha': forms.TextInput(attrs={'class':'form-control'}) ,
+            #'fecha_ficha': forms.DateInput() ,
+            'idusuario': forms.Select(attrs={'class':'form-control'}),
+            #datos libres
+            'ambiente': forms.TextInput(attrs={'class':'form-control'}),
+            'piso': forms.TextInput(attrs={'class':'form-control'}),
+            'dependencia': forms.TextInput(attrs={'class':'form-control'}) ,
+            'sede' : forms.TextInput(attrs={'class':'form-control'}),
+        }
