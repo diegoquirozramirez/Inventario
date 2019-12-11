@@ -240,7 +240,7 @@ def buscarUsuario(request):
             sed = sede.objects.all()
             print(base1)
             #base1 = base12019.objects.filter(user=request.user)
-            contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado}
+            contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado, 'num_ficha': exist_ficha}
             template = 'Inventario/cabecera.html'
             return render(request, template, contexto)
                  
@@ -287,6 +287,7 @@ def captureBase0(request):
     tipo = request.GET.get('tipo', None)
     modalidad= request.GET.get('modalidad', None)
     ficha = request.GET.get('ficha', None)
+    cod_confor = request.GET.get('codigo_conformidad', None)
 
     base0.objects.filter(id=id).update(
         
@@ -312,16 +313,21 @@ def captureBase0(request):
 
     try:
 
-        base12019.objects.create(
-            base0_fk_id = id,
-            user = request.user,
-            idficha_id = ficha,
-        )
-        messages.add_message(request, messages.INFO, 'Se registro correctamente')
-        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
+        if str(id) == '' or str(ficha) == '' or str(cod_confor) == '':
+            messages.add_message(request, messages.INFO, 'Ingrese el Codigo de Confirmación para registrar este bien')
+            return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
+        else:
+            base12019.objects.create(
+                base0_fk_id = id,
+                user = request.user,
+                idficha_id = ficha,
+                codigo_conformidad = cod_confor
+            )
+            messages.add_message(request, messages.INFO, 'Se registro correctamente')
+            return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
     except IntegrityError:
-        messages.add_message(request, messages.INFO, 'Ya se registró a una ficha Ficha')
+        messages.add_message(request, messages.INFO, 'Ya se registró a una Ficha')
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
 
@@ -418,45 +424,47 @@ def updateOneRegister(request):
 #Sprint 3
 
 def grabarGenerarFicha(request):
-    num_ficha = request.GET.get('ficha', None)
+    #num_ficha = request.GET.get('ficha', None)
     id_usuario = request.GET.get('usuario', None)
     ambiente = request.GET.get('ambiente', None)
     piso = request.GET.get('piso', None)
     dependencia = request.GET.get('dependencia', None)
-    sede = request.GET.get('sede', None)   
+    codigo_sede = request.GET.get('sede.cod_sede', None) 
+    sede_id = request.GET.get('sede', None)  
+    
 
     #para grabar y generar ficha
+    sed = sede.objects.get(id=sede_id)
 
-    
+    print(str(sed.nom_sede)+', '+str(sed.cod_sede))
     dni = request.GET.get('dni', None)
     nombres = request.GET.get('nombre', None)
 
 
-    if str(num_ficha) == '':
-        messages.add_message(request, messages.INFO, 'Debe ingresar en número de la Ficha')
-        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
-    else:
+    #if str(num_ficha) == '':
+    #    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+    #else:
 
-        try:
+    try:
 
-            ficha.objects.create(
-                num_ficha =num_ficha,
+        ficha.objects.create(
+            num_ficha =str(sed.cod_sede),
             
-                idusuario_id = id_usuario,
+            idusuario_id = id_usuario,
                 #datos libres
-                ambiente = ambiente,
-                piso = piso,
-                dependencia = str(dependencia), 
-                sede = str(sede),
+            ambiente = ambiente,
+            piso = piso,
+            dependencia = str(dependencia), 
+            sede = str(sed.nom_sede),
 
-            )
-        except IntegrityError:
-            nu_ficha = ficha.objects.get(idusuario_id=id_usuario)
-            messages.add_message(request, messages.INFO, 'Usuario con dni '+str(dni)+' ya se encuentra asociada a la ficha '+str(nu_ficha.num_ficha))
-            return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+        )
+    except IntegrityError:
+        nu_ficha = ficha.objects.get(idusuario_id=id_usuario)
+        messages.add_message(request, messages.INFO, 'Usuario con dni '+str(dni)+' ya se encuentra asociada a la ficha '+str(nu_ficha.num_ficha))
+        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
 
     #para el redirect
    
-    print(num_ficha+" ,"+id_usuario+" ,"+ambiente+" ,"+piso+" ,"+str(dependencia)+" ,"+str(sede)+" ,"+dni+" ,"+nombres)
+    #print(num_ficha+" ,"+id_usuario+" ,"+ambiente+" ,"+piso+" ,"+str(dependencia)+" ,"+str(sede)+" ,"+dni+" ,"+nombres)
 
     return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))

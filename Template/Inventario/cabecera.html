@@ -46,13 +46,16 @@
                                                         <input type="hidden" name="nombre" value="{{nombre}}"> 
                                                         <tr>
                                                             <td colspan="3">
-                                                                <input type="number" name="ficha" style="margin: 5px" class="form-control" placeholder="Número de Ficha">    
+                                                                <!--input type="number" name="ficha" style="margin: 5px" class="form-control" placeholder="Número de Ficha"-->
+                                                                <input type="submit" value="Grabar y Generar Número de Ficha" class="btn btn-success form-control">    
                                                             </td>
-                                                            <td>
-                                                                <input type="submit" value="Grabar y Generar Número de Ficha" class="btn btn-success form-control">
+                                                            <td colspan="2">
+                                                               <span style="color: rgba(184, 48, 48, 0.904); float: left; margin: 15px;"><strong>{{mensaje}}</strong></span>
+                                                                
                                                             </td>
+                                                            <th>Número de Ficha</th>
                                                             <td>
-                                                                <span style="color: rgba(184, 48, 48, 0.904); float: right; margin: 15px;"><strong>{{mensaje}}</strong></span>
+                                                                    {{num_ficha.num_ficha}}
                                                             </td>
                                                         </tr>
                                                        
@@ -117,13 +120,14 @@
                                                              {% if sed %}
                                                             <select name="sede" id="" class="form-control">
                                                                 {% for sede in sed %}
-                                                                    <option value="{{sede.nom_sede}}" style="color: black;">{{sede}}</option>
+                                                                    <option value="{{sede.id}}" style="color: black;">{{sede.nom_sede}}</option>
                                                                 {% endfor %}
                                                             </select>
                                                                 
                                                             {% endif %}
                                                         </td>
                                                     </tr>
+                                                   
                                                     </form>
                                                       <!-- fin de form par grabar-->
                                                     {% if estado == True %}                                                        
@@ -224,6 +228,7 @@
                                                         <th colspan="">Operatividad</th>
                                                  
                                                         <th colspan="">Observacion 1</th>
+                                                        <th>Codigo de Verificación</th>
                                                   
                                                         <th colspan="2">Acciones</th>
                                                        
@@ -245,7 +250,8 @@
                                                         <td>{{base1.base0_fk.est.nom_es}}</td>
                                                         <td>{{base1.base0_fk.op.nom_ope}}</td>
                                                   
-                                                        <td>{{base1.base0_fk.observacion1}}</td>                                                        
+                                                        <td>{{base1.base0_fk.observacion1}}</td>  
+                                                        <td><span style="color: rgb(177, 21, 21); text-align: center; font: bold;"><strong>{{base1.codigo_conformidad}}</strong></span</td>                                                      
                                                    
                                                         <td>
                                                             <form action="{% url 'update' base1.id %}">

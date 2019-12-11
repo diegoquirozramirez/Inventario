@@ -60,7 +60,7 @@ class sede(models.Model):
     provi_sede = models.ForeignKey(provincia, on_delete=models.CASCADE)#Provincia se convirtio en Tabla    
     dis_sede = models.ForeignKey(distrito, on_delete=models.CASCADE)  #Distrito se convirtio en Tabla  
     def __str__(self):
-        return '{}'.format(self.nom_sede)
+        return '{} {}'.format(self.nom_sede, self.cod_sede)
 
 
 class edificio(models.Model):
@@ -167,7 +167,7 @@ class Usuario(models.Model):
         return '{}'.format(self.cod_usuario)
 
 class ficha(models.Model):    
-    num_ficha = models.IntegerField(blank=False, null= False)
+    num_ficha = models.CharField(max_length=7, blank=False, null= False)
     fecha_ficha = models.DateField(auto_now_add=True)
     idusuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     #datos libres
@@ -304,7 +304,7 @@ class base12019(models.Model):
     base0_fk = models.ForeignKey(base0, on_delete=models.CASCADE)  
     user = models.ForeignKey(User, on_delete=models.CASCADE)    
     idficha = models.ForeignKey(ficha, on_delete=models.CASCADE)  
-    codigo_conformidad = models.CharField(max_length=5)
+    codigo_conformidad = models.CharField(max_length=5, blank=False, null=False)
 
     class Meta:
         unique_together = ['base0_fk']
