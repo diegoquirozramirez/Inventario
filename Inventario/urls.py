@@ -48,5 +48,10 @@ urlpatterns = [
     path('consultar-ficha/', inventario.consultarFicha, name="consultar-ficha"),
     path('update-ficha/', inventario.updateFicha, name="update-ficha"),
     path('delete-ficha/', inventario.deleteFicha, name="delete-ficha"),
-    path('catalogo', inventario.catalogo, name="catalogo"),
+    path('catalogo/', inventario.verCatalogo, name="verCatalogo"),
+    path('delete-bien-ficha/<int:id>/', inventario.deleteBienFicha, name="delete-bien-ficha"),
+    path('update-bien-ficha/<int:id>', inventario.updateBienFicha, name="update-bien-ficha"),
+    path('catalogo/get-catalogo/', inventario.get_catalogos, name="get-catalogo"),
+
+
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

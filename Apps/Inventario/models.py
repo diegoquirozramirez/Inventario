@@ -11,12 +11,12 @@ class situacion(models.Model):
         return '{}, {}'.format(self.id, self.nom_situ)
 
 class piso(models.Model):
-    cod_piso = models.CharField(max_length=2)
-    nom_psio = models.CharField(max_length=60)
+    #cod_piso = models.CharField(max_length=2)
+    nom_piso = models.CharField(max_length=60)
     deta_piso = models.CharField(max_length=60, blank=True, null=True)
     obs_piso = models.CharField(max_length=60, blank=True, null=True)
     def __str__(self):
-        return '{}, {}'.format(self.id, self.nom_psio)
+        return '{}, {}'.format(self.id, self.nom_piso)
 
 class sector(models.Model):
     cod_sector = models.CharField(max_length=2)
@@ -27,7 +27,7 @@ class sector(models.Model):
 
 
 class departamento(models.Model):
-    cod_departamento = models.CharField(max_length=3) #antes 2
+    #cod_departamento = models.CharField(max_length=3) #antes 2
     nom_departamento = models.CharField(max_length=60)
     obs_departamento = models.CharField(max_length=60, blank=True)
     
@@ -57,10 +57,10 @@ class sede(models.Model):
     direc_fis_sede = models.CharField(max_length=60, blank=True, null=True)
     obs_sede = models.CharField(max_length=60, blank=True, null=True)
     depa_sede = models.ForeignKey(departamento, on_delete=models.CASCADE)#Depoartamento se convirtio en Tabla
-    provi_sede = models.ForeignKey(provincia, on_delete=models.CASCADE)#Provincia se convirtio en Tabla    
-    dis_sede = models.ForeignKey(distrito, on_delete=models.CASCADE)  #Distrito se convirtio en Tabla  
+    #provi_sede = models.ForeignKey(provincia, on_delete=models.CASCADE)#Provincia se convirtio en Tabla    
+    #dis_sede = models.ForeignKey(distrito, on_delete=models.CASCADE)  #Distrito se convirtio en Tabla  
     def __str__(self):
-        return '{} {}'.format(self.nom_sede, self.cod_sede)
+        return '{}'.format(self.nom_sede)
 
 
 class edificio(models.Model):
@@ -74,13 +74,13 @@ class edificio(models.Model):
 
 
 class tipoDoc(models.Model):
-    cod_documento = models.CharField(max_length=1)
+    #cod_documento = models.CharField(max_length=1)
     tipo_doc = models.CharField(max_length=20)
     def __str__(self):
         return '{}, {}'.format(self.id, self.tipo_doc)
 
 class modalidad(models.Model):
-    cod_modalidad = models.CharField(max_length=2)
+    #cod_modalidad = models.CharField(max_length=2)
     modalidad_contratacion = models.CharField(max_length=60)
     obs_modalidad = models.CharField(max_length=60, blank=True)
     def __str__(self):
@@ -100,34 +100,37 @@ class jefeUsuario(models.Model):
     def __str__(self):
         return '{}, {}'.format(self.id, self.nom_jefusuario)
 
-class direccionGerencia(models.Model): #O es Direccion o es Gerencia dependiendo de la Estructura organizacional
-    cod_dirger = models.CharField(max_length=2)
-    nom_dirger = models.CharField(max_length=60)
-    obs_dirger = models.CharField(max_length=60, blank=True)
-    def __str__(self):
-        return '{}, {}'.format(self.id, self.nom_dirger)
+
 
 class oficina(models.Model):
-    cod_oficina = models.CharField(max_length=2)
+    #cod_oficina = models.CharField(max_length=2)
     nom_oficina = models.CharField(max_length=60)
     obs_oficina = models.CharField(max_length=60, blank=True)
-    gere_oficina = models.ForeignKey(direccionGerencia, on_delete=models.CASCADE)  #""" FK (gerencia) """
+    #gere_oficina = models.ForeignKey(direccionGerencia, on_delete=models.CASCADE)  #""" FK (gerencia) """
     def __str__(self):
         return '{}, {}'.format(self.id, self.nom_oficina)
 
 class suboficina(models.Model):
-    cod_suboficina = models.CharField(max_length=2)
+    #cod_suboficina = models.CharField(max_length=2)
     nom_suboficina = models.CharField(max_length=60)
     obs_suboficina = models.CharField(max_length=60, blank=True)
     #""" 
     #FK (gerencia)
-    gere_suboficina = models.ForeignKey(direccionGerencia, on_delete=models.CASCADE) 
+    #gere_suboficina = models.ForeignKey(direccionGerencia, on_delete=models.CASCADE) 
     #FK (oficina)
-    ofi_suboficina = models.ForeignKey(oficina, on_delete=models.CASCADE)
+    #ofi_suboficina = models.ForeignKey(oficina, on_delete=models.CASCADE)
     #"""
     def __str__(self):
         return '{}, {}'.format(self.id, self.nom_suboficina)
 
+class direccionGerencia(models.Model): #O es Direccion o es Gerencia dependiendo de la Estructura organizacional
+    #cod_dirger = models.CharField(max_length=2)
+    nom_dirger = models.CharField(max_length=60)
+    obs_dirger = models.CharField(max_length=60, blank=True)
+    ofi_dirger = models.ForeignKey(oficina, on_delete=models.CASCADE) 
+    subofi_dirger = models.ForeignKey(suboficina, on_delete=models.CASCADE) 
+    def __str__(self):
+        return '{}, {}'.format(self.id, self.nom_dirger)
 
 """class usuario(models.Model):
     cod_usuario = models.CharField(max_length=8)
@@ -149,7 +152,7 @@ class suboficina(models.Model):
         """
 
 class Usuario(models.Model):
-    cod_usuario = models.CharField(max_length=8)
+    
     numero_doc_usuario = models.CharField(max_length=8)
     nom_final_usuario = models.CharField(max_length=60,blank=True)
     ap_pat_usuario = models.CharField(max_length=60, blank=True)
@@ -194,11 +197,11 @@ class ambiente(models.Model):
     #depart = models.ForeignKey(departamento, on_delete=models.CASCADE)
     num_ambiente = models.CharField(max_length=4)
     nom_ambiente = models.CharField(max_length=60)
-    cod_ambiente = models.CharField(max_length=9)
-    obs_ambiente = models.CharField(max_length=60, blank=True)
+    cod_ambiente = models.CharField(max_length=9, blank=True, null=True)
+    obs_ambiente = models.CharField(max_length=60, blank=True, null=True)
     #cod_correlativo = models.CharField(max_length=4, default='')
     def __str__(self):
-        return 'Codigo: {}, Nombre : {}, Sede: {}, Departamento: {}, Piso: {}'.format(self.cod_ambiente, self.nom_ambiente, self.sede_ambiente.nom_sede, self.sede_ambiente.depa_sede.nom_departamento, self.piso_ambiente.cod_piso)
+        return 'Codigo: {}, Nombre : {}, Sede: {}, Departamento: {}, Piso: {}'.format(self.cod_ambiente, self.nom_ambiente, self.sede_ambiente.nom_sede, self.sede_ambiente.depa_sede.nom_departamento, self.piso_ambiente.nom_piso)
 
 """class cabecera(models.Model):
     usu = models.ForeignKey(usuario, on_delete=models.CASCADE)
@@ -227,11 +230,11 @@ class operatividad(models.Model):
     
 
 class etiquetado(models.Model):
-    cod_eti = models.CharField(max_length=1)
+    #cod_eti = models.CharField(max_length=1)
     nom_eti = models.CharField(max_length=60) #SI o NO -> ¿deberia ser 2?
 
 class marca(models.Model):
-    cod_marca = models.CharField(max_length=3)
+    #cod_marca = models.CharField(max_length=3)
     marca = models.CharField(max_length=60)
 
     def __str__(self):
@@ -247,7 +250,7 @@ class recurso(models.Model):
         return '{} {}'.format(self.cod_re, self.nom_re)
 
 class color(models.Model):
-    cod_color = models.CharField(max_length=3)
+    #cod_color = models.CharField(max_length=3)
     nom_color = models.CharField(max_length=60)
 
     def __str__(self):
@@ -258,7 +261,7 @@ class color(models.Model):
         return '{}'.format(col)
 
 class estado(models.Model):
-    cod_es = models.CharField(max_length=1)
+    #cod_es = models.CharField(max_length=1)
     nom_es = models.CharField(max_length=1)
     deta_es = models.CharField(max_length=60, blank=True)
     obs_es = models.CharField(max_length=60, blank=True)
@@ -277,10 +280,10 @@ class base0(models.Model):
     codigo_sbn =models.CharField(max_length=12, blank=True)
     codigo_interno = models.CharField(max_length=5, blank=True)    
     descripcion = models.CharField(max_length=60, default='') #obligatorio
-    detalle = models.CharField(max_length=60,default='')  #obligatorio
-    modelo = models.CharField(max_length=60,default='')  #obligatorio
-    serie =  models.CharField(max_length=60,default='') #obligatorio
-    medida = models.CharField(max_length=60,default='') #obligatorio
+    detalle = models.CharField(max_length=60,default='', blank=True, null=True)  #obligatorio
+    modelo = models.CharField(max_length=60,default='', blank=True, null=True)  #obligatorio
+    serie =  models.CharField(max_length=60,default='', blank=True, null=True) #obligatorio
+    medida = models.CharField(max_length=60,default='', blank=True, null=True) #obligatorio
     placa = models.CharField(max_length=60, blank=True, null=True) 
     motor = models.CharField(max_length=60, blank=True, null=True) 
     chasis =  models.CharField(max_length=60, blank=True, null=True)
@@ -290,6 +293,8 @@ class base0(models.Model):
     observacion1 = models.CharField(max_length=60, blank=True, null=True)
     observacion2 = models.CharField(max_length=60, blank=True, null=True)
     observacion3 = models.CharField(max_length=60, blank=True, null=True)
+    eti = models.ForeignKey(etiquetado, on_delete=models.CASCADE)
+    tipo = models.CharField(max_length=60, blank=True, null=True)
 
 
     #usuario_base0 = models.ForeignKey(Usuario, on_delete=models.CASCADE)
@@ -312,3 +317,9 @@ class base12019(models.Model):
     def __str__(self):
         return 'Base0: {} {} {}'.format(self.base0_fk,self.id, self.user)
     
+class catalogo(models.Model):
+    numero_bien =models.CharField(max_length=8)
+    denominacion_bien = models.CharField(max_length=60)
+
+    def __str__(self):
+        return '{}, {}'.format(self.id,self.denominacion_bien)

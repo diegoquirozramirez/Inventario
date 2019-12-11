@@ -1,6 +1,7 @@
 
 {% extends 'index.html' %}
 {% block content %}        
+
 <div class="app-main">             
     <div class="app-main__outer">
                         <div class="app-main__inner">
@@ -98,7 +99,7 @@
                                                            {% if pis %}
                                                             <select name="piso" id="" class="form-control">
                                                                 {% for piso in pis %}
-                                                                    <option value="{{piso.cod_piso}}" style="color: black;">{{piso.cod_piso}}</option>
+                                                                    <option value="{{piso.nom_piso}}" style="color: black;">{{piso.nom_piso}}</option>
                                                                 {% endfor %}
                                                             </select>
                                                                 
@@ -156,7 +157,7 @@
                                                                         </script>
 
                                                                         <div class="col-3">
-                                                                            <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12" minlength="12" />
+                                                                            <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12"  />
                                                                         </div>
                                                                       
                                                                        
@@ -164,7 +165,7 @@
                                                                             <input type="submit" name="" id="" value="Consultar" class="form-control btn btn-primary" >
                                                                         </div>
                                                                         <div class="col-3">
-                                                                              <a href="{% url 'catalogo' %}" class="btn btn-info form-control">Catálogo</a>
+                                                                              <a href="{% url 'verCatalogo' %}" class="btn btn-info form-control">Catálogo</a>
                                                                         </div>
                                                                         
                                                                     </div>
@@ -306,6 +307,11 @@
                    
 
                         </div>
+
+
+
+
+
                         <div class="app-wrapper-footer">
                             <div class="app-footer">
                                 <div class="app-footer__inner">
@@ -345,4 +351,6 @@
                         </div>    
     </div>
 </div>
+
+
 {% endblock %}  

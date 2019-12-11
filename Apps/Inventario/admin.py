@@ -44,7 +44,15 @@ class distritoAdmin(ImportExportModelAdmin):
     resources_class = distritoResource
 
 admin.site.register(distrito, distritoAdmin)
-admin.site.register(estado)
+
+class estadoResource(resources.ModelResource):
+    class Meta:
+        model = estado
+
+class estadoAdmin(ImportExportModelAdmin):
+    resources_class = departamentoResource
+admin.site.register(estado, estadoAdmin)
+
 admin.site.register(etiquetado)
 admin.site.register(ficha)
 admin.site.register(jefeUsuario)
@@ -120,3 +128,11 @@ class edificioResource(resources.ModelResource):
 class edificioAdmin(ImportExportModelAdmin):
     resources_class = edificioResource
 admin.site.register(models.edificio, edificioAdmin)
+
+class catalogoResource(resources.ModelResource):
+    class Meta:
+        model = models.catalogo
+
+class catalogoAdmin(ImportExportModelAdmin):
+    resources_class = catalogoResource
+admin.site.register(models.catalogo, catalogoAdmin)

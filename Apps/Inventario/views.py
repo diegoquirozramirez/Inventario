@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from Apps.Inventario.models import Usuario, ambiente, base0, base12019, piso, direccionGerencia, sede, ficha
+from Apps.Inventario.models import Usuario, ambiente, base0, base12019, piso, direccionGerencia, sede, ficha, catalogo
 from Apps.Inventario.forms import usuarioForm, ambienteForm, base0Form, fichaForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
@@ -140,7 +140,7 @@ def base0Consulta(request):
                 else:
                     mensaje = "No registrado"
 
-                _base0 = base0.objects.get(codigo_sbn=codigo)
+                _base0 = base0.objects.get(codigo_interno=cod_interno)
                 if request.method == 'POST':
                     form = base0Form(request.POST, instance=_base0)
                     if form.is_valid():
@@ -219,28 +219,30 @@ def addBase12019cint(request, idbase0, idu, cod):
  
 
  #SPRINT 2
-
+from django.db.models import Q
 def buscarUsuario(request):
     dni = request.GET.get('dni', None)
     nombre = request.GET.get('nombres', None)
     tipo = request.GET.get('tipo', None)
     modalidad = request.GET.get('modalidad', None)
     try:
-        usu = Usuario.objects.get(numero_doc_usuario=dni)
-        existencia_ficha = ficha.objects.filter(idusuario_id=usu.id)
+        usu = Usuario.objects.filter(Q(numero_doc_usuario=dni) | Q(nom_final_usuario__icontains=nombre))
+        usua = Usuario.objects.get(id=usu[0].id)
+        print(usua)
+        existencia_ficha = ficha.objects.filter(idusuario_id=usu[0].id)
         if existencia_ficha.exists():
             mensaje = "¡Ficha Grabada y Generada!"
             estado = True
-            exist_ficha = ficha.objects.get(idusuario_id=usu.id)
+            exist_ficha = ficha.objects.get(idusuario_id=usu[0].id)
             base1 = base12019.objects.filter(idficha_id=exist_ficha.id)
-
+            
             pis = piso.objects.all()
             dep = direccionGerencia.objects.all()
             ambi = ambiente.objects.all()
             sed = sede.objects.all()
             print(base1)
             #base1 = base12019.objects.filter(user=request.user)
-            contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado, 'num_ficha': exist_ficha}
+            contexto = {'usu':usua, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado, 'num_ficha': exist_ficha}
             template = 'Inventario/cabecera.html'
             return render(request, template, contexto)
                  
@@ -253,7 +255,7 @@ def buscarUsuario(request):
             sed = sede.objects.all()
             base1 = ''
             #base1 = base12019.objects.filter(user=request.user)
-            contexto = {'usu':usu, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado}
+            contexto = {'usu':usua, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado}
             template = 'Inventario/cabecera.html'
             return render(request, template, contexto)
 
@@ -504,12 +506,14 @@ def consultarFicha(request):
 
     try:
         data = ficha.objects.get(num_ficha=fich)
+        registros = base12019.objects.filter(idficha_id=data.id)
+        print(registros)
     except ObjectDoesNotExist:
         messages.add_message(request, messages.INFO, 'No existe la ficha con Número '+str(fich))
         return redirect('buscar-ficha')
 
     template = 'Ficha/ficha.html'
-    context = {'data':data}
+    context = {'data':data, 'registros':registros}
     return render(request, template, context)
 
 def deleteFicha(request):
@@ -517,6 +521,46 @@ def deleteFicha(request):
     ficha.objects.get(num_ficha=fich).delete()
     return redirect('buscar-ficha')
 
-def catalogo(request):
+def verCatalogo(request):
     template = 'Catalogo/catalogo.html'
     return render(request, template)
+
+import json
+def get_catalogos(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        places = catalogo.objects.filter(denominacion_bien__icontains=q)
+        results = []
+        for pl in places:
+            place_json = {}
+            place_json = pl.denominacion_bien#+ "," +str(pl.id)
+            results.append(place_json)
+        data = json.dumps(results)
+        #print(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
+
+
+def deleteBienFicha(request,id):
+    base12019.objects.filter(id=id).delete()
+    ficha = request.GET.get('num_ficha', None)    
+    return redirect('/consultar-ficha/?num_ficha='+str(ficha))
+
+def updateBienFicha(request, id):
+    fich = request.GET.get('num_ficha', None)
+    fi = ficha.objects.get(num_ficha=str(fich))
+    print(fi)
+    bien1 = base12019.objects.get(id=id)
+    bien0 = base0.objects.get(id=bien1.base0_fk_id)
+    if request.method == 'POST':
+        form = base0Form(request.POST, instance = bien0)
+        if form.is_valid():
+            form.save()
+        return redirect('/consultar-ficha/?num_ficha='+str(fich))
+    else:
+        form = base0Form(instance=bien0)
+    context = {'form':form,'fi':fi, 'bien0':bien0}
+    template = 'Ficha/bienUpdate.html'
+    return render(request, template, context)
