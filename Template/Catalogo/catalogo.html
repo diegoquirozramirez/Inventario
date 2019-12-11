@@ -31,11 +31,11 @@
                                                 <thead>
                                                 <tr>
                                                     <th colspan="5">Importante</th>
-                                                    <input type="hidden" name="dni" value="{{dni}}"> 
+                                                    <!--input type="hidden" name="dni" value="{{dni}}"> 
                                                     <input type="hidden" name="nombre" value="{{nombre}}"> 
-                                                    <!--input type="hidden" name="tipo" value="{{tipo}}"> 
-                                                    <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
-                                                    <input type="hidden" name="usuario" value="{{usu}}">
+                                                    <input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                    <input type="hidden" name="modalidad" value="{{modalidad}}"> 
+                                                    <input type="hidden" name="usuario" value="{{usu}}"-->
                                                
                                                 </tr>
 
@@ -43,13 +43,19 @@
 
                                                 <tbody>
                                                 <!-- inicio de form para grabar-->
-                                                <form action="">
+                                                <form action="{% url 'standby-catalogo' %}">
                                                         <input type="hidden" name="dni" value="{{dni}}"> 
-                                                        <input type="hidden" name="nombre" value="{{nombre}}"> 
-                                                        
+                                                        <input type="hidden" name="nombres" value="{{nombres}}"> 
+                                                        <input type="hidden" name="ficha" value="{{ficha}}">
+                                                        <div class="container"><br><br>
+                                                            <div class="row">
+                                                                <input type="text" id="catalogos" name="catalogo" placeholder="Catálogo" class="col-3 form-control" style="margin: 5px;">
+                                                                <input type="text" name="codigo_conformidad" class="col-3 form-control"  style="margin: 5px;" placeholder="Codigo 2019" maxlength="5">
+                                                                <input type="submit" value="Catalogar" class="btn btn-success form-control col-3"  style="margin: 5px;">  
+                                                          </div>
+                                                          <br><br>
+                                                        </div>
                                                           
-                                                                <input type="text" id="catalogos" placeholder="Catálogo" class="form-control">
-                                                            
                                                             <script>
 
                                                                     $(function() {
@@ -72,7 +78,7 @@
                                                     <tr>
                                                             <td colspan="1">
                                                                 <!--input type="number" name="ficha" style="margin: 5px" class="form-control" placeholder="Número de Ficha"-->
-                                                                <input type="submit" value="Grabar y Generar Número de Ficha" class="btn btn-success form-control">    
+                                                                  
                                                             </td>
                                                             <td colspan="2">
                                                                <span style="color: rgba(184, 48, 48, 0.904); float: left; margin: 15px;"><strong>{{mensaje}}</strong></span>
@@ -102,7 +108,7 @@
                                                         <td colspan="4">{{usu.moda_usuario.modalidad_contratacion}}</td>
                                                         
                                                     </tr> 
-                                         <input type="hidden" name="usuario" value="{{usu.id}}">
+                                
                                                     <tr>
                                                         <th>Ambiente</th>
                                                         <td colspan="6">
@@ -156,59 +162,8 @@
                                                     </tr>
                                                    
                                                     </form>
-                                                      <!-- fin de form par grabar-->
-                                                    {% if estado == True %}                                                        
-                                                    <tr>
-                                                            <th colspan="4">Buscar Bien</th> 
-                                                    </tr>
                                                   
-                                                    <tr>
-                                                        <!-- form para consultar -->
-                                                        <td colspan="7">
-                                                             <form action="{% url 'base0-consultar'  %}"  method="GET" >
-                                                         
-                                                                <input type="hidden" name="dni" value="{{dni}}"> 
-                                                                <input type="hidden" name="nombre" value="{{nombre}}"> 
-                                                                <!--input type="hidden" name="tipo" value="{{tipo}}"> 
-                                                                <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
-                                                                <input type="hidden" name="usuario" value="{{usu}}">
-                                                                <div class="form-row">
-                                                                          <div class="col-3">
-                                                                            <input type="text" id="cod_interno" name="cod_interno" placeholder="Codigo Interno" class="form-control" maxlength="5" minlength="5" >
-                                                                        </div>
-                                                                        <script type="text/javascript">
-                                                                            document.getElementById('cod_interno').focus()
-                                                                        </script>
-
-                                                                        <div class="col-3">
-                                                                            <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12" minlength="12" />
-                                                                        </div>
-                                                                      
-                                                                       
-                                                                          <div class="col-3">                                                                            
-                                                                            <input type="submit" name="" id="" value="Consultar" class="form-control btn btn-primary" >
-                                                                        </div>
-                                                                        <div class="col-3">
-                                                                              <a href="{% url 'catalogo' %}" class="btn btn-info form-control">Catálogo</a>
-                                                                        </div>
-                                                                        
-                                                                    </div>
-                                                                
-                                                        </td>
-                                                        </form>
-                                                        <!-- fin de form para consultar-->
-                                                    
-                                                         
-                                                    </tr>
-                                                    
-                                                    
-                                                    
-                                                    {% else %}
-                                                    <tr style="height: 70px;">
-                                                            <th colspan="7"><span style="color: rgba(184, 48, 48, 0.904); align-content: center;"><strong>Debe generar la Ficha para Buscar un Bien</strong></span> </th>
-                                                    </tr>
-                                                  
-                                                    {% endif %}
+                                               
                                                    
                                            <!--
                                                 {% if ambi %}

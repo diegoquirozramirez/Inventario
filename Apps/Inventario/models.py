@@ -272,10 +272,10 @@ class estado(models.Model):
 
 class base0(models.Model):
     #situ = models.ForeignKey(situacion, on_delete=models.CASCADE)
-    mar = models.ForeignKey(marca, on_delete=models.CASCADE) #obligatorio
-    col = models.ForeignKey(color, on_delete=models.CASCADE) #obligatorio
-    est = models.ForeignKey(estado, on_delete=models.CASCADE) #obligatorio
-    op = models.ForeignKey(operatividad, on_delete=models.CASCADE) #obligatorio
+    mar = models.ForeignKey(marca, on_delete=models.CASCADE, default=1) #obligatorio
+    col = models.ForeignKey(color, on_delete=models.CASCADE, default=1) #obligatorio
+    est = models.ForeignKey(estado, on_delete=models.CASCADE, default=1) #obligatorio
+    op = models.ForeignKey(operatividad, on_delete=models.CASCADE,default=1) #obligatorio
 
     codigo_sbn =models.CharField(max_length=12, blank=True)
     codigo_interno = models.CharField(max_length=5, blank=True)    
@@ -293,8 +293,9 @@ class base0(models.Model):
     observacion1 = models.CharField(max_length=60, blank=True, null=True)
     observacion2 = models.CharField(max_length=60, blank=True, null=True)
     observacion3 = models.CharField(max_length=60, blank=True, null=True)
-    eti = models.ForeignKey(etiquetado, on_delete=models.CASCADE)
+    eti = models.ForeignKey(etiquetado, on_delete=models.CASCADE, default=1)
     tipo = models.CharField(max_length=60, blank=True, null=True)
+    aux_ficha = models.CharField(max_length=20, blank=True, null = True)
 
 
     #usuario_base0 = models.ForeignKey(Usuario, on_delete=models.CASCADE)

@@ -120,6 +120,7 @@ class base0Form(forms.ModelForm):
             'observacion1',
             'observacion2',
             'observacion3',
+            'aux_ficha',
         ]
 
         labels = {
@@ -145,6 +146,7 @@ class base0Form(forms.ModelForm):
             'observacion1':'',
             'observacion2':'',
             'observacion3':'',
+            
         }
 
         widgets = {

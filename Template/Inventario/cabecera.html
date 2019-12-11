@@ -164,14 +164,23 @@
                                                                           <div class="col-3">                                                                            
                                                                             <input type="submit" name="" id="" value="Consultar" class="form-control btn btn-primary" >
                                                                         </div>
-                                                                        <div class="col-3">
-                                                                              <a href="{% url 'verCatalogo' %}" class="btn btn-info form-control">Catálogo</a>
-                                                                        </div>
+                                                                     
                                                                         
                                                                     </div>
                                                                 
                                                         </td>
                                                         </form>
+                                                        <div class="col-12">
+                                                                <form action="{% url 'verCatalogo' %}">
+                                                                        <input type="hidden" name="dni" value="{{dni}}"> 
+                                                                        <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                                        {%  if estado == True %}
+                                                                          <input type="hidden" name="ficha" value="{{num_ficha.num_ficha}}">                                                                          
+                                                                        {% endif %}
+                                                                    <input type="submit" value="Catálogo" class="btn btn-info form-control" style="float: right;" >
+                                                                </form>
+                                                              
+                                                            </div>
                                                         <!-- fin de form para consultar-->
                                                     
                                                          

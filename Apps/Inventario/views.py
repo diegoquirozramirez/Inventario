@@ -522,8 +522,12 @@ def deleteFicha(request):
     return redirect('buscar-ficha')
 
 def verCatalogo(request):
+    fich = request.GET.get('ficha', None)
+    dni = request.GET.get('dni', None)
+    nombres = request.GET.get('nombre', None)
+    context = {'dni':dni, 'nombres':nombres, 'ficha':fich}
     template = 'Catalogo/catalogo.html'
-    return render(request, template)
+    return render(request, template, context)
 
 import json
 def get_catalogos(request):
@@ -543,8 +547,17 @@ def get_catalogos(request):
     return HttpResponse(data, mimetype)
 
 
-def deleteBienFicha(request,id):
-    base12019.objects.filter(id=id).delete()
+def deleteBienFicha(request,id):   
+    
+    ba0 = base12019.objects.get(id=id)
+    print("este es :"+ba0)
+    b0 = base0.objects.filter(id=ba0.base0_fk_id)
+    print("este es 2: "+b0)
+    try:
+        base0.objects.filter(id=ba0.base0_fk_id).delete()  
+        base12019.objects.filter(id=id).delete()
+    except:
+        pass
     ficha = request.GET.get('num_ficha', None)    
     return redirect('/consultar-ficha/?num_ficha='+str(ficha))
 
@@ -563,4 +576,43 @@ def updateBienFicha(request, id):
         form = base0Form(instance=bien0)
     context = {'form':form,'fi':fi, 'bien0':bien0}
     template = 'Ficha/bienUpdate.html'
+    return render(request, template, context)
+
+def standByCatalogo(request):
+    #valor de la denominacion
+    confor = request.GET.get('codigo_conformidad', None)
+    fich = request.GET.get('ficha', None)
+    cata = request.GET.get('catalogo', None)
+    dni = request.GET.get('dni', None)
+    nombres = request.GET.get('nombres', None)
+    if request.method == 'POST':
+        form = base0Form(request.POST or None)
+        if form.is_valid():
+            form_aux = form.save(commit = False)
+            if form_aux.descripcion == cata:
+                form_aux.aux_ficha = fich
+                form_aux.save()
+
+                b0 = base0.objects.get(aux_ficha=fich)
+
+                base0.objects.filter(id=b0.id).update(
+                    aux_ficha=str(fich)+str(b0.id),
+                )
+
+                base12019.objects.create(
+                    base0_fk_id = b0.id,
+                    user = request.user,
+                    idficha_id = b0.aux_ficha,
+                    codigo_conformidad = str(confor),
+                )
+
+            else:
+                messages.add_message(request, messages.INFO, 'No manipules el Campo con atributo solo de Lectura')
+                return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+    else:
+        form = base0Form()
+
+    template = 'Catalogo/standby.html'
+    context = {'form':form, 'cata':cata, 'ficha':fich,'confor': confor}
     return render(request, template, context)
