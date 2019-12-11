@@ -304,6 +304,7 @@ class base12019(models.Model):
     base0_fk = models.ForeignKey(base0, on_delete=models.CASCADE)  
     user = models.ForeignKey(User, on_delete=models.CASCADE)    
     idficha = models.ForeignKey(ficha, on_delete=models.CASCADE)  
+    codigo_conformidad = models.CharField(max_length=5)
 
     class Meta:
         unique_together = ['base0_fk']
