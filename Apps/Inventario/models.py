@@ -216,7 +216,7 @@ class ambiente(models.Model):
     obs_ambiente = models.CharField(max_length=60, blank=True, null=True)
     #cod_correlativo = models.CharField(max_length=4, default='')
     def __str__(self):
-        return 'Número: {}, Nombre : {}, Sede: {}, Departamento: {}, Piso: {}'.format(self.num_ambiente, self.nom_ambiente, self.sede_ambiente.nom_sede, self.sede_ambiente.depa_sede.nom_departamento, self.piso_ambiente.nom_piso)
+        return 'NombreSS: {} '.format(self.nom_ambiente)# Nombre : {}, Sede: {}, Departamento: {}, Piso: {}'.format(self.num_ambiente, self.nom_ambiente, self.sede_ambiente.nom_sede, self.sede_ambiente.depa_sede.nom_departamento, self.piso_ambiente.nom_piso)
 
 """class cabecera(models.Model):
     usu = models.ForeignKey(usuario, on_delete=models.CASCADE)

@@ -459,20 +459,35 @@ def grabarGenerarFicha(request):
     #num_ficha = request.GET.get('ficha', None)
     id_usuario = request.GET.get('usuario', None)
     ambi = request.GET.get('ambiente', None)
-    ambient = ambiente.objects.get(id=ambi)
+    am = request.GET.get('ambi', None)
+    dni = request.GET.get('dni', None)
+    nombres = request.GET.get('nombre', None)
+
     #piso = request.GET.get('piso', None)
     #dependencia = request.GET.get('dependencia', None)
     #codigo_sede = request.GET.get('sede.cod_sede', None) 
-    sede_id = request.GET.get('sede', None)  
+    #sede_id = request.GET.get('sede', None)
+    # 
+    if str(am) == '':
+        messages.add_message(request, messages.INFO, 'Ingrese el ambiente')
+        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+
+    #ambient = ambiente.objects.get(id=ambi)  
     
+    a = str(am).split(",")
+    try:
+        ambient = ambiente.objects.get(num_ambiente=str(a[0])) 
+    except:
+        messages.add_message(request, messages.INFO, 'Ambiente no Identificado')
+        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+    
+    #print(a[0],a[1],a[2])
 
     #para grabar y generar ficha
     #sed = sede.objects.get(id=sede_id)
 
     #print(str(sed.nom_sede)+', '+str(sed.cod_sede))
-    dni = request.GET.get('dni', None)
-    nombres = request.GET.get('nombre', None)
-
+    
 
     #if str(num_ficha) == '':
     #    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
@@ -488,11 +503,11 @@ def grabarGenerarFicha(request):
                 
                 idusuario_id = id_usuario,
                     #datos libres
-                ambiente = str(ambient.nom_ambiente),
-                piso = str(ambient.piso_ambiente.deta_piso),
+                ambiente = a[1],#str(ambient.nom_ambiente),
+                piso = a[3],#str(ambient.piso_ambiente.deta_piso),
                 #dependencia = str(dependencia), 
-                sede = str(ambient.sede_ambiente.nom_sede),
-                cod_ambiente = str(ambient.num_ambiente),
+                sede = a[2],# str(ambient.sede_ambiente.nom_sede),
+                cod_ambiente = a[0],
 
             )
         except IntegrityError:
@@ -515,12 +530,12 @@ def grabarGenerarFicha(request):
                 
                 idusuario_id = id_usuario,
                     #datos libres
-                ambiente = str(ambient.nom_ambiente),
-                piso = str(ambient.piso_ambiente.deta_piso),
+                ambiente = a[1],
+                piso = a[3],
                 #dependencia = str(dependencia), 
-                sede = str(ambient.sede_ambiente.nom_sede),
+                sede =  a[2],
                 numero_aux = int(fl.numero_aux)+1,
-                cod_ambiente = str(ambient.num_ambiente),
+                cod_ambiente = a[0],
 
             )
         except IntegrityError:
@@ -607,6 +622,30 @@ def get_catalogos(request):
             dic = {'bien':pl.denominacion_bien,'cod_bien':pl.numero_bien}
         data = json.dumps(results)
         #print(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
+
+
+import json
+from django.core import serializers
+def get_ambiente(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        places = ambiente.objects.filter(nom_ambiente__icontains=q)
+
+        #alli = [*ambiente.objects.filter(nom_ambiente__icontains=q)]
+        place_json =  serializers.serialize("json", ambiente.objects.filter(nom_ambiente__icontains=q), fields=('nom_ambiente','num_ambiente','sede_ambiente__nom_sede','piso_ambiente__nom_piso'))#+ " | " +str(pl.sede_ambiente.nom_sede)+" | "+str(pl.piso_ambiente.nom_piso)
+        
+        results = []
+        for pl in places:
+            place_json = {}
+            place_json = str(pl.num_ambiente)+","+pl.nom_ambiente+","+str(pl.sede_ambiente.nom_sede)+","+str(pl.piso_ambiente.nom_piso)
+            results.append(place_json)
+            #dic = {'bien':pl.denominacion_bien,'cod_bien':pl.numero_bien}
+        data = json.dumps(results)
+
     else:
         data = 'fail'
     mimetype = 'application/json'

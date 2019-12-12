@@ -80,20 +80,40 @@
                                                     </tr> 
                                          <input type="hidden" name="usuario" value="{{usu.id}}">
                                                     <tr>
-                                                        <th>Ambiente</th>
+                                                        <th colspan="1">Ambiente <br><span style="font-size: 12px; width: 100px; color:rgb(182, 35, 35) ;">(N° | Nombre del Ambiente | Sede | Piso)</span> </th>
                                                         <td colspan="6">
                                                             {% if ambi %}
-                                                            <select name="ambiente" id="" class="form-control">
+                                                            <!--select name="ambiente" id="" class="form-control">
                                                                 {% for ambi in ambi %}
                                                                     <option value="{{ambi.id}}">{{ambi}}</option>
                                                                 {% endfor %}
-                                                            </select>
+                                                            </select-->
+                                                                <input type="text" name="ambi" id="ambi" class="form-control">
                                                                 
                                                             {% endif %}
                                                         </td>
                                                     </tr>
-
-                                                    <tr >
+                                                    <script>
+                                                            $(function() {
+                                                                    $("#ambi").autocomplete({
+                                                                      source: "/ambiente/get-ambiente/",
+                                                                      select: function (event, ui) { //item selected
+                                                                        AutoCompleteSelectHandler(event, ui)
+                                                                      },
+                                                                      minLength: 2,
+                                                                     });
+                                                                     });
+                                                                    
+                                                                     function AutoCompleteSelectHandler(event, ui)
+                                                                      {
+                                                                      var selectedObj = ui.item;
+                                                                     
+                                                                     }
+                                                                    
+                                                                    </script>
+                                                    </script>
+                                                
+                                                    <!--tr >
                                                         <th >Piso</th>
                                                         <td colspan="2" >
                                                            {% if pis %}
@@ -129,7 +149,7 @@
                                                                 
                                                             {% endif %}
                                                         </td>
-                                                    </tr>
+                                                    </tr-->
                                                    
                                                     </form>
                                                       <!-- fin de form par grabar-->
