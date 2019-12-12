@@ -136,3 +136,5 @@ class catalogoResource(resources.ModelResource):
 class catalogoAdmin(ImportExportModelAdmin):
     resources_class = catalogoResource
 admin.site.register(models.catalogo, catalogoAdmin)
+
+admin.site.register(models.userGroup)

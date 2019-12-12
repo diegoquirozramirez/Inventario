@@ -1,6 +1,19 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 # Create your models here.
+
+
+#Gruppos
+class userGroup(models.Model):
+    user =  models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    codgroup = models.CharField(max_length=3)
+
+    class Meta:
+        unique_together = ['user','group']
+
+    def __str__(self):
+        return '{} {} {}'.format(self.codgroup, self.user, self.group)
 
 
 class situacion(models.Model):
@@ -175,9 +188,11 @@ class ficha(models.Model):
     idusuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     #datos libres
     ambiente = models.CharField(max_length=60, default="")
+    cod_ambiente = models.CharField(max_length=10) #en el modelo de ambiente esta representado como numero de ambiente
     piso = models.CharField(max_length=5, default="") #deberia ser 2
     dependencia = models.CharField(max_length=60, default="")
     sede = models.CharField(max_length=60, default="")
+    numero_aux = models.IntegerField(default=1)
 
     def __str__(self):
         return '{}, {} {}'.format(self.id, self.num_ficha, self.fecha_ficha)
@@ -195,13 +210,13 @@ class ambiente(models.Model):
     #""" FK (sector) """
     #sector_ambiente = models.ForeignKey(sector, on_delete=models.CASCADE)
     #depart = models.ForeignKey(departamento, on_delete=models.CASCADE)
-    num_ambiente = models.CharField(max_length=4)
+    num_ambiente = models.CharField(max_length=9)
     nom_ambiente = models.CharField(max_length=60)
-    cod_ambiente = models.CharField(max_length=9, blank=True, null=True)
+    #cod_ambiente = models.CharField(max_length=9, blank=True, null=True)
     obs_ambiente = models.CharField(max_length=60, blank=True, null=True)
     #cod_correlativo = models.CharField(max_length=4, default='')
     def __str__(self):
-        return 'Codigo: {}, Nombre : {}, Sede: {}, Departamento: {}, Piso: {}'.format(self.cod_ambiente, self.nom_ambiente, self.sede_ambiente.nom_sede, self.sede_ambiente.depa_sede.nom_departamento, self.piso_ambiente.nom_piso)
+        return 'Número: {}, Nombre : {}, Sede: {}, Departamento: {}, Piso: {}'.format(self.num_ambiente, self.nom_ambiente, self.sede_ambiente.nom_sede, self.sede_ambiente.depa_sede.nom_departamento, self.piso_ambiente.nom_piso)
 
 """class cabecera(models.Model):
     usu = models.ForeignKey(usuario, on_delete=models.CASCADE)
@@ -311,6 +326,7 @@ class base12019(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)    
     idficha = models.ForeignKey(ficha, on_delete=models.CASCADE)  
     codigo_conformidad = models.CharField(max_length=5, blank=False, null=False)
+    prov_cata = models.CharField(max_length=1)
 
     class Meta:
         unique_together = ['base0_fk']
@@ -324,3 +340,5 @@ class catalogo(models.Model):
 
     def __str__(self):
         return '{}, {}'.format(self.id,self.denominacion_bien)
+
+

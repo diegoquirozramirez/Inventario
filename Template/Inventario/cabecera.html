@@ -85,7 +85,7 @@
                                                             {% if ambi %}
                                                             <select name="ambiente" id="" class="form-control">
                                                                 {% for ambi in ambi %}
-                                                                    <option value="{{ambi.sede_ambiente}}">{{ambi}}</option>
+                                                                    <option value="{{ambi.id}}">{{ambi}}</option>
                                                                 {% endfor %}
                                                             </select>
                                                                 
@@ -157,7 +157,7 @@
                                                                         </script>
 
                                                                         <div class="col-3">
-                                                                            <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12"  />
+                                                                            <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12"  minlength="12" />
                                                                         </div>
                                                                       
                                                                        

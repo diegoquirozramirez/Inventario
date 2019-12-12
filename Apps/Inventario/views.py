@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from Apps.Inventario.models import Usuario, ambiente, base0, base12019, piso, direccionGerencia, sede, ficha, catalogo
+from Apps.Inventario.models import Usuario, ambiente, base0, base12019, piso, direccionGerencia, sede, ficha, catalogo, userGroup
 from Apps.Inventario.forms import usuarioForm, ambienteForm, base0Form, fichaForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
@@ -85,91 +85,64 @@ def base0Consulta(request):
     tipo = request.GET.get('tipo', None)
     modalidad= request.GET.get('modalidad', None)
 
-    try:
-        usu = Usuario.objects.get(numero_doc_usuario=dni)
-    except ObjectDoesNotExist:
-        messages.add_message(request, messages.INFO, 'No se encontró un Usuario con dni '+str(dni)+' | Advertencia: NO Manipular la URL')
-        return redirect('registar-usuario')
-
-    pis = piso.objects.all()
-    dep = direccionGerencia.objects.all()
-    ambi = ambiente.objects.all()
-    sed = sede.objects.all()
-      
-    #usuario = request.GET['idu']
-    #if codigo == '' and cod_interno == '':
-     #   messages.add_message(request, messages.INFO, 'Ingrese código SBN o código interno')
-      #  return redirect('consultar', idu=idu)
-
-    if codigo != '' and cod_interno == '':        
-        codigo_sbn_base0 = base0.objects.filter(codigo_sbn=codigo)
-       #form = 
-        if codigo_sbn_base0.exists():
-            if base12019.objects.filter(base0_fk = codigo_sbn_base0[0].id).exists():
-                mensaje = "Registrado"
-            else:
-                mensaje = "No registrado"
-            
-            _base0 = base0.objects.get(codigo_sbn=codigo)
-            if request.method == 'POST':
-                form = base0Form(request.POST, instance=_base0)
-                if form.is_valid():
-                    form.save()
-                return redirect('home')
-            else:
-                form = base0Form(instance=_base0)
-
+    if len(codigo) == 12 or len(cod_interno) == 5:
+    
+        try:
             usu = Usuario.objects.get(numero_doc_usuario=dni)
-            fich = ficha.objects.get(idusuario_id=usu.id)           
+        except ObjectDoesNotExist:
+            messages.add_message(request, messages.INFO, 'No se encontró un Usuario con dni '+str(dni)+' | Advertencia: NO Manipular la URL')
+            return redirect('/MIMP/registrar-usuario')
 
-            context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form, 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad , 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id}
-            template = 'Inventario/base0.html'
-            return render(request, template, context)
-        else:
-            messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo SBN '+str(codigo))
-            return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
-    else:
-        if codigo == '' and cod_interno != '':
-            
-            codigo_sbn_base0 = base0.objects.filter(codigo_interno=cod_interno)
+        pis = piso.objects.all()
+        dep = direccionGerencia.objects.all()
+        ambi = ambiente.objects.all()
+        sed = sede.objects.all()
         
-         
+        #usuario = request.GET['idu']
+        #if codigo == '' and cod_interno == '':
+        #   messages.add_message(request, messages.INFO, 'Ingrese código SBN o código interno')
+        #  return redirect('consultar', idu=idu)
+
+        if codigo != '' and cod_interno == '':        
+            codigo_sbn_base0 = base0.objects.filter(codigo_sbn=codigo)
+        #form = 
             if codigo_sbn_base0.exists():
                 if base12019.objects.filter(base0_fk = codigo_sbn_base0[0].id).exists():
                     mensaje = "Registrado"
                 else:
                     mensaje = "No registrado"
-
-                _base0 = base0.objects.get(codigo_interno=cod_interno)
+                
+                _base0 = base0.objects.get(codigo_sbn=codigo)
                 if request.method == 'POST':
                     form = base0Form(request.POST, instance=_base0)
                     if form.is_valid():
                         form.save()
-                    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
+                    return redirect('home')
                 else:
                     form = base0Form(instance=_base0)
 
                 usu = Usuario.objects.get(numero_doc_usuario=dni)
-                fich = ficha.objects.get(idusuario_id=usu.id) 
-                
-                context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form , 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad,  'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep,'ficha':fich.id}
+                fich = ficha.objects.get(idusuario_id=usu.id)           
+
+                context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form, 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad , 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id}
                 template = 'Inventario/base0.html'
                 return render(request, template, context)
             else:
-                messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo interno '+str(cod_interno))
+                messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo SBN '+str(codigo))
                 return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
         else:
-            if codigo != '' and cod_interno != '':
-                codigo_sbn_base0 = base0.objects.filter(codigo_sbn=codigo).filter(codigo_interno=cod_interno)
-                                
+            if codigo == '' and cod_interno != '':
+                
+                codigo_sbn_base0 = base0.objects.filter(codigo_interno=cod_interno)
+            
+            
                 if codigo_sbn_base0.exists():
                     if base12019.objects.filter(base0_fk = codigo_sbn_base0[0].id).exists():
                         mensaje = "Registrado"
                     else:
                         mensaje = "No registrado"
-                        
 
-                    _base0 = base0.objects.get(codigo_sbn=codigo)
+                    _base0 = base0.objects.get(codigo_interno=cod_interno)
                     if request.method == 'POST':
                         form = base0Form(request.POST, instance=_base0)
                         if form.is_valid():
@@ -177,15 +150,48 @@ def base0Consulta(request):
                         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
                     else:
                         form = base0Form(instance=_base0)
-                    
 
-                    context = {'codigo_sbn_base0':codigo_sbn_base0,'codigo':codigo, 'cod_interno':cod_interno,'mensaje':mensaje, 'form':form ,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep}
+                    usu = Usuario.objects.get(numero_doc_usuario=dni)
+                    fich = ficha.objects.get(idusuario_id=usu.id) 
+                    
+                    context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form , 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad,  'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep,'ficha':fich.id}
                     template = 'Inventario/base0.html'
                     return render(request, template, context)
                 else:
-                    messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo interno '+str(cod_interno)+' ni el código SBN '+str(codigo))
+                    messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo interno '+str(cod_interno))
                     return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
-        
+            else:
+                if codigo != '' and cod_interno != '':
+                    codigo_sbn_base0 = base0.objects.filter(codigo_sbn=codigo).filter(codigo_interno=cod_interno)
+                                    
+                    if codigo_sbn_base0.exists():
+                        if base12019.objects.filter(base0_fk = codigo_sbn_base0[0].id).exists():
+                            mensaje = "Registrado"
+                        else:
+                            mensaje = "No registrado"
+                            
+
+                        _base0 = base0.objects.get(codigo_sbn=codigo)
+                        if request.method == 'POST':
+                            form = base0Form(request.POST, instance=_base0)
+                            if form.is_valid():
+                                form.save()
+                            return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
+                        else:
+                            form = base0Form(instance=_base0)
+                        
+
+                        context = {'codigo_sbn_base0':codigo_sbn_base0,'codigo':codigo, 'cod_interno':cod_interno,'mensaje':mensaje, 'form':form ,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep}
+                        template = 'Inventario/base0.html'
+                        return render(request, template, context)
+                    else:
+                        messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo interno '+str(cod_interno)+' ni el código SBN '+str(codigo))
+                        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
+
+    else:
+        messages.add_message(request, messages.INFO, 'Datos no admitids por el sistema, asegurese de haber ingresado correctamente los valores')
+        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
+            
 
 def addBase12019sbn(request):#, idbase0, idu, cod):
     descripcion = request.GET.get('id_descipcion', None)
@@ -211,7 +217,7 @@ def addBase12019cint(request, idbase0, idu, cod):
                 base0_fk_id=idbase0,
                 user = request.user
             )
-            return redirect('/MIMP/base0/'+str(idu)+'?codigo_sbn=&cod_interno='+str(cod))#'base0-consultar', idu=idu)
+            return redirect('/MIMP/base0/'+str(idu)+'?codigo_sbn=&cod_interno='+str(cod))
         except:
             return redirect('/MIMP/base0/'+str(idu)+'?codigo_sbn=&cod_interno='+str(cod))
     else:
@@ -225,10 +231,22 @@ def buscarUsuario(request):
     nombre = request.GET.get('nombres', None)
     tipo = request.GET.get('tipo', None)
     modalidad = request.GET.get('modalidad', None)
+    print(str(dni), str(dni), str(nombre), str(tipo))
+
     try:
-        usu = Usuario.objects.filter(Q(numero_doc_usuario=dni) | Q(nom_final_usuario__icontains=nombre))
-        usua = Usuario.objects.get(id=usu[0].id)
-        print(usua)
+        if len(dni) == 8:
+            usu = Usuario.objects.filter(Q(numero_doc_usuario__iexact=dni) | Q(nom_final_usuario__icontains=nombre))
+            if usu.exists():
+                usua = Usuario.objects.get(id=usu[0].id)
+            else:
+                messages.add_message(request, messages.INFO, 'Usuario no encontrado')
+                return redirect('/MIMP/registrar-usuario')
+        else:
+            messages.add_message(request, messages.INFO, 'Caracteres minimo para DNI es 8')
+            return redirect('/MIMP/registrar-usuario')
+            
+        print("este es q "+str(usu))
+        print("tener id"+str(usua))
         existencia_ficha = ficha.objects.filter(idusuario_id=usu[0].id)
         if existencia_ficha.exists():
             mensaje = "¡Ficha Grabada y Generada!"
@@ -241,7 +259,7 @@ def buscarUsuario(request):
             ambi = ambiente.objects.all()
             sed = sede.objects.all()
             print(base1)
-            #base1 = base12019.objects.filter(user=request.user)
+           
             contexto = {'usu':usua, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado, 'num_ficha': exist_ficha}
             template = 'Inventario/cabecera.html'
             return render(request, template, contexto)
@@ -254,14 +272,14 @@ def buscarUsuario(request):
             ambi = ambiente.objects.all()
             sed = sede.objects.all()
             base1 = ''
-            #base1 = base12019.objects.filter(user=request.user)
+            
             contexto = {'usu':usua, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado}
             template = 'Inventario/cabecera.html'
             return render(request, template, contexto)
 
     except ObjectDoesNotExist:
         messages.add_message(request, messages.INFO, 'No existe este Usuario con dni: '+str(dni))
-        return redirect('registar-usuario')
+        return redirect('/MIMP/registrar-usuario')
 
 
 def captureBase0(request):
@@ -282,8 +300,7 @@ def captureBase0(request):
     mot = request.GET.get('motor', None)
     id = request.GET.get('id', None)
 
-    #codigo_interno = request.GET.get('codigo_interno', None)
-    #codigo_sbn = request.GET.get('codigo_sbn', None)
+    
     dni = request.GET.get('dni', None)
     nombre = request.GET.get('nombre', None)
     tipo = request.GET.get('tipo', None)
@@ -332,13 +349,19 @@ def captureBase0(request):
         messages.add_message(request, messages.INFO, 'Ya se registró a una Ficha')
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
-
+#cuando este con la cabecera
 def deleteRegister(request,id):
-    base12019.objects.filter(id=id).delete()
+    
+    base01 = base12019.objects.get(id=id)
+
+    if str(base01.prov_cata) == 'S':
+        base0.objects.get(id=base01.base0_fk_id).delete()
+    else:
+        base12019.objects.get(id=id).delete()
+    
+    
     dni = request.GET.get('dni', None)
     nombre = request.GET.get('nombre', None)
-    tipo = request.GET.get('tipo', None)
-    modalidad= request.GET.get('modalidad', None)
     return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
 def editRegister(request, id):    
@@ -370,7 +393,14 @@ def editRegister(request, id):
 
     template= 'Inventario/update.html'    
     usu = Usuario.objects.get(numero_doc_usuario=dni)
-    codigo_sbn_base0 = base0.objects.get(codigo_sbn=codigo_sbn)
+    if codigo_sbn != '':
+        codigo_sbn_base0 = base0.objects.get(codigo_sbn=codigo_sbn)
+    else:
+        dni = request.GET.get('dni', None)
+        
+        nombre = request.GET.get('nombre', None)
+        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
+
     ambi = ambiente.objects.all()
     context = {'form':form, 'id':base.base0_fk_id, 'dni':dni, 'nombre':nombre, 'tipo':tipo,'modalidad':modalidad, 'usu':usu, 'ambi':ambi, 'codigo_sbn_base0':codigo_sbn_base0 }
 
@@ -428,17 +458,18 @@ def updateOneRegister(request):
 def grabarGenerarFicha(request):
     #num_ficha = request.GET.get('ficha', None)
     id_usuario = request.GET.get('usuario', None)
-    ambiente = request.GET.get('ambiente', None)
-    piso = request.GET.get('piso', None)
-    dependencia = request.GET.get('dependencia', None)
-    codigo_sede = request.GET.get('sede.cod_sede', None) 
+    ambi = request.GET.get('ambiente', None)
+    ambient = ambiente.objects.get(id=ambi)
+    #piso = request.GET.get('piso', None)
+    #dependencia = request.GET.get('dependencia', None)
+    #codigo_sede = request.GET.get('sede.cod_sede', None) 
     sede_id = request.GET.get('sede', None)  
     
 
     #para grabar y generar ficha
-    sed = sede.objects.get(id=sede_id)
+    #sed = sede.objects.get(id=sede_id)
 
-    print(str(sed.nom_sede)+', '+str(sed.cod_sede))
+    #print(str(sed.nom_sede)+', '+str(sed.cod_sede))
     dni = request.GET.get('dni', None)
     nombres = request.GET.get('nombre', None)
 
@@ -447,29 +478,62 @@ def grabarGenerarFicha(request):
     #    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
     #else:
 
-    try:
+    if ficha.objects.all().exists() == False:
+        ug = userGroup.objects.get(user=request.user)
+        primer_numero = 1
+        try:
 
-        ficha.objects.create(
-            num_ficha =str(sed.cod_sede),
-            
-            idusuario_id = id_usuario,
-                #datos libres
-            ambiente = ambiente,
-            piso = piso,
-            dependencia = str(dependencia), 
-            sede = str(sed.nom_sede),
+            ficha.objects.create(
+                num_ficha =str(ug.codgroup)+str(ambient.sede_ambiente.cod_sede)+str(primer_numero),
+                
+                idusuario_id = id_usuario,
+                    #datos libres
+                ambiente = str(ambient.nom_ambiente),
+                piso = str(ambient.piso_ambiente.deta_piso),
+                #dependencia = str(dependencia), 
+                sede = str(ambient.sede_ambiente.nom_sede),
+                cod_ambiente = str(ambient.num_ambiente),
 
-        )
-    except IntegrityError:
-        nu_ficha = ficha.objects.get(idusuario_id=id_usuario)
-        messages.add_message(request, messages.INFO, 'Usuario con dni '+str(dni)+' ya se encuentra asociada a la ficha '+str(nu_ficha.num_ficha))
+            )
+        except IntegrityError:
+            nu_ficha = ficha.objects.get(idusuario_id=id_usuario)
+            messages.add_message(request, messages.INFO, 'Usuario con dni '+str(dni)+' ya se encuentra asociada a la ficha '+str(nu_ficha.num_ficha))
+            return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+
+        #para el redirect
+    
+        #print(num_ficha+" ,"+id_usuario+" ,"+ambiente+" ,"+piso+" ,"+str(dependencia)+" ,"+str(sede)+" ,"+dni+" ,"+nombres)
+
+        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+    else:
+        ug = userGroup.objects.get(user=request.user)
+        fl = ficha.objects.last()
+        try:
+
+            ficha.objects.create(
+                num_ficha =str(ug.codgroup)+str(ambient.sede_ambiente.cod_sede)+str(int(fl.numero_aux)+1),
+                
+                idusuario_id = id_usuario,
+                    #datos libres
+                ambiente = str(ambient.nom_ambiente),
+                piso = str(ambient.piso_ambiente.deta_piso),
+                #dependencia = str(dependencia), 
+                sede = str(ambient.sede_ambiente.nom_sede),
+                numero_aux = int(fl.numero_aux)+1,
+                cod_ambiente = str(ambient.num_ambiente),
+
+            )
+        except IntegrityError:
+            nu_ficha = ficha.objects.get(idusuario_id=id_usuario)
+            messages.add_message(request, messages.INFO, 'Usuario con dni '+str(dni)+' ya se encuentra asociada a la ficha '+str(nu_ficha.num_ficha))
+            return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+
+        #para el redirect
+    
+        #print(num_ficha+" ,"+id_usuario+" ,"+ambiente+" ,"+piso+" ,"+str(dependencia)+" ,"+str(sede)+" ,"+dni+" ,"+nombres)
+
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
 
-    #para el redirect
-   
-    #print(num_ficha+" ,"+id_usuario+" ,"+ambiente+" ,"+piso+" ,"+str(dependencia)+" ,"+str(sede)+" ,"+dni+" ,"+nombres)
-
-    return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
 
 def buscarFicha(request):
     template = 'Ficha/buscar.html'
@@ -534,11 +598,13 @@ def get_catalogos(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
         places = catalogo.objects.filter(denominacion_bien__icontains=q)
+        dic = {}
         results = []
         for pl in places:
             place_json = {}
             place_json = pl.denominacion_bien#+ "," +str(pl.id)
             results.append(place_json)
+            dic = {'bien':pl.denominacion_bien,'cod_bien':pl.numero_bien}
         data = json.dumps(results)
         #print(results)
     else:
@@ -546,20 +612,15 @@ def get_catalogos(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
-
+#cuando este de ficha sin cabecera
 def deleteBienFicha(request,id):   
-    
-    ba0 = base12019.objects.get(id=id)
-    print("este es :"+ba0)
-    b0 = base0.objects.filter(id=ba0.base0_fk_id)
-    print("este es 2: "+b0)
+    ficha = request.GET.get('num_ficha', None)   
     try:
-        base0.objects.filter(id=ba0.base0_fk_id).delete()  
-        base12019.objects.filter(id=id).delete()
+        base12019.objects.get(id=id).delete()
+        return redirect('/consultar-ficha/?num_ficha='+str(ficha))   
     except:
-        pass
-    ficha = request.GET.get('num_ficha', None)    
-    return redirect('/consultar-ficha/?num_ficha='+str(ficha))
+        return redirect('/consultar-ficha/?num_ficha='+str(ficha))   
+    
 
 def updateBienFicha(request, id):
     fich = request.GET.get('num_ficha', None)
@@ -582,7 +643,9 @@ def standByCatalogo(request):
     #valor de la denominacion
     confor = request.GET.get('codigo_conformidad', None)
     fich = request.GET.get('ficha', None)
+    fi = ficha.objects.get(num_ficha=str(fich))
     cata = request.GET.get('catalogo', None)
+    codcat = catalogo.objects.get(denominacion_bien=str(cata))
     dni = request.GET.get('dni', None)
     nombres = request.GET.get('nombres', None)
     if request.method == 'POST':
@@ -590,20 +653,22 @@ def standByCatalogo(request):
         if form.is_valid():
             form_aux = form.save(commit = False)
             if form_aux.descripcion == cata:
-                form_aux.aux_ficha = fich
+                form_aux.codigo_sbn = str(codcat.numero_bien)
+                form_aux.aux_ficha = str(fich)+str(request.user.id)
                 form_aux.save()
 
-                b0 = base0.objects.get(aux_ficha=fich)
+                #b0 = base0.objects.get(aux_ficha=(str(fich)+str(request.user.id)))
 
-                base0.objects.filter(id=b0.id).update(
-                    aux_ficha=str(fich)+str(b0.id),
-                )
-
+                #base0.objects.filter(id=b0.id).update(
+                    #aux_ficha=str(fich)+str(b0.id),
+                #)
+                
                 base12019.objects.create(
-                    base0_fk_id = b0.id,
+                    base0_fk = form_aux,
                     user = request.user,
-                    idficha_id = b0.aux_ficha,
+                    idficha_id = fi.id,
                     codigo_conformidad = str(confor),
+                    prov_cata = 'S',
                 )
 
             else:
