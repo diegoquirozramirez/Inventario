@@ -193,6 +193,7 @@ class ficha(models.Model):
     dependencia = models.CharField(max_length=60, default="", blank=True, null= True)
     sede = models.CharField(max_length=60, default="", blank=True, null= True)
     numero_aux = models.IntegerField(default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return '{}, {} {}'.format(self.id, self.num_ficha, self.fecha_ficha)

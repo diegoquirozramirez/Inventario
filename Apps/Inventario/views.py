@@ -526,6 +526,7 @@ def grabarGenerarFicha(request):
                 #dependencia = str(dependencia), 
                 sede = a[2],# str(ambient.sede_ambiente.nom_sede),
                 cod_ambiente = a[0],
+                user = request.user,
 
             )
         except IntegrityError:
@@ -557,6 +558,7 @@ def grabarGenerarFicha(request):
                     sede =  a[2],
                     numero_aux = int(fl.numero_aux)+1,
                     cod_ambiente = a[0],
+                    user =  request.user,
 
                 )
             except IntegrityError:

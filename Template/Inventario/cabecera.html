@@ -22,9 +22,110 @@
                                     </div>
                              <div class="row">
                                 
+
+
+
+
+
                                 <div class="col-lg-12">
                                     <div class="main-card mb-3 card">
                                         <div class="card-body"><h5 class="card-title">Cabecera</h5>
+                            {%  if estado == True %}             
+                                <table class="mb-0 table table-bordered">
+                                    <input type="hidden" name="dni" value="{{dni}}"> 
+                                    <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                    <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                    <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
+                                    <input type="hidden" name="usuario" value="{{usu}}">
+                                    <tr >
+                                        <td colspan="7" rowspan="2"></td>
+                                        <td colspan="">
+                                            <strong>FOLIO:    {{num_ficha.num_ficha}}</strong> 
+                                            <tr>
+                                                <td><strong>FECHA:    {{num_ficha.fecha_ficha|date:"d/m/y"}}</strong></td>
+                                            </tr>
+                                           
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th>USUARIO RESPONSABLE</th>
+                                        <td colspan="3">{{num_ficha.user}}________________________________________________________________________</td>
+                                        <th>SEDE</th>
+                                        <td colspan="3">{{num_ficha.sede}}___________________________________________________________________________</td>
+                                    </tr>
+                                    <tr>
+                                        <th>DNI</th>
+                                        <td>{{num_ficha.idusuario.numero_doc_usuario}}____________________</td>
+                                        <th>MODALIDAD</th>
+                                        <td>{{num_ficha.idusuario.moda_usuario.modalidad_contratacion}}________________</td>
+                                        <th>PISO</th>
+                                        <td colspan="3">{{num_ficha.piso}}____________________________________________________________________________</td>
+                                    </tr>
+                                    <tr>
+                                        <th>DIRECCION</th>
+                                        <td colspan="3">_____________________________________________________________________________</td>
+                                        <th>CODIGO AMBIENTE</th>
+                                        <td>{{num_ficha.cod_ambiente}}_______________________________</td>
+                                        <th>AMBIENTE</th>
+                                        <td>{{num_ficha.ambiente}}_______________________________</td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <form action="{% url 'verCatalogo' %}">
+                                                <input type="hidden" name="dni" value="{{dni}}"> 
+                                                <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                {%  if estado == True %}
+                                                  <input type="hidden" name="ficha" value="{{num_ficha.num_ficha}}">                                                                          
+                                                {% endif %}
+                                            <span style=" margin: 10px; color: rgb(190, 60, 60);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Buscar</span> <br>
+                                            <input type="submit" value="Catálogo" class="btn btn-info form-control"  >
+                                            </form>
+                                        </td>
+                                        
+                                        
+                                                <td colspan="7">
+                                                    <form action="{% url 'base0-consultar'  %}"  method="GET" >
+                                                
+                                                       <input type="hidden" name="dni" value="{{dni}}"> 
+                                                       <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                       <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                       <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
+                                                       <input type="hidden" name="usuario" value="{{usu}}">
+                                                       <div class="form-row">
+                                                                 <div class="col-3">
+                                                                   <input type="text" id="cod_interno" name="cod_interno" placeholder="Codigo Interno" class="form-control" maxlength="5" minlength="5" >
+                                                               </div>
+                                                               <script type="text/javascript">
+                                                                   document.getElementById('cod_interno').focus()
+                                                               </script>
+
+                                                               <div class="col-3">
+                                                                   <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12"  minlength="12" />
+                                                               </div>
+                                                             
+                                                              
+                                                                 <div class="col-3">                                                                            
+                                                                   <input type="submit" name="" id="" value="Consultar" class="form-control btn btn-primary" >
+                                                               </div>
+                                                            
+                                                               
+                                                           </div>
+                                                       
+                                               
+                                               </form>
+                                            </td>
+                                      
+                                        
+                                    </tr>
+                                    
+                                </table>
+
+                                {% else %}
+
+
+
+
                                             <!--form action="{% url 'base0-consultar'  %}"  method="GET" -->
                                             <table class="mb-0 table table-bordered">
                                                 <thead>
@@ -196,7 +297,7 @@
                                                                         
                                                                     </div>
                                                                 
-                                                        </td>
+                                                        
                                                         </form>
                                                         <div class="col-12">
                                                                 <form action="{% url 'verCatalogo' %}">
@@ -248,6 +349,7 @@
                                                 </tbody>
                                             </table>
                                         <!--/form-->
+                                {% endif %}
                                         </div>
                                     </div>
                                 </div>

@@ -43,7 +43,7 @@
                                                         <input type="hidden" name="ficha" value="{{ficha}}">
                                                         <div class="container"><br><br>
                                                             <div class="row">
-                                                                <input type="text" id="catalogos" name="catalogo" placeholder="Ingrese Tipo de Bien" class="col-3 form-control" style="margin: 5px;">
+                                                                <input type="text" id="catalogo" name="catalogo" placeholder="Ingrese Tipo de Bien" class="col-3 form-control" style="margin: 5px;">
                                                                 <script type="text/javascript">
                                                                     document.getElementById('catalogos').focus();
                                                                 </script>
@@ -56,7 +56,7 @@
                                                             <script>
 
                                                                     $(function() {
-                                                                    $("#catalogos").autocomplete({
+                                                                    $("#catalogo").autocomplete({
                                                                     source: "/catalogo/get-catalogo/",
                                                                     select: function (event, ui) { //item selected
                                                                         AutoCompleteSelectHandler(event, ui)
