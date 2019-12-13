@@ -5,7 +5,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.contrib import messages 
 
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
+@login_required(login_url='/')
 def cabecera(request, idu):
     usu = Usuario.objects.get(id=idu)
     try:
@@ -16,6 +19,7 @@ def cabecera(request, idu):
     template = 'Inventario/consulta.html'
     return render(request, template, context)
 
+@login_required(login_url='/')
 def registraUsuario(request):    
     if request.method == 'POST':
         form = usuarioForm(request.POST)
@@ -33,6 +37,7 @@ def registraUsuario(request):
 
 #funcion especial para general codigo de ambiente concatenado
 
+@login_required(login_url='/')
 def asignarCodAmbiente(request, idu):  
     #correlativo = '0001'
     #ambi = ambiente.objects.get(id=ida)
@@ -52,6 +57,7 @@ def asignarCodAmbiente(request, idu):
     template = 'Inventario/ambiente.html'
     return render(request, template, context)  
 
+@login_required(login_url='/')
 def updateAsignarCodAmbiente(request, idu, ida):  
     #correlativo = '0001'
     ambi = ambiente.objects.get(id=ida)
@@ -70,12 +76,14 @@ def updateAsignarCodAmbiente(request, idu, ida):
     template = 'Inventario/ambiente.html'
     return render(request, template, context)
 
+@login_required(login_url='/')
 def listadoUsuario(request):
     usu = Usuario.objects.all()
     context = {'usu':usu}
     template = 'Usuario/listado.html'
     return render(request, template, context)
 
+@login_required(login_url='/')
 def base0Consulta(request):
     codigo = request.GET.get('codigo_sbn', None)
     cod_interno = request.GET.get('cod_interno', None)
@@ -90,7 +98,7 @@ def base0Consulta(request):
         try:
             usu = Usuario.objects.get(numero_doc_usuario=dni)
         except ObjectDoesNotExist:
-            messages.add_message(request, messages.INFO, 'No se encontró un Usuario con dni '+str(dni)+' | Advertencia: NO Manipular la URL')
+            messages.add_message(request, messages.INFO, 'No se encontró un Usuario con dni '+str(dni))
             return redirect('/MIMP/registrar-usuario')
 
         pis = piso.objects.all()
@@ -180,19 +188,22 @@ def base0Consulta(request):
                         else:
                             form = base0Form(instance=_base0)
                         
+                        usu = Usuario.objects.get(numero_doc_usuario=dni)
+                        fich = ficha.objects.get(idusuario_id=usu.id) 
 
-                        context = {'codigo_sbn_base0':codigo_sbn_base0,'codigo':codigo, 'cod_interno':cod_interno,'mensaje':mensaje, 'form':form ,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep}
+
+                        context = {'codigo_sbn_base0':codigo_sbn_base0,'codigo':codigo, 'cod_interno':cod_interno,'mensaje':mensaje, 'form':form ,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id}
                         template = 'Inventario/base0.html'
                         return render(request, template, context)
                     else:
-                        messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo interno '+str(cod_interno)+' ni el código SBN '+str(codigo))
+                        messages.add_message(request, messages.INFO, 'No se encontró registro con el codigo interno '+str(cod_interno)+' ni el código SBN '+str(codigo)+", o no tengan relación alguna.")
                         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
     else:
         messages.add_message(request, messages.INFO, 'Datos no admitids por el sistema, asegurese de haber ingresado correctamente los valores')
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
             
-
+@login_required(login_url='/')
 def addBase12019sbn(request):#, idbase0, idu, cod):
     descripcion = request.GET.get('id_descipcion', None)
     print(descripcion)
@@ -210,6 +221,7 @@ def addBase12019sbn(request):#, idbase0, idu, cod):
         return redirect('/MIMP/base0/'+str(idu)+'?codigo_sbn='+str(cod)+'&cod_interno=')
     """
 
+@login_required(login_url='/')
 def addBase12019cint(request, idbase0, idu, cod):
     if base0.objects.filter(id=idbase0).exists():
         try:
@@ -226,6 +238,7 @@ def addBase12019cint(request, idbase0, idu, cod):
 
  #SPRINT 2
 from django.db.models import Q
+@login_required(login_url='/')
 def buscarUsuario(request):
     dni = request.GET.get('dni', None)
     nombre = request.GET.get('nombres', None)
@@ -281,7 +294,7 @@ def buscarUsuario(request):
         messages.add_message(request, messages.INFO, 'No existe este Usuario con dni: '+str(dni))
         return redirect('/MIMP/registrar-usuario')
 
-
+@login_required(login_url='/')
 def captureBase0(request):
     
     des = request.GET.get('descripcion', None)
@@ -350,6 +363,7 @@ def captureBase0(request):
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
 #cuando este con la cabecera
+@login_required(login_url='/')
 def deleteRegister(request,id):
     
     base01 = base12019.objects.get(id=id)
@@ -364,6 +378,8 @@ def deleteRegister(request,id):
     nombre = request.GET.get('nombre', None)
     return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombre))
 
+
+@login_required(login_url='/')
 def editRegister(request, id):    
     base = base12019.objects.get(id=id)
     print(base.base0_fk.id)
@@ -406,6 +422,7 @@ def editRegister(request, id):
 
     return render(request, template, context)
 
+@login_required(login_url='/')
 def updateOneRegister(request):
     des = request.GET.get('descripcion', None)
     obs1 = request.GET.get('observacion1', None)
@@ -455,6 +472,7 @@ def updateOneRegister(request):
 
 #Sprint 3
 
+@login_required(login_url='/')
 def grabarGenerarFicha(request):
     #num_ficha = request.GET.get('ficha', None)
     id_usuario = request.GET.get('usuario', None)
@@ -549,7 +567,7 @@ def grabarGenerarFicha(request):
 
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
 
-
+@login_required(login_url='/')
 def buscarFicha(request):
     template = 'Ficha/buscar.html'
     return render(request, template)
@@ -563,6 +581,8 @@ from django.http import HttpResponse
     datas = serializers.serialize('json', data, fields=('num_ficha','fecha_ficha','ambiente','piso','dependencia','sede'))  
     return HttpResponse(datas, content_type='application/json')"""
 
+
+@login_required(login_url='/')
 def updateFicha(request):
     num_ficha = request.GET.get('num_ficha', None)
     fich = ficha.objects.get(num_ficha=num_ficha)
@@ -577,6 +597,7 @@ def updateFicha(request):
     template = 'Ficha/update.html'
     return render(request, template, context)
 
+@login_required(login_url='/')
 def consultarFicha(request):
     fich = request.GET.get('num_ficha', None)
     if fich == '':
@@ -595,11 +616,13 @@ def consultarFicha(request):
     context = {'data':data, 'registros':registros}
     return render(request, template, context)
 
+@login_required(login_url='/')
 def deleteFicha(request):
     fich = request.GET.get('num_ficha', None)
     ficha.objects.get(num_ficha=fich).delete()
     return redirect('buscar-ficha')
 
+@login_required(login_url='/')
 def verCatalogo(request):
     fich = request.GET.get('ficha', None)
     dni = request.GET.get('dni', None)
@@ -609,6 +632,7 @@ def verCatalogo(request):
     return render(request, template, context)
 
 import json
+@login_required(login_url='/')
 def get_catalogos(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
@@ -628,8 +652,8 @@ def get_catalogos(request):
     return HttpResponse(data, mimetype)
 
 
-import json
 from django.core import serializers
+@login_required(login_url='/')
 def get_ambiente(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
@@ -652,6 +676,7 @@ def get_ambiente(request):
     return HttpResponse(data, mimetype)
 
 #cuando este de ficha sin cabecera
+@login_required(login_url='/')
 def deleteBienFicha(request,id):   
     ficha = request.GET.get('num_ficha', None)   
     try:
@@ -660,7 +685,7 @@ def deleteBienFicha(request,id):
     except:
         return redirect('/consultar-ficha/?num_ficha='+str(ficha))   
     
-
+@login_required(login_url='/')
 def updateBienFicha(request, id):
     fich = request.GET.get('num_ficha', None)
     fi = ficha.objects.get(num_ficha=str(fich))
@@ -678,6 +703,8 @@ def updateBienFicha(request, id):
     template = 'Ficha/bienUpdate.html'
     return render(request, template, context)
 
+
+@login_required(login_url='/')
 def standByCatalogo(request):
     #valor de la denominacion
     confor = request.GET.get('codigo_conformidad', None)
@@ -713,6 +740,8 @@ def standByCatalogo(request):
             else:
                 messages.add_message(request, messages.INFO, 'No manipules el Campo con atributo solo de Lectura')
                 return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+
+        messages.add_message(request, messages.INFO, 'Se registró correctamente')
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
     else:
         form = base0Form()
@@ -720,3 +749,42 @@ def standByCatalogo(request):
     template = 'Catalogo/standby.html'
     context = {'form':form, 'cata':cata, 'ficha':fich,'confor': confor}
     return render(request, template, context)
+
+@login_required(login_url='/')
+def get_ficha(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        places = ficha.objects.filter(num_ficha__icontains=q)
+      
+        results = []
+        for pl in places:
+            place_json = {}
+            place_json = pl.num_ficha#+","+pl.nom_ambiente+","+str(pl.sede_ambiente.nom_sede)+","+str(pl.piso_ambiente.nom_piso)
+            results.append(place_json)
+            #dic = {'bien':pl.denominacion_bien,'cod_bien':pl.numero_bien}
+        data = json.dumps(results)
+
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
+
+
+@login_required(login_url='/')
+def get_usuario(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        places = Usuario.objects.filter(nom_final_usuario__icontains=q)
+      
+        results = []
+        for pl in places:
+            place_json = {}
+            place_json = pl.nom_final_usuario#+","+pl.nom_ambiente+","+str(pl.sede_ambiente.nom_sede)+","+str(pl.piso_ambiente.nom_piso)
+            results.append(place_json)
+            #dic = {'bien':pl.denominacion_bien,'cod_bien':pl.numero_bien}
+        data = json.dumps(results)
+
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)

@@ -3,7 +3,7 @@
 {% block content %}        
 
 <div class="app-main">             
-    <div class="app-main__outer">
+    <div class="app-main__outer" style="margin-left: -270px;">
                         <div class="app-main__inner">
                                 <div class="row" style="margin-top: -70px;">
                                         <div class="col-lg-12">
@@ -43,17 +43,20 @@
                                                 <tbody>
                                                 <!-- inicio de form para grabar-->
                                                 <form action="{% url 'generar-ficha' %}">
-                                                        <input type="hidden" name="dni" value="{{dni}}"> 
+                                                       
                                                         <input type="hidden" name="nombre" value="{{nombre}}"> 
                                                         <tr>
-                                                            <td colspan="3">
+                                                            {%  if estado != True %}
+                                                            <td colspan="1">
                                                                 <!--input type="number" name="ficha" style="margin: 5px" class="form-control" placeholder="Número de Ficha"-->
-                                                                <input type="submit" value="Grabar y Generar Número de Ficha" class="btn btn-success form-control">    
+                                                                <input type="submit" value="Grabar y Generar Número de Ficha" class="btn btn-success form-control">  
                                                             </td>
+                                                            {% endif %} 
                                                             <td colspan="2">
                                                                <span style="color: rgba(184, 48, 48, 0.904); float: left; margin: 15px;"><strong>{{mensaje}}</strong></span>
                                                                 
                                                             </td>
+                                                            <td colspan="3"></td>
                                                             {%  if estado == True %}
                                                             <th>Número de Ficha</th>
                                                             <td>
@@ -74,25 +77,30 @@
                                                     <tr>
                                                         <th scope="row">DNI</th>
                                                         <td colspan="">{{usu.numero_doc_usuario}}</td>
+                                                        <input type="hidden" name="dni" value="{{usu.numero_doc_usuario}}"> 
                                                         <th scope="row">Modalidad</th>
                                                         <td colspan="4">{{usu.moda_usuario.modalidad_contratacion}}</td>
                                                         
                                                     </tr> 
                                          <input type="hidden" name="usuario" value="{{usu.id}}">
+                                                    {% if estado != True %}
                                                     <tr>
                                                         <th colspan="1">Ambiente <br><span style="font-size: 12px; width: 100px; color:rgb(182, 35, 35) ;">(N° | Nombre del Ambiente | Sede | Piso)</span> </th>
                                                         <td colspan="6">
-                                                            {% if ambi %}
+                                                          
                                                             <!--select name="ambiente" id="" class="form-control">
                                                                 {% for ambi in ambi %}
                                                                     <option value="{{ambi.id}}">{{ambi}}</option>
                                                                 {% endfor %}
                                                             </select-->
+                                                            
                                                                 <input type="text" name="ambi" id="ambi" class="form-control">
+                                                            
                                                                 
-                                                            {% endif %}
+                                                          
                                                         </td>
                                                     </tr>
+                                                    {% endif %}
                                                     <script>
                                                             $(function() {
                                                                     $("#ambi").autocomplete({
@@ -197,7 +205,7 @@
                                                                         {%  if estado == True %}
                                                                           <input type="hidden" name="ficha" value="{{num_ficha.num_ficha}}">                                                                          
                                                                         {% endif %}
-                                                                    <input type="submit" value="Catálogo" class="btn btn-info form-control" style="float: right;" >
+                                                                    <input type="submit" value="Catálogo" class="btn btn-info " style="float: right;"  ><span style="float: right; margin: 10px; color: rgb(190, 60, 60);">Buscar en Catálogo</span> 
                                                                 </form>
                                                               
                                                             </div>
@@ -338,46 +346,6 @@
                         </div>
 
 
-
-
-
-                        <div class="app-wrapper-footer">
-                            <div class="app-footer">
-                                <div class="app-footer__inner">
-                                    <div class="app-footer-left">
-                                        <ul class="nav">
-                                            <li class="nav-item">
-                                                <a href="javascript:void(0);" class="nav-link">
-                                                    Footer Link 1
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="javascript:void(0);" class="nav-link">
-                                                    Footer Link 2
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="app-footer-right">
-                                        <ul class="nav">
-                                            <li class="nav-item">
-                                                <a href="javascript:void(0);" class="nav-link">
-                                                    Footer Link 3
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="javascript:void(0);" class="nav-link">
-                                                    <div class="badge badge-success mr-1 ml-0">
-                                                        <small>NEW</small>
-                                                    </div>
-                                                    Footer Link 4
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>    
     </div>
 </div>
 

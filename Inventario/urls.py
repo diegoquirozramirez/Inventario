@@ -22,9 +22,17 @@ from django.conf.urls.static import static
 from Apps import views
 from Apps.Inventario import views as inventario
 
+from django.contrib.auth.views import login, logout
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name="home"),
+    #Login
+    path('', login, name="login"),    
+    path('accounts/logout/', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name="logout"),
+
+    #sprint 1
+    path('home', views.home, name="home"),
     path('MIMP/registrar-usuario', inventario.registraUsuario, name="registar-usuario"),
     path('MIMP/consultar/<int:idu>', inventario.cabecera, name="consultar"),
     path('MIMP/asignar-ambiente/<int:idu>', inventario.asignarCodAmbiente, name="asignar-ambiente"),
@@ -54,6 +62,8 @@ urlpatterns = [
     path('catalogo/get-catalogo/', inventario.get_catalogos, name="get-catalogo"),
     path('standby-catalogo/', inventario.standByCatalogo, name="standby-catalogo"),
     path('ambiente/get-ambiente/', inventario.get_ambiente, name="get-ambiente"),
+    path('ficha/get-ficha/', inventario.get_ficha, name="get-ficha"),
+    path('usuario/get-usuario/', inventario.get_usuario, name="get-usuario"),
 
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

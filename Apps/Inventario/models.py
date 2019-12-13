@@ -187,11 +187,11 @@ class ficha(models.Model):
     fecha_ficha = models.DateField(auto_now_add=True)
     idusuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     #datos libres
-    ambiente = models.CharField(max_length=60, default="")
+    ambiente = models.CharField(max_length=60, default="", blank=True, null= True)
     cod_ambiente = models.CharField(max_length=10) #en el modelo de ambiente esta representado como numero de ambiente
     piso = models.CharField(max_length=5, default="") #deberia ser 2
-    dependencia = models.CharField(max_length=60, default="")
-    sede = models.CharField(max_length=60, default="")
+    dependencia = models.CharField(max_length=60, default="", blank=True, null= True)
+    sede = models.CharField(max_length=60, default="", blank=True, null= True)
     numero_aux = models.IntegerField(default=1)
 
     def __str__(self):
