@@ -539,33 +539,39 @@ def grabarGenerarFicha(request):
 
         return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
     else:
-        ug = userGroup.objects.get(user=request.user)
-        fl = ficha.objects.last()
-        try:
+        ug_exists = userGroup.objects.filter(user=request.user)
+        if ug_exists.exists():
 
-            ficha.objects.create(
-                num_ficha =str(ug.codgroup)+str(ambient.sede_ambiente.cod_sede)+str(int(fl.numero_aux)+1),
-                
-                idusuario_id = id_usuario,
-                    #datos libres
-                ambiente = a[1],
-                piso = a[3],
-                #dependencia = str(dependencia), 
-                sede =  a[2],
-                numero_aux = int(fl.numero_aux)+1,
-                cod_ambiente = a[0],
+            ug = userGroup.objects.get(user=request.user)
+            fl = ficha.objects.last()
+            try:
 
-            )
-        except IntegrityError:
-            nu_ficha = ficha.objects.get(idusuario_id=id_usuario)
-            messages.add_message(request, messages.INFO, 'Usuario con dni '+str(dni)+' ya se encuentra asociada a la ficha '+str(nu_ficha.num_ficha))
+                ficha.objects.create(
+                    num_ficha =str(ug.codgroup)+str(ambient.sede_ambiente.cod_sede)+str(int(fl.numero_aux)+1),
+                    
+                    idusuario_id = id_usuario,
+                        #datos libres
+                    ambiente = a[1],
+                    piso = a[3],
+                    #dependencia = str(dependencia), 
+                    sede =  a[2],
+                    numero_aux = int(fl.numero_aux)+1,
+                    cod_ambiente = a[0],
+
+                )
+            except IntegrityError:
+                nu_ficha = ficha.objects.get(idusuario_id=id_usuario)
+                messages.add_message(request, messages.INFO, 'Usuario con dni '+str(dni)+' ya se encuentra asociada a la ficha '+str(nu_ficha.num_ficha))
+                return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+
+            #para el redirect
+        
+            #print(num_ficha+" ,"+id_usuario+" ,"+ambiente+" ,"+piso+" ,"+str(dependencia)+" ,"+str(sede)+" ,"+dni+" ,"+nombres)
+
             return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
-
-        #para el redirect
-    
-        #print(num_ficha+" ,"+id_usuario+" ,"+ambiente+" ,"+piso+" ,"+str(dependencia)+" ,"+str(sede)+" ,"+dni+" ,"+nombres)
-
-        return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
+        else:
+            messages.add_message(request, messages.INFO, str(request.user).upper()+' no está asociado algun grupo.')
+            return redirect('/MIMP/buscar-usuario?dni='+str(dni)+'&nombres='+str(nombres))
 
 @login_required(login_url='/')
 def buscarFicha(request):
