@@ -92,7 +92,7 @@ def base0Consulta(request):
     nombre = request.GET.get('nombre', None)
     tipo = request.GET.get('tipo', None)
     modalidad= request.GET.get('modalidad', None)
-
+    count = base12019.objects.filter(user=request.user).count()
     if len(codigo) == 12 or len(cod_interno) == 5:
     
         try:
@@ -132,7 +132,7 @@ def base0Consulta(request):
                 usu = Usuario.objects.get(numero_doc_usuario=dni)
                 fich = ficha.objects.get(idusuario_id=usu.id)           
 
-                context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form, 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad , 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id}
+                context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form, 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad , 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id, 'count':count}
                 template = 'Inventario/base0.html'
                 return render(request, template, context)
             else:
@@ -162,7 +162,7 @@ def base0Consulta(request):
                     usu = Usuario.objects.get(numero_doc_usuario=dni)
                     fich = ficha.objects.get(idusuario_id=usu.id) 
                     
-                    context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form , 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad,  'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep,'ficha':fich.id}
+                    context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form , 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad,  'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep,'ficha':fich.id, 'count':count}
                     template = 'Inventario/base0.html'
                     return render(request, template, context)
                 else:
@@ -192,7 +192,7 @@ def base0Consulta(request):
                         fich = ficha.objects.get(idusuario_id=usu.id) 
 
 
-                        context = {'codigo_sbn_base0':codigo_sbn_base0,'codigo':codigo, 'cod_interno':cod_interno,'mensaje':mensaje, 'form':form ,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id}
+                        context = {'codigo_sbn_base0':codigo_sbn_base0,'codigo':codigo, 'cod_interno':cod_interno,'mensaje':mensaje, 'form':form ,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id, 'count':count}
                         template = 'Inventario/base0.html'
                         return render(request, template, context)
                     else:
@@ -245,7 +245,7 @@ def buscarUsuario(request):
     tipo = request.GET.get('tipo', None)
     modalidad = request.GET.get('modalidad', None)
     print(str(dni), str(dni), str(nombre), str(tipo))
-
+    count = base12019.objects.filter(user=request.user).count()
     try:
         if len(dni) == 8:
             usu = Usuario.objects.filter(Q(numero_doc_usuario__iexact=dni) | Q(nom_final_usuario__icontains=nombre))
@@ -273,7 +273,7 @@ def buscarUsuario(request):
             sed = sede.objects.all()
             print(base1)
            
-            contexto = {'usu':usua, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado, 'num_ficha': exist_ficha}
+            contexto = {'usu':usua, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado, 'num_ficha': exist_ficha,'count':count}
             template = 'Inventario/cabecera.html'
             return render(request, template, contexto)
                  
@@ -286,7 +286,7 @@ def buscarUsuario(request):
             sed = sede.objects.all()
             base1 = ''
             
-            contexto = {'usu':usua, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado}
+            contexto = {'usu':usua, 'ambi':ambi, 'base1':base1,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'pis':pis, 'dep':dep, 'sed':sed, 'mensaje':mensaje, 'estado': estado,'count':count}
             template = 'Inventario/cabecera.html'
             return render(request, template, contexto)
 
