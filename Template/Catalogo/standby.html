@@ -11,53 +11,57 @@
                                     <div class="col-lg-12">
                                         <div class="main-card mb-3 card" style="margin-top: -70px;">
                                             <div class="card-body"><h5 class="card-title">Cabecera</h5>
-                                                
+                                                <table class="mb-0 table table-bordered">
+                                                    <input type="hidden" name="dni" value="{{dni}}"> 
+                                                    <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                                    <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                                    <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
+                                                    <input type="hidden" name="usuario" value="{{usu}}">
+                                                    <tr >
+                                                        <td colspan="7" rowspan="2"></td>
+                                                        <td colspan="">
+                                                            <strong>FOLIO:    {{num_ficha.num_ficha}}</strong> 
+                                                            <tr>
+                                                                <td><strong>FECHA:    {{num_ficha.fecha_ficha|date:"d/m/y"}}</strong></td>
+                                                            </tr>
+                                                           
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <th>USUARIO RESPONSABLE</th>
+                                                        <td colspan="3">{{num_ficha.idusuario.nom_final_usuario}}________________________________________________________________________</td>
+                                                        <th>SEDE</th>
+                                                        <td colspan="3">{{num_ficha.sede}}___________________________________________________________________________</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>DNI</th>
+                                                        <td>{{num_ficha.idusuario.numero_doc_usuario}}____________________</td>
+                                                        <th>MODALIDAD</th>
+                                                        <td>{{num_ficha.idusuario.moda_usuario.modalidad_contratacion}}________________</td>
+                                                        <th>PISO</th>
+                                                        <td colspan="3">{{num_ficha.piso}}____________________________________________________________________________</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>DIRECCION</th>
+                                                        <td colspan="3">_____________________________________________________________________________</td>
+                                                        <th>CODIGO AMBIENTE</th>
+                                                        <td>{{num_ficha.cod_ambiente}}_______________________________</td>
+                                                        <th>AMBIENTE</th>
+                                                        <td>{{num_ficha.ambiente}}_______________________________</td>                                        
+                                                    </tr>
+                                                    <tr>
+                                             
+                                                        
+                                                    
+                                                      
+                                                        
+                                                    </tr>
+                                                    
+                                                </table>
                                                 <form method="POST" >
                                                     {% csrf_token %}
-                                                    
-                                                        <table class="mb-0 table table-bordered">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th colspan="4">Datos</th>
-                                                                    <!--input type="hidden" name="dni" value="{{dni}}"> 
-                                                                    <input type="hidden" name="nombre" value="{{nombre}}"> 
-                                                                    <input type="hidden" name="tipo" value="{{tipo}}"> 
-                                                                    <input type="hidden" name="modalidad" value="{{modalidad}}"> 
-                                                                    <input type="hidden" name="usuario" value="{{usu}}"-->
-                                                                </tr>
-                                                                </thead>
-                
-                                                                <tbody>
-                                                                <tr>
-                                                                    <th scope="row">Usuario</th>
-                                                                    <td colspan="4">{{usu.nom_final_usuario}}</td>
-                                                                    <th scope="row">Tipo de Documento</th>
-                                                                    <td colspan="">{{usu.t_doc_usuario.tipo_doc}}</td>
-                                                               
-                                                                </tr>
-                                                           
-                                                                    <tr>
-                                                                        <th scope="row">DNI</th>
-                                                                        <td>{{usu.numero_doc_usuario}}</td>
-                                                                        <th scope="row">Modalidad</th>
-                                                                        <td colspan="2">{{usu.moda_usuario.modalidad_contratacion}}</td>
-                                                                        
-                                                                    </tr> 
-                                                                    <tr>
-                                                                        <th>Ambiente</th>
-                                                                        <td colspan="3">
-                                                                            {% if ambi %}
-                                                                            <select name="ambiente" id="" class="form-control">
-                                                                                {% for ambi in ambi %}
-                                                                                    <option value="{{ambi.sede_ambiente}}">{{ambi}}</option>
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                                
-                                                                            {% endif %}
-                                                                        </td>
-                                                                    </tr>
-                                                            </tbody>
-                                                        </table>
+                            
                                                 <table class="mb-0 table table-bordered">
                                                     <thead>
                                                     <tr>

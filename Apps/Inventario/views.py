@@ -758,7 +758,7 @@ def standByCatalogo(request):
         form = base0Form()
 
     template = 'Catalogo/standby.html'
-    context = {'form':form, 'cata':cata, 'ficha':fich,'confor': confor}
+    context = {'form':form, 'cata':cata, 'ficha':fich,'confor': confor, 'num_ficha':fi}
     return render(request, template, context)
 
 @login_required(login_url='/')
