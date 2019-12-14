@@ -2,7 +2,7 @@
 {% extends 'index.html' %}
 {% block content %}        
 
-<div class="app-main">             
+<div class="app-main" style="font-size: 0.8em;">             
     <div class="app-main__outer" style="margin-left: -270px;">
                         <div class="app-main__inner">
                                 <div class="row" style="margin-top: -70px;">
@@ -86,7 +86,7 @@
                                         
                                                 <td colspan="7">
                                                     <form action="{% url 'base0-consultar'  %}"  method="GET" >
-                                                
+                                                        <input type="hidden" name="ficha" value="{{num_ficha.num_ficha}}">
                                                        <input type="hidden" name="dni" value="{{dni}}"> 
                                                        <input type="hidden" name="nombre" value="{{nombre}}"> 
                                                        <!--input type="hidden" name="tipo" value="{{tipo}}"> 
@@ -161,6 +161,7 @@
                                                             {%  if estado == True %}
                                                             <th>Número de Ficha</th>
                                                             <td>
+                                                              
                                                                     {{num_ficha.num_ficha}}
                                                             </td>
                                                             {% endif %}
@@ -194,7 +195,7 @@
                                                                     <option value="{{ambi.id}}">{{ambi}}</option>
                                                                 {% endfor %}
                                                             </select-->
-                                                            
+                                                        
                                                                 <input type="text" name="ambi" id="ambi" class="form-control">
                                                             
                                                                 

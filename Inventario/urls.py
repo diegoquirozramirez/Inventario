@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 from Apps import views
 from Apps.Inventario import views as inventario
+from Apps.Exportar import views as exportar
 
 from django.contrib.auth.views import login, logout
 
@@ -64,6 +65,8 @@ urlpatterns = [
     path('ambiente/get-ambiente/', inventario.get_ambiente, name="get-ambiente"),
     path('ficha/get-ficha/', inventario.get_ficha, name="get-ficha"),
     path('usuario/get-usuario/', inventario.get_usuario, name="get-usuario"),
+
+    path('exportar-hoja-pdf/<int:pk>', exportar.exportHojaPDF, name="exportar-hoja-pdf"),
 
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

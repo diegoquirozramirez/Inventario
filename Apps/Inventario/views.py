@@ -85,6 +85,8 @@ def listadoUsuario(request):
 
 @login_required(login_url='/')
 def base0Consulta(request):
+    f = request.GET.get('ficha', None)
+    fi = ficha.objects.get(num_ficha=f)
     codigo = request.GET.get('codigo_sbn', None)
     cod_interno = request.GET.get('cod_interno', None)
     #ambiente = request.GET.get('ambiente', None)
@@ -132,7 +134,7 @@ def base0Consulta(request):
                 usu = Usuario.objects.get(numero_doc_usuario=dni)
                 fich = ficha.objects.get(idusuario_id=usu.id)           
 
-                context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form, 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad , 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id, 'count':count}
+                context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form, 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad , 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id, 'count':count, 'num_ficha':fi}
                 template = 'Inventario/base0.html'
                 return render(request, template, context)
             else:
@@ -162,7 +164,7 @@ def base0Consulta(request):
                     usu = Usuario.objects.get(numero_doc_usuario=dni)
                     fich = ficha.objects.get(idusuario_id=usu.id) 
                     
-                    context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form , 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad,  'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep,'ficha':fich.id, 'count':count}
+                    context = {'codigo_sbn_base0':codigo_sbn_base0, 'codigo':codigo, 'cod_interno':cod_interno, 'mensaje':mensaje, 'form':form , 'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad,  'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep,'ficha':fich.id, 'count':count, 'num_ficha':fi}
                     template = 'Inventario/base0.html'
                     return render(request, template, context)
                 else:
@@ -192,7 +194,7 @@ def base0Consulta(request):
                         fich = ficha.objects.get(idusuario_id=usu.id) 
 
 
-                        context = {'codigo_sbn_base0':codigo_sbn_base0,'codigo':codigo, 'cod_interno':cod_interno,'mensaje':mensaje, 'form':form ,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id, 'count':count}
+                        context = {'codigo_sbn_base0':codigo_sbn_base0,'codigo':codigo, 'cod_interno':cod_interno,'mensaje':mensaje, 'form':form ,'dni':dni, 'nombre':nombre, 'tipo':tipo, 'modalidad':modalidad, 'usu':usu, 'ambi':ambi,'pis':pis, 'sed':sed, 'dep':dep, 'ficha':fich.id, 'count':count, 'num_ficha':fi}
                         template = 'Inventario/base0.html'
                         return render(request, template, context)
                     else:
@@ -635,7 +637,8 @@ def verCatalogo(request):
     fich = request.GET.get('ficha', None)
     dni = request.GET.get('dni', None)
     nombres = request.GET.get('nombre', None)
-    context = {'dni':dni, 'nombres':nombres, 'ficha':fich}
+    fi = ficha.objects.get(num_ficha=fich)
+    context = {'dni':dni, 'nombres':nombres, 'ficha':fich, 'num_ficha':fi}
     template = 'Catalogo/catalogo.html'
     return render(request, template, context)
 

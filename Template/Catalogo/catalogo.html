@@ -3,7 +3,7 @@
 {% block content %}        
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" /> <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"> </script> <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
     
-<div class="app-main">             
+<div class="app-main" style="font-size: 0.8em;">             
     <div class="app-main__outer" style="margin-left: -270px;">
                         <div class="app-main__inner">
                                 <div class="row" style="margin-top: -70px;">
@@ -76,124 +76,57 @@
                                                 </tr>
 
                                                 </thead>
-
-                                                <tbody>
-                                                
-                                                    <tr>
-                                                            <td colspan="1">
-                                                                <!--input type="number" name="ficha" style="margin: 5px" class="form-control" placeholder="Número de Ficha"-->
-                                                                  
-                                                            </td>
-                                                            <td colspan="2">
-                                                               <span style="color: rgba(184, 48, 48, 0.904); float: left; margin: 15px;"><strong>{{mensaje}}</strong></span>
-                                                                
-                                                            </td>
-                                                            {%  if estado == True %}
-                                                            <th>Número de Ficha</th>
-                                                            <td>
-                                                                    {{num_ficha.num_ficha}}
-                                                            </td>
-                                                            {% endif %}
-                                                        </tr>
-                                                       
-                                                       
-                                                <tr>
-                                                    <th scope="row">Usuario</th>
-                                                    <td colspan="4">{{usu.nom_final_usuario}}</td>
-                                                    <th scope="row">Tipo de Documento</th>
-                                                    <td colspan="">{{usu.t_doc_usuario.tipo_doc}}</td>
-                                               
-                                                </tr>
-                                           
-                                                    <tr>
-                                                        <th scope="row">DNI</th>
-                                                        <td colspan="">{{usu.numero_doc_usuario}}</td>
-                                                        <th scope="row">Modalidad</th>
-                                                        <td colspan="4">{{usu.moda_usuario.modalidad_contratacion}}</td>
-                                                        
-                                                    </tr> 
-                                
-                                                    <tr>
-                                                        <th>Ambiente</th>
-                                                        <td colspan="6">
-                                                            {% if ambi %}
-                                                            <select name="ambiente" id="" class="form-control">
-                                                                {% for ambi in ambi %}
-                                                                    <option value="{{ambi.sede_ambiente}}">{{ambi}}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                                
-                                                            {% endif %}
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr >
-                                                        <th >Piso</th>
-                                                        <td colspan="2" >
-                                                           {% if pis %}
-                                                            <select name="piso" id="" class="form-control">
-                                                                {% for piso in pis %}
-                                                                    <option value="{{piso.cod_piso}}" style="color: black;">{{piso.cod_piso}}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                                
-                                                            {% endif %}
-                                                        </td>
-                                                        <th>
-                                                            Dependencia
-                                                        </th>
-                                                        <td>
-                                                             {% if dep %}
-                                                            <select name="dependencia" id="" class="form-control">
-                                                                {% for dependencia in dep %}
-                                                                    <option value="{{dependencia.nom_dirger}}" style="color: black;">{{dependencia.nom_dirger}}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                                
-                                                            {% endif %}
-                                                        </td>
-                                                        <th>Sede</th>
-                                                        <td colspan="1">
-                                                             {% if sed %}
-                                                            <select name="sede" id="" class="form-control">
-                                                                {% for sede in sed %}
-                                                                    <option value="{{sede.id}}" style="color: black;">{{sede.nom_sede}}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                                
-                                                            {% endif %}
-                                                        </td>
-                                                    </tr>
-                                                   
-                                                 
-                                                  
-                                               
-                                                   
-                                           <!--
-                                                {% if ambi %}
-                                                {% for ambi in ambi %}
-                                                <tr>
-                                                    <th scope="row">Codigo Ambiente</th>
-                                                    <td>{{ambi.cod_ambiente}}</td>
-                                                    <th scope="row">Nombre Ambiente</th> 
-                                                    <td>{{ambi.nom_ambiente}} </td>
-                                                    <td><form action=""><input type="submit" class="form-control" value="Actualizar Ambiente" style="background-color: darkslateblue; width: 100%; color: white; " ></form></td>                                                   
-                                             
-                                                </tr>
-                                                {% endfor %}
-                                                {% else %}
-                                                <tr>
-                                                    <th scope="row">Codigo Ambiente</th>
-                                                    <td>Sin código asignado</td>
-                                                    <th scope="row">Nombre Ambiente</th> 
-                                                    <td>Sin Nombre asignado </td>
-                                                    <td><form action=""><input type="submit" class="form-control" value="Asignar Ambiente" style="background-color: darkslateblue; width: 100%; color: white;" ></form></td>      
-                                               
-                                                </tr>
-                                                {% endif %} -->
-                                                </tbody>
                                             </table>
+                           
                                         <!--/form-->
+                                        <table class="mb-0 table table-bordered">
+                                            <input type="hidden" name="dni" value="{{dni}}"> 
+                                            <input type="hidden" name="nombre" value="{{nombre}}"> 
+                                            <!--input type="hidden" name="tipo" value="{{tipo}}"> 
+                                            <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
+                                            <input type="hidden" name="usuario" value="{{usu}}">
+                                            <tr >
+                                                <td colspan="7" rowspan="2"></td>
+                                                <td colspan="">
+                                                    <strong>FOLIO:    {{num_ficha.num_ficha}}</strong> 
+                                                    <tr>
+                                                        <td><strong>FECHA:    {{num_ficha.fecha_ficha|date:"d/m/y"}}</strong></td>
+                                                    </tr>
+                                                   
+                                                </td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <th>USUARIO RESPONSABLE</th>
+                                                <td colspan="3">{{num_ficha.idusuario.nom_final_usuario}}________________________________________________________________________</td>
+                                                <th>SEDE</th>
+                                                <td colspan="3">{{num_ficha.sede}}___________________________________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <th>DNI</th>
+                                                <td>{{num_ficha.idusuario.numero_doc_usuario}}____________________</td>
+                                                <th>MODALIDAD</th>
+                                                <td>{{num_ficha.idusuario.moda_usuario.modalidad_contratacion}}________________</td>
+                                                <th>PISO</th>
+                                                <td colspan="3">{{num_ficha.piso}}____________________________________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <th>DIRECCION</th>
+                                                <td colspan="3">_____________________________________________________________________________</td>
+                                                <th>CODIGO AMBIENTE</th>
+                                                <td>{{num_ficha.cod_ambiente}}_______________________________</td>
+                                                <th>AMBIENTE</th>
+                                                <td>{{num_ficha.ambiente}}_______________________________</td>                                        
+                                            </tr>
+                                            <tr>
+                                     
+                                                
+                                            
+                                              
+                                                
+                                            </tr>
+                                            
+                                        </table>
                                         </div>
                                     </div>
                                 </div>
@@ -290,43 +223,7 @@
                    
 
                         </div>
-                        <div class="app-wrapper-footer">
-                            <div class="app-footer">
-                                <div class="app-footer__inner">
-                                    <div class="app-footer-left">
-                                        <ul class="nav">
-                                            <li class="nav-item">
-                                                <a href="javascript:void(0);" class="nav-link">
-                                                    Footer Link 1
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="javascript:void(0);" class="nav-link">
-                                                    Footer Link 2
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="app-footer-right">
-                                        <ul class="nav">
-                                            <li class="nav-item">
-                                                <a href="javascript:void(0);" class="nav-link">
-                                                    Footer Link 3
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="javascript:void(0);" class="nav-link">
-                                                    <div class="badge badge-success mr-1 ml-0">
-                                                        <small>NEW</small>
-                                                    </div>
-                                                    Footer Link 4
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>    
+                      
     </div>
 </div>
 {% endblock %}  
