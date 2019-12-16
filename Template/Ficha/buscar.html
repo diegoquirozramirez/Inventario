@@ -1,6 +1,7 @@
 
 {% extends 'index.html' %}
 {% block content %}  
+
 <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -31,119 +32,122 @@
                             <div class="row">
                                 
                                     <div class="col-lg-12" style="width: 10px;">
-                                        <div class="main-card mb-3 card" style="width: 25%; margin-top: -30px;">
+                                        <div class="main-card mb-3 card" style="width: 100%; margin-top: -30px;">
                                             <div class="card-body">
                                                 
                                                 <table class="mb-0 table table-bordered" >
                                                         <div class="search-wrapper">
-                                                            
-                                                                <!--div class="input-holder">
-                                                                      
-                                                                        <input type="text" id="num_ficha" name="num_ficha" class="search-input" placeholder="Type to search">
-                                                                   
-                                                                    
-                                                                    <button class="search-icon" id="btn_save" ><span> </span></button>
-                                                                </div>
-                                                                <button class="close"></button-->
-                                                            <form action="{% url 'consultar-ficha' %}">
+                                                           <div class="row">
+                                                               <div class="col-3">
+                                                                <form action="{% url 'viewFicha' %}" method="GET" id="fichaForm">
                                                                     <div class="form-row">
                                                                             <div class="col-12">
-                                                                                <input type="text" id="num_ficha" name="num_ficha" placeholder="Número de Ficha" class="form-control" maxlength="9"  />
+                                                                                Número de Ficha:
+                                                                                <input type="text" id="num_ficha" name="fi" placeholder="Número de Ficha" class="form-control" maxlength="9"  />
                                                                         </div>
                                                                       
-                                                                        <script>
-
-                                                                            $(function() {
-                                                                            $("#num_ficha").autocomplete({
-                                                                            source: "/ficha/get-ficha/",
-                                                                            select: function (event, ui) { //item selected
-                                                                                AutoCompleteSelectHandler(event, ui)
-                                                                            },
-                                                                            minLength: 2,
-                                                                            });
-                                                                            });
-                                                                            
-                                                                            function AutoCompleteSelectHandler(event, ui)
-                                                                            {
-                                                                            var selectedObj = ui.item;
-                                                                            }
-                                                                            
-                                                                            </script>
+                                                                        
                                                                         </div>
                                                                         <div class="form-row">
                                                                             <div class="col-12">
-                                                                                
+                                                                                <input type="hidden" name="num_ficha_edit" id="num_ficha_edit">
                                                                                 <input type="submit"  id="ficha" value="Consultar" class="form-control btn btn-primary" style="margin-top: 15px;">
                                                                             </div>
                                                                     </div>
                                                             </form>
+                                                               </div>
                                                             
-                                                            <!--div class="search-wrapper">
-                                                                    <div class="input-holder">
-                                                                        <input type="text" class="search-input" placeholder="Type to search">
-                                                                        <button class="search-icon" ><span></span></button>
-                                                                    </div>
-                                                                    <button class="close"></button>
-                                                            </div-->
-                                                                <!--script type="text/javascript">
-                                                                  
-                                                                    /**function on_click(){
-                                                                        var num_ficha = document.getElementById('num_ficha').value;
-                                                                        console.log(num_ficha)
-                                                                    }*/
-                                                               
 
-                                                                    $(function() {
-
-                                                                        $('#ficha').on('click', function() {
-                                                                            var num_ficha = document.getElementById('num_ficha').value;
-                                                                            $.get("{% url 'consultar-ficha' %}", {
-                                                                                "ficha": num_ficha,
+                                                        <div class="col-9" >
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    Numero: <input class="form-control" type="text" name="num_ficha2" id="num_ficha2">
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    Fecha: <input class="form-control" type="text" name="fecha_ficha2" id="fecha_ficha2">
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    Ambiente: <input class="form-control" type="text" name="ambiente2" id="ambiente2">
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <form action="/update-ficha/">
+                                                                        <input type="hidden" name="num_ficha_edit2" id="num_ficha_edit2">
+                                                                        <input class="form-control btn btn-success" type="submit" value="Actualizar" >
+                                                                    </form>
+                                                                    
+                                                                    <div class="page-title-actions" style="float: right;">
+                                        
+                                                                        <div class="d-inline-block dropdown">
+                                                                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
+                                                                                <span class="btn-icon-wrapper pr-2 opacity-7">
+                                                                                    <i class="fa fa-business-time fa-w-20"></i>
+                                                                                </span>
+                                                                                Exportar
+                                                                            </button>
+                                                                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                                                <ul class="nav flex-column">
+                                                                                    <li class="nav-item">
+                                                                                        <form action="{% url 'exportar-hoja-pdf'  %}">
+                                                                                            <a href="#" class="nav-link" id="pdf_export">
+                                                                                                <i class="nav-link-icon lnr-inbox"></i>
+                                                                                               <input type="hidden" id="id_ficha" name="id_ficha">
+                                                                                                <input type="submit" value="PDF" class="nav-link">
+                                                                                            </a>
+                                                                                    </form>
+                                                                                    </li>
+                                                                                    <li class="nav-item">
+                                                                                        <a href="javascript:void(0);" class="nav-link">
+                                                                                            <i class="nav-link-icon lnr-book"></i>
+                                                                                            <span>
+                                                                                                Excel
+                                                                                            </span>
+                                                                                           
+                                                                                        </a>
+                                                                                    </li>
                                                                                
-                                                                            },function(data) {
-                                                                                var html = "";
-                                                                                
-                                                                                for (var i = 0; i< data.length; i++){
-                                                                                    html +='<thead>'+
-                                                                                        '<tr>'+
-                                                                                            '<th colspan="">Número de Ficha</th>'+
-                                                                                            '<th colspan="">Fecha de Creación</th>'+
-                                                                                            '<th colspan="">Ambiente</th>'+
-                                                                                            '<th colspan="">Piso</th>'+
-                                                                                            '<th colspan="">Dependencia</th>'+
-                                                                                            '<th colspan="">Sede</th>'+
-                                                                                            '<th colspan="2">Acciones</th>'+
-                                                                                      
-                                                                                        '</tr>'+
-                                                                                    '</thead>'+
-                                                                                    '<tbody>'+
-                                                                                        '<tr>'+
-                                                                                            '<td>'+ data[i].fields.num_ficha +'</td>'+
-                                                                                            '<td>'+ data[i].fields.fecha_ficha +'</td>'+
-                                                                                            '<td>'+ data[i].fields.ambiente +'</td>'+
-                                                                                            '<td>'+ data[i].fields.piso +'</td>'+
-                                                                                            '<td>'+ data[i].fields.dependencia +'</td>'+
-                                                                                            '<td>'+ data[i].fields.sede+'</td>'+
-                                                                                            
-                                                                                            '<td><button onclick="editFicha('+String(data[i].fields.num_ficha)+')" id="editar" class="btn btn-success"  >Editar</button></td>'+
-                                                                                            '<td><a href="#" class="btn btn-danger" >Eliminar</a></td>'+
-                                                                                        '</tr>'+
-                                                                                    '</tbody>'
-                                                                                }
-                                                                                $('#fichas').html(html)
-                                                                            });
-                                                                        })
+                                                                            
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    Cod Ambiente: <input class="form-control" type="text" name="cod_ambiente2" id="cod_ambiente2">
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    Piso: <input class="form-control" type="text" name="piso2" id="piso2">
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    Dependencia/Dirección: <input class="form-control" type="text" name="dependencia2" id="dependencia2">
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    Sede: <input class="form-control" type="text" name="sede2" id="sede2">
+                                                                </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                                                           </div> 
+                                                           <script>
+    
+                                                            document.getElementById('num_ficha').focus();
 
-                                                                        
-
-                                                                        $('#editar').on('click', function(){
-                                                                            console.log("Hola")
-                                                                        })
-
-                                                                        })
-
-                                                                      
-                                                                </script-->
+                                                            $(function() {
+                                                            $("#num_ficha").autocomplete({
+                                                            source: "/ficha/get-ficha/",
+                                                            select: function (event, ui) { //item selected
+                                                                AutoCompleteSelectHandler(event, ui)
+                                                            },
+                                                            minLength: 2,
+                                                            });
+                                                            });
+                                                            
+                                                            function AutoCompleteSelectHandler(event, ui)
+                                                            {
+                                                            var selectedObj = ui.item;
+                                                            }
+                                                            
+                                                            </script>
+                                                            
                                                         </div>
                                                  
                                                     <tbody>
@@ -163,6 +167,7 @@
 
                         </div>
 
+   
                         <div class="app-main__inner">
           
               
@@ -170,15 +175,35 @@
                                 <div class="row">
                                     
                                         <div class="col-lg-12" >
-                                            <div class="main-card mb-3 card" style="margin-top: -120px;">
-                                                <div class="card-body"><h5 class="card-title">Ficha</h5>
+                                            <div class="main-card mb-3 card" >
+                                                <div class="card-body"><h5 class="card-title">Registros</h5>
                                                    
+
+                                              
     
-                                                    <table class="mb-0 table table-bordered" id="fichas">
-                                                          
-            
-                                                         
-                                                    </table>
+                                                    <!--table class="mb-0 table table-bordered ficha">
+                                                        <thead>
+                                                            <td></td>
+                                                            <td style="width:15em">Codigo Interno</td>
+                                                            <td style="width:20em">Codigo SBN</td>
+                                                            <td style="width:50em">Descripcion</td>
+                                                            <td>Detalle</td>
+                                                            <td>Marca</td>
+                                                            <td>Modelo</td>
+                                                            <td>Medida</td>
+                                                            <td>Serie</td>
+                                                            <td>Estado</td>
+                                                            <td>Operatividad</td>
+                                                            <td>Observaciones</td>
+                                                            <td >Acciones</td>
+                                                        </thead>
+                                                        
+                                                            <tbody >
+                                                              <div id="demo"></div>
+                                                            </!tbody>
+                                               
+                                                    </table-->
+                                                    <table class="mb-0 table table-bordered ficha" id="ficha-table"></table>
                                                 </div>
                                             </div>
                                         </div>
@@ -191,5 +216,130 @@
                          
     </div>
 </div>
+
+
+
+
+<script>
+
+
+    $(document).ready(function(){
+    
+    
+        $('#fichaForm').submit(function(e){
+            e.preventDefault();
+           
+                    
+                    
+                    html= "";
+                    $.ajax({
+                        url: "{% url 'viewFichaBienes' %}",
+                        type: "GET",
+                        data: $(this).serialize(),
+
+                        success : function(bienes){
+                            //alert(bienes[0].id)
+                            for(var i=0; i < bienes.length;i++){
+                                
+                                html += 
+                                "<tbody>"+
+                                                                            "<td></td>"+
+                                                                            "<td>Cod Interno <br>"+
+                                                                        bienes[i].codigo_interno+
+                                                                        "</td>"+
+                                                                        "<td>Cod SBN <br>"+
+                                                                        bienes[i].codigo_sbn+
+                                                                        "</td>"+
+                                                                        "<td>Descripcion <br>"+
+                                                                            "<p>"+bienes[i].descripcion+"</p>"+
+                                                                        "</td>"+
+                                                                        "<td>Detalle <br>"+
+                                                                        bienes[i].detalle+
+                                                                        "</td>"+
+                                                                        "<td>Marca <br>"+
+                                                                        bienes[i].marca+
+                                                                        "</td>"+
+                                                                        "<td>modelo <br>"+
+                                                                        bienes[i].modelo+
+                                                                        "</td>"+
+                                                                        "<td> medida <br>"+
+                                                                        bienes[i].medida+
+                                                                        "</td>"+
+                                                                        "<td>Serie <br>"+
+                                                                        "<p style='width:5em'>"+bienes[i].serie+"</p>"+
+                                                                        "</td>"+
+                                                                        "<td>Est <br>"+
+                                                                        bienes[i].estado+
+                                                                        "</td>"+
+                                                                        "<td>Ope <br>"+
+                                                                        bienes[i].operatividad+
+                                                                        "</td>"+
+                                                                        "<td>Obs <br>"+
+                                                                        bienes[i].observaciones+
+                                                                        "</td>"+
+                                                                        "<td>"+                                                                   
+                                                                                
+                                                                                "<a href='/update-bien-ficha/"+parseInt(bienes[i].id)+"'"+"class='btn btn-primary form-control'> <i class='fa fa-edit'> </i></a>"+
+                                                                             
+                                                                                "<a href='/delete-bien-ficha/"+parseInt(bienes[i].id)+"'"+"class='btn btn-danger form-control'> <i class='fa fa-trash'> </i></a>"+                                                                 
+                                                                        "</td>"+
+                                                                       "</tbody>";
+                            }
+                            //document.getElementById('demo').innerHTML = html;
+                            //alert("Ficha encontrada"); 
+                            /**document.getElementById('num_ficha2').value = json[0].num_ficha;
+                            document.getElementById('fecha_ficha2').value = json[0].fecha_ficha;
+                            document.getElementById('ambiente2').value = json[0].ambiente;
+                            document.getElementById('cod_ambiente2').value = json[0].cod_ambiente;
+                            document.getElementById('piso2').value = json[0].piso;
+                            document.getElementById('dependencia2').value = json[0].dependencia;
+                            document.getElementById('sede2').value = json[0].sede;///*/
+                           $("#ficha-table").html(html);
+                        }
+                        
+                    })
+                    var id_export ;
+                    
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: $(this).attr('method'),
+                        data: $(this).serialize(),
+
+                        success : function(json){
+                            //console.log(json)
+                            //console.log(json[0])
+                            //console.log(json[0].fecha_ficha)
+                            //alert("Ficha encontrada"); 
+                            //document.getElementById('num_ficha_edit').value = json[0].num_ficha;
+                        
+                            document.getElementById('id_ficha').value = json[0].id;
+                            document.getElementById('num_ficha2').value = json[0].num_ficha;
+                            document.getElementById('fecha_ficha2').value = json[0].fecha_ficha;
+                            document.getElementById('ambiente2').value = json[0].ambiente;
+                            document.getElementById('cod_ambiente2').value = json[0].cod_ambiente;
+                            document.getElementById('piso2').value = json[0].piso;
+                            document.getElementById('dependencia2').value = json[0].dependencia;
+                            document.getElementById('sede2').value = json[0].sede;
+                            document.getElementById('num_ficha_edit2').value = document.getElementById('num_ficha2').value;
+                            //document.getElementByIdpdf_export("pdf_export").href = "/exportar-hoja-pdf/"+String(json[0].id);
+                          
+                            
+                           
+                            
+                        }
+                    })
+                    $("table.mb-0 table table-bordered ficha").html(html);
+                   
+                   
+         
+        })
+
+        
+    
+    })
+
+
+</script>
+
 
 {% endblock %}  

@@ -193,6 +193,8 @@ class ficha(models.Model):
     dependencia = models.CharField(max_length=60, default="", blank=True, null= True)
     sede = models.CharField(max_length=60, default="", blank=True, null= True)
     numero_aux = models.IntegerField(default=1)
+    modalidad_ficha = models.CharField(max_length=20)
+    dni_ficha = models.CharField(max_length=8, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -288,8 +290,8 @@ class estado(models.Model):
 
 class base0(models.Model):
     #situ = models.ForeignKey(situacion, on_delete=models.CASCADE)
-    mar = models.ForeignKey(marca, on_delete=models.CASCADE, default=1) #obligatorio
-    col = models.ForeignKey(color, on_delete=models.CASCADE, default=1) #obligatorio
+    mar = models.ForeignKey(marca, on_delete=models.CASCADE) #obligatorio
+    col = models.ForeignKey(color, on_delete=models.CASCADE) #obligatorio
     est = models.ForeignKey(estado, on_delete=models.CASCADE, default=1) #obligatorio
     op = models.ForeignKey(operatividad, on_delete=models.CASCADE,default=1) #obligatorio
 
@@ -317,20 +319,22 @@ class base0(models.Model):
     #usuario_base0 = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'SBN: {} | Interno: {}'.format(self.codigo_sbn, self.codigo_interno)
+        return 'SBN: {} | Interno: {}'.format(self.codigo_sbn, self.codigo_interno, self.mar.marca)
 
     
 
 class base12019(models.Model):
     id = models.AutoField(primary_key=True, max_length=12)    
+    item = models.IntegerField(default=1)
     base0_fk = models.ForeignKey(base0, on_delete=models.CASCADE)  
     user = models.ForeignKey(User, on_delete=models.CASCADE)    
     idficha = models.ForeignKey(ficha, on_delete=models.CASCADE)  
     codigo_conformidad = models.CharField(max_length=5, blank=False, null=False)
     prov_cata = models.CharField(max_length=1)
+    codigo_sbn = models.CharField(max_length=20, default='999999999999')
 
     class Meta:
-        unique_together = ['base0_fk']
+        unique_together = ['base0_fk','codigo_sbn','codigo_conformidad']
 
     def __str__(self):
         return 'Base0: {} {} {}'.format(self.base0_fk,self.id, self.user)

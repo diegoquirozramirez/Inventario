@@ -29,34 +29,27 @@
                                                     </tr>
                                                     <tr>
                                                         <th>USUARIO RESPONSABLE</th>
-                                                        <td colspan="3">{{num_ficha.idusuario.nom_final_usuario}}________________________________________________________________________</td>
+                                                        <td colspan="3">{{num_ficha.idusuario.nom_final_usuario}}</td>
                                                         <th>SEDE</th>
-                                                        <td colspan="3">{{num_ficha.sede}}___________________________________________________________________________</td>
+                                                        <td colspan="3">{{num_ficha.sede}}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>DNI</th>
-                                                        <td>{{num_ficha.idusuario.numero_doc_usuario}}____________________</td>
+                                                        <td>{{num_ficha.dni_ficha}}</td>
                                                         <th>MODALIDAD</th>
-                                                        <td>{{num_ficha.idusuario.moda_usuario.modalidad_contratacion}}________________</td>
+                                                        <td>{{num_ficha.modalidad_ficha}}</td>
                                                         <th>PISO</th>
-                                                        <td colspan="3">{{num_ficha.piso}}____________________________________________________________________________</td>
+                                                        <td colspan="3">{{num_ficha.piso}}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>DIRECCION</th>
-                                                        <td colspan="3">_____________________________________________________________________________</td>
+                                                        <td colspan="3"></td>
                                                         <th>CODIGO AMBIENTE</th>
-                                                        <td>{{num_ficha.cod_ambiente}}_______________________________</td>
+                                                        <td>{{num_ficha.cod_ambiente}}</td>
                                                         <th>AMBIENTE</th>
-                                                        <td>{{num_ficha.ambiente}}_______________________________</td>                                        
+                                                        <td>{{num_ficha.ambiente}}</td>                                        
                                                     </tr>
-                                                    <tr>
-                                             
-                                                        
-                                                    
-                                                      
-                                                        
-                                                    </tr>
-                                                    
+                                                  
                                                 </table>
                                                 
                                                 <form action="{% url 'capture-base0'  %}">
@@ -69,15 +62,54 @@
                                                                     <input type="hidden" name="usuario" value="{{usu}}">
                                                                
                                                      
-                                                     <br>   <hr style="color: rgb(151, 29, 29);">
-                                                <table class="mb-0 table table-bordered">
+                                                                    <hr color="black"><br>
+                                                <table class="mb-0 table "  border="1">
                                                     <thead>
-                                                    <tr>
-                                                        <th colspan="8">Resultado</th> <!--input type="hidden" name="codigo_interno" value="{{cod_interno}}"> <input type="hidden" value="{{codigo}}" name="codigo_sbn"--> 
                                                         <input type="hidden" name="dni" value="{{dni}}"> 
                                                         <input type="hidden" name="nombre" value="{{nombre}}"> 
                                                         <input type="hidden" name="tipo" value="{{tipo}}"> 
                                                         <input type="hidden" name="modalidad" value="{{modalidad}}"> 
+                                                    <tr>
+                                                        <th colspan="12">Datos del Nuevo Bien 2019
+                                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-success" style="color: white;float:right; ">
+                                                                <i class="nav-link-icon fa fa-edit"> </i>
+                                                                Registrar Nuevo Bien
+                                                                <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                                            </a>
+                                                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right" style="width: 10%; float: right; margin-left: 100px;" >
+                                                                <form class="needs-validation" id="search" novalidate action="{% url 'standby-catalogo' %}" style="margin-left: 80px;">    
+                                                                    <input type="hidden" name="dni" value="{{dni}}"> 
+                                                                        <input type="hidden" name="nombres" value="{{num_ficha.idusuario.nom_final_usuario}}"> 
+                                                                        {% if estado == True %}{{ficha}}{% endif %}
+                                                                        <input type="hidden" name="ficha" value="{{num_ficha.num_ficha}}">    
+                                                                    <input type="hidden" value="{{cod_sbn_cat}}" name="codigo_sbn">             
+                                                                    
+                                                                    <div class="form-row" style="width: 100%; margin-left: 40px;">
+                                                                        <span><strong>Obligatorio (*)</strong></span>
+                                                                                <div class="col-md-8 mb-3">
+                                                                                    <label for="validationCustom01">Código 2019 (*)</label>
+                                                                                    <input type="text" id="codigo_conformidad" name="codigo_conformidad" placeholder="Código 2019" class="form-control" maxlength="5" minlength="5" required>
+                                                                                    <hr><input type="submit" value="Listo" style="float: right;" class="btn btn-primary form-control">                                                                                
+                                                                                       
+                                                                                        <div class="valid-feedback">
+                                                                                        Bien!
+                                                                                    </div>
+                                                                                </div>
+                                                                                <script type="text/javascript">
+                                                                                    $(document).ready(function() {
+                                                                                        $("form").keypress(function(e) {
+                                                                                            if (e.which == 13) {
+                                                                                                return false;
+                                                                                            }
+                                                                                        });
+                                                                                    });
+                                                                                    </script>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+
+                                                        </th> <!--input type="hidden" name="codigo_interno" value="{{cod_interno}}"> <input type="hidden" value="{{codigo}}" name="codigo_sbn"--> 
+                                                     
                                                     </tr>
                                                     </thead>
                                                     {% if codigo_sbn_base0 %}
@@ -86,7 +118,7 @@
                                                     
                                                      <tbody>
                                                            
-                                                        <tr>
+                                                        <!--tr>
                                                             <td colspan="4"></td>
                                                             <td>
                                                                 <div class="col-12">
@@ -100,86 +132,54 @@
                                                                 <input type="submit" value="Actulizar / Registrar" style="float: right;" class="btn btn-primary form-control"> 
                                                             </td>
                                                                         
-                                                        </tr>
+                                                        </tr-->
                                                 
                                                     <tr>
                                                         <th scope="row">Codigo SBN</th>
-                                                        <td colspan="2">{{base0.codigo_sbn}}</td>
+                                                        <td colspan="" >{{base0.codigo_sbn}}</td>
                                                         <th scope="row" >Código Interno</th>
-                                                        <td colspan="2">{{base0.codigo_interno}}</td>
-                                                      
-                                                    </tr>    
-                                               <tr>
-                                                  <td colspan="4"><br></td>
-                                               </tr>
-                                             
-                                                    <tr>
-                                                        <th>Descripcion</th>
-                                                        <td colspan="2">
-                                                            {{form.descripcion}}
-                                                            <!--input type="text" name="" value="{{base0.descripcion}}" class="form-control"-->
-                                                        </td>
-                                                        <th>Observacion 1</th>
-                                                        <td colspan="4">
-                                                            {{form.observacion1}}
-                                                            <!--input type="text" name="" value="{{base0.observacion1}}" class="form-control"-->
-                                                        </td>
-                                                    </tr>
-                                                     <tr>
+                                                        <td colspan="">{{base0.codigo_interno}}</td>
+                                                        
                                                         <th>Detalle</th>
-                                                        <td colspan="2">{{form.detalle}}<!--input type="text" name="" value="{{base0.detalle}}" class="form-control"--></td>
-                                                        <th>Observacion 2</th>
-                                                        <td colspan="4">{{form.observacion2}}<!--input type="text" name="" value="{{base0.observacion2}}" class="form-control"--></td>
-                                                    </tr>
-                                                    <tr>
+                                                        <td colspan="">{{form.detalle}}</td>
                                                         <th>Marca</th> 
                                                         <td colspan="2">
                                                                 {{form.mar}}   
-                                                            <!--input type="text" name="" value="{{base0.mar}}"class="form-control"--></td>
-                                                        <th>Observacion 3</th>
-                                                        <td colspan="4">{{form.observacion3}}  <!--input type="text" name="" value="{{base0.observacion3}}" class="form-control"--></td>
-                                                    </tr>
-                                                    <tr>
+                                                        </td>
                                                         <th>Modelo</th>
-                                                        <td colspan="2">{{form.modelo}}   <!--input type="text" name="" value="{{base0.modelo}}" class="form-control"--></td>
-                                                        <th>Estado</th>
-                                                        <td colspan="3">{{form.est}}   <!--input type="text" name="" value="{{base0.est}}" class="form-control"--></td>
-                                                       
-                                                    </tr>
+                                                        <td colspan="2">{{form.modelo}} </td>
+                                                    </tr>    
+                                             
+                                             
                                                     <tr>
+
+                                                        <th>Descripcion</th>
+                                                        <td colspan="5">
+                                                            {{form.descripcion}}
+                                                
+                                                        </td>
+                                                        <th>Estado</th>
+                                                        <td colspan="2">{{form.est}}</td>
                                                         <th>Serie</th>
                                                         <td colspan="2">
                                                                 {{form.serie}}   
-                                                            <!--input type="text" name="" value="{{base0.serie}}" class="form-control"--></td>
+                                                          </td>
+                                                    </tr>
+                                                     <tr>
                                                         <th>Uso</th>
-                                                        <td colspan="3">{{form.op}}   <!--input type="text" name="" value="{{base0.op}}" class="form-control"--></td>
-                                                       
-                                                    </tr>
-                                                    <tr>
+                                                        <td colspan="">{{form.op}}   </td>
                                                         <th>Medida</th>
-                                                        <td colspan="2">{{form.medida}}   <!--input type="text" name="" value="{{base0.medida}}" class="form-control"--></td>
-                                                        <th>Placa</th>
-                                                        <td colspan="3">{{form.placa}}   <!--input type="text" name="" value="{{base0.placa}}" class="form-control"--></td>
-                                                    </tr>
-                                                    <tr>
+                                                        <td colspan="">{{form.medida}} </td>
                                                         <th>Color</th>
-                                                        <td colspan="2">{{form.col}}   <!--input type="text" name="" value="{{base0.col}}" class="form-control"--></td>
-                                                        <th>Motor</th>
-                                                        <td colspan="3">{{form.motor}}   <!--input type="text" name="" value="{{base0.motor}}" class="form-control"--></td>
-                                                    </tr>
+                                                        <td colspan="">{{form.col}}   </td>
+                                                        <th>Observacion</th>
+                                                        <td colspan="4">{{form.observacion1}}<!--input type="text" name="" value="{{base0.observacion2}}" class="form-control"--></td>
 
-                                                    <tr>
-                                                        <td>
-                                                            <input type="hidden" name="id" value="{{base0.id}}">
-                                                            <input type="hidden" name="ficha" value="{{ficha}}">
-                                                        </td>
                                                     </tr>
-                                                    <td>
+                                                   
 
-                                                    </td>
-                                               
-                                            
-                                           
+                                                    <input type="hidden" name="id" value="{{base0.id}}">
+                                                    <input type="hidden" name="ficha" value="{{ficha}}">
                                                     </tbody>
                                                     {% endfor %}
                                                     {% endif %}

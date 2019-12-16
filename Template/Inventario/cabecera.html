@@ -32,7 +32,7 @@
                                         <div class="card-body"><h5 class="card-title">Cabecera</h5>
                             {%  if estado == True %}             
                                 <table class="mb-0 table table-bordered">
-                                    <input type="hidden" name="dni" value="{{dni}}"> 
+                                    <input type="hidden" name="dni" value="{{num_ficha.dni_ficha}}"> 
                                     <input type="hidden" name="nombre" value="{{nombre}}"> 
                                     <!--input type="hidden" name="tipo" value="{{tipo}}"> 
                                     <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
@@ -49,30 +49,31 @@
                                         
                                     </tr>
                                     <tr>
-                                        <th>USUARIO RESPONSABLE</th>
-                                        <td colspan="3">{{num_ficha.idusuario.nom_final_usuario}}________________________________________________________________________</td>
+                                        <th style="width: 19em;">USUARIO RESPONSABLE</th>
+                                        <td colspan="3">{{num_ficha.idusuario.nom_final_usuario}}</td>
                                         <th>SEDE</th>
-                                        <td colspan="3">{{num_ficha.sede}}___________________________________________________________________________</td>
+                                        <td colspan="3">{{num_ficha.sede}}</td>
                                     </tr>
                                     <tr>
                                         <th>DNI</th>
-                                        <td>{{num_ficha.idusuario.numero_doc_usuario}}____________________</td>
+                                        <td>{{num_ficha.dni_ficha}}</td>
                                         <th>MODALIDAD</th>
-                                        <td>{{num_ficha.idusuario.moda_usuario.modalidad_contratacion}}________________</td>
+                                        <td>{{num_ficha.modalidad_ficha}}</td>
+                                      
                                         <th>PISO</th>
-                                        <td colspan="3">{{num_ficha.piso}}____________________________________________________________________________</td>
+                                        <td colspan="3">{{num_ficha.piso}}</td>
                                     </tr>
                                     <tr>
                                         <th>DIRECCION</th>
-                                        <td colspan="3">_____________________________________________________________________________</td>
+                                        <td colspan="3">{{num_ficha.dependencia}}</td>
                                         <th>CODIGO AMBIENTE</th>
-                                        <td>{{num_ficha.cod_ambiente}}_______________________________</td>
+                                        <td>{{num_ficha.cod_ambiente}}</td>
                                         <th>AMBIENTE</th>
-                                        <td>{{num_ficha.ambiente}}_______________________________</td>                                        
+                                        <td>{{num_ficha.ambiente}}</td>                                        
                                     </tr>
                                     <tr>
                                         <td>
-                                            <form action="{% url 'verCatalogo' %}">
+                                            <!--form action="{% url 'verCatalogo' %}">
                                                 <input type="hidden" name="dni" value="{{dni}}"> 
                                                 <input type="hidden" name="nombre" value="{{nombre}}"> 
                                                 {%  if estado == True %}
@@ -80,32 +81,150 @@
                                                 {% endif %}
                                             <span style=" margin: 10px; color: rgb(190, 60, 60);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Buscar</span> <br>
                                             <input type="submit" value="Catálogo" class="btn btn-info form-control"  >
-                                            </form>
+                                            </form-->
+                                            <span style="color: rgb(187, 46, 46);"><strong> Click para ver el catálogo</strong></span> 
+                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-success" style="color: white; float: right;">
+                                                <i class="nav-link-icon fa fa-edit"> </i>
+                                                Bsucar en Catálogo
+                                                <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                            </a>
+                                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right" style="width: 40%; float: right; margin-left: 100px;" >
+                                                <form class="needs-validation" id="search" novalidate action="{% url 'standby-catalogo' %}" style="margin-left: 50px;">    
+                                                    <input type="hidden" name="dni" value="{{dni}}"> 
+                                                        <input type="hidden" name="nombres" value="{{num_ficha.idusuario.nom_final_usuario}}"> 
+                                                        {% if estado == True %}{{ficha}}{% endif %}
+                                                        <input type="hidden" name="ficha" value="{{num_ficha.num_ficha}}">                          
+                                                     <span><strong>Obligatorio (*)</strong></span>
+                                                    <div class="form-row" style="width: 90%;">
+                                                                <div class="col-md-12 mb-3">
+                                                                    <label for="validationCustom01">Denominación del Bien (*) </label>
+                                                                        <input type="text" id="catalogo" name="catalogo"  class="form-control" required >
+                                                                        <span style="color: rgb(163, 31, 31);"> Enter para selecionar</span>
+                                                                        <script type="text/javascript">
+                                                                            document.getElementById('catalogos').focus();
+                                                                        </script>                                                   
+                                                                       
+                                                                        <div class="valid-feedback">
+                                                                        Bien!
+                                                                    </div>
+                                                                </div>
+                                                         
+                
+                                                                <div class="col-md-12 mb-3">
+                                                                    <label for="validationCustom01">Código 2019 (*)</label>
+                                                                    <input type="text" name="codigo_conformidad" class="form-control"  style="margin: 5px;" maxlength="5" minlength="5" required>
+                                                                    <div class="valid-feedback">
+                                                                        Bien!
+                                                                    </div>
+                                                                   
+                                                                </div>
+                
+                
+                                                                <div class="col-md-12 mb-3">
+                                                                    <label ></label>
+                                                                    <input type="submit"  class="btn btn-primary form-control" style="height: 40px;" value="Buscar en catálogo">                                                     
+                                                                  
+                                                                </div>
+
+                                                                <script>
+
+                                                                    $(function() {
+                                                                    $("#catalogo").autocomplete({
+                                                                    source: "/catalogo/get-catalogo/",
+                                                                    select: function (event, ui) { //item selected
+                                                                        AutoCompleteSelectHandler(event, ui)
+                                                                    },
+                                                                    minLength: 2,
+                                                                    });
+                                                                    });
+                                                                    
+                                                                    function AutoCompleteSelectHandler(event, ui)
+                                                                    {
+                                                                    var selectedObj = ui.item;
+                                                                    }
+                                                                    
+                                                                    </script>
+                                                        
+                                                    </div>
+                                                    
+                                                </form>
+                                                <script type="text/javascript">
+                                                    $(document).ready(function() {
+                                                        $("form").keypress(function(e) {
+                                                            if (e.which == 13) {
+                                                                return false;
+                                                            }
+                                                        });
+                                                    });
+                                                    </script>
+                                                <script>
+                                                                   
+                                                    $(function() {
+                                                        $("#nombres").autocomplete({
+                                                        source: "/usuario/get-usuario/",
+                                                        select: function (event, ui) { //item selected
+                                                            AutoCompleteSelectHandler(event, ui)
+                                                        },
+                                                        minLength: 2,
+                                                        });
+                                                    });
+                
+                                                    function AutoCompleteSelectHandler(event, ui)
+                                                    {
+                                                        var selectedObj = ui.item;
+                                                    }
+                                                </script>
+                        
+                                            <script>
+                                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                                (function() {
+                                                    'use strict';
+                                                    window.addEventListener('load', function() {
+                                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                                        var forms = document.getElementsByClassName('needs-validation');
+                                                        // Loop over them and prevent submission
+                                                        var validation = Array.prototype.filter.call(forms, function(form) {
+                                                            form.addEventListener('submit', function(event) {
+                                                                if (form.checkValidity() === false) {
+                                                                    event.preventDefault();
+                                                                    event.stopPropagation();
+                                                                }
+                                                                form.classList.add('was-validated');
+                                                            }, false);
+                                                        });
+                                                    }, false);
+                                                })();
+                                            </script>
+                                            </div>
                                         </td>
                                         
                                         
                                                 <td colspan="7">
+                                                    
                                                     <form action="{% url 'base0-consultar'  %}"  method="GET" >
                                                         <input type="hidden" name="ficha" value="{{num_ficha.num_ficha}}">
-                                                       <input type="hidden" name="dni" value="{{dni}}"> 
+                                                       <input type="hidden" name="dni" value="{{num_ficha.dni_ficha}}"> 
                                                        <input type="hidden" name="nombre" value="{{nombre}}"> 
                                                        <!--input type="hidden" name="tipo" value="{{tipo}}"> 
                                                        <input type="hidden" name="modalidad" value="{{modalidad}}"--> 
                                                        <input type="hidden" name="usuario" value="{{usu}}">
                                                        <div class="form-row">
                                                                  <div class="col-3">
-                                                                   <input type="text" id="cod_interno" name="cod_interno" placeholder="Codigo Interno" class="form-control" maxlength="5" minlength="5" >
+                                                                    <span style="color: rgb(187, 46, 46);"><strong>  Código interno  </strong></span>
+                                                                 <input  type="text" id="cod_interno" name="cod_interno" placeholder="Codigo Interno" class="form-control" maxlength="5" minlength="5" >
                                                                </div>
                                                                <script type="text/javascript">
                                                                    document.getElementById('cod_interno').focus()
                                                                </script>
 
                                                                <div class="col-3">
-                                                                   <input type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12"  minlength="12" />
+                                                                <span style="color: rgb(187, 46, 46);"><strong> Código SBN:</strong></span>
+                                                                   <input  type="text" id="codigo_sbn" name="codigo_sbn" placeholder="Codigo SBN" class="form-control" maxlength="12"  minlength="12" />
                                                                </div>
                                                              
                                                               
-                                                                 <div class="col-3">                                                                            
+                                                                 <div class="col-3"> 
+                                                                    <span style="color: rgb(187, 46, 46);"><strong>  Click para Consultar   </strong></span>                                                                       
                                                                    <input type="submit" name="" id="" value="Consultar" class="form-control btn btn-primary" >
                                                                </div>
                                                             
@@ -170,7 +289,7 @@
                                                        
                                                 <tr>
                                                     <th scope="row">Usuario</th>
-                                                    <td colspan="4">{{usu.nom_final_usuario}}</td>
+                                                    <td colspan="4">{% if usu.nom_final_usuario == '*' %} <span><strong style="color: rgb(151, 17, 17); font-size: 2em;">Pantalla Predeterminada</strong></span> {% endif %} {{usu.nom_final_usuario}}</td>
                                                     <th scope="row">Tipo de Documento</th>
                                                     <td colspan="">{{usu.t_doc_usuario.tipo_doc}}</td>
                                                
@@ -178,10 +297,42 @@
                                            
                                                     <tr>
                                                         <th scope="row">DNI</th>
-                                                        <td colspan="">{{usu.numero_doc_usuario}}</td>
+                                                        <td colspan="" ><input type="text" name="dni_ficha" class="form-control" placeholder="Ingrese DNI" required minlength="8" maxlength="8"></td>
                                                         <input type="hidden" name="dni" value="{{usu.numero_doc_usuario}}"> 
                                                         <th scope="row">Modalidad</th>
-                                                        <td colspan="4">{{usu.moda_usuario.modalidad_contratacion}}</td>
+                                                        <!--td colspan="4">{{usu.moda_usuario.modalidad_contratacion}}</td-->
+                                                        <td>
+                                                            <select name="modalidad" id="" class="form-control">
+                                                                {% if mod %}
+                                                                    {% for mod in mod %}
+                                                                        <option value="{{mod.modalidad_contratacion}}">{{mod}}</option>
+                                                                {% endfor %}
+                                                                {% endif %}
+                                                            </select>
+                                                        </td>
+                                                        <td colspan="3">
+                                                            <span style="font-size: 12px; width: 100px; color:rgb(182, 35, 35) ;">Ingrese Direccion/Gerencia/Dependencia</span>
+                                                            <input type="text" class="form-control" placeholder="Direccion o Gerencia" id="direccion" name="direccion" required>
+                                                        </td>
+                                                        <script>
+
+                                                            $(function() {
+                                                            $("#direccion").autocomplete({
+                                                            source: "/direccioj/get-direccion/",
+                                                            select: function (event, ui) { //item selected
+                                                                AutoCompleteSelectHandler(event, ui)
+                                                            },
+                                                            minLength: 2,
+                                                            });
+                                                            });
+                                                            
+                                                            function AutoCompleteSelectHandler(event, ui)
+                                                            {
+                                                            var selectedObj = ui.item;
+                                                            }
+                                                            
+                                                            </script>
+        
                                                         
                                                     </tr> 
                                          <input type="hidden" name="usuario" value="{{usu.id}}">
@@ -195,10 +346,20 @@
                                                                     <option value="{{ambi.id}}">{{ambi}}</option>
                                                                 {% endfor %}
                                                             </select-->
-                                                        
-                                                                <input type="text" name="ambi" id="ambi" class="form-control">
-                                                            
-                                                                
+                                                            <span style="font-size: 12px; width: 100px; color:rgb(182, 35, 35) ;">(N° , Nombre del Ambiente , Sede , Piso)</span>
+                                                                <input type="text" name="ambi" id="ambi" class="form-control" placeholder="(N° Ambiente, Nombre del Ambiente, Sede, Piso)" required>
+                                                                <script type="text/javascript">
+                                                                    $(document).ready(function() {
+                                                                        $("form").keypress(function(e) {
+                                                                            if (e.which == 13) {
+                                                                                return false;
+                                                                            }
+                                                                        });
+                                                                    });
+                                                                </script>
+                                                                <script>
+                                                                    document.getElementById('ambi').focus();
+                                                                </script>
                                                           
                                                         </td>
                                                     </tr>
@@ -221,7 +382,7 @@
                                                                      }
                                                                     
                                                                     </script>
-                                                    </script>
+                                                  
                                                 
                                                     <!--tr >
                                                         <th >Piso</th>
@@ -262,6 +423,7 @@
                                                     </tr-->
                                                    
                                                     </form>
+                                                   
                                                       <!-- fin de form par grabar-->
                                                     {% if estado == True %}                                                        
                                                     <tr>
@@ -301,6 +463,7 @@
                                                         
                                                         </form>
                                                         <div class="col-12">
+                                                            
                                                                 <form action="{% url 'verCatalogo' %}">
                                                                         <input type="hidden" name="dni" value="{{dni}}"> 
                                                                         <input type="hidden" name="nombre" value="{{nombre}}"> 
@@ -320,7 +483,7 @@
                                                     
                                                     {% else %}
                                                     <tr style="height: 70px;">
-                                                            <th colspan="7"><span style="color: rgba(184, 48, 48, 0.904); align-content: center;"><strong>Debe generar la Ficha para Buscar un Bien</strong></span> </th>
+                                                            <th colspan="7" style="width: 1%;"><span style="color: rgba(184, 48, 48, 0.904); align-content: center;"><strong>Debe generar la Ficha para Buscar un Bien</strong></span> </th>
                                                     </tr>
                                                   
                                                     {% endif %}
@@ -358,25 +521,26 @@
                                 {% if base1 %}
                                 <div class="col-lg-12">
                                         <div class="main-card mb-3 card">
-                                            <div class="card-body"><h5 class="card-title">Registrados por el usuario: {{request.user}}</h5>
+                                            <div class="card-body"><h5 class="card-title">Bienes Registrados</h5>
                                                 
                                                 <table class="mb-0 table table-bordered">
                                                     <thead>
                                                     <tr>
+                                                        <th>Item</th>
                                                         <th>Codigo Interno</th>
                                                         <th>Codigo SBN</th>
-                                                        <th colspan="">Descripcion</th>
-                                                        <th colspan="">Detalle</th>
+                                                        <th colspan="">Descripcion/Denominacion del Bien</th>
+                                                      
                                                         <th colspan="">Marca</th>
                                                         <th colspan="">Modelo</th>
                                                         <th colspan="">Serie</th>
                                                         <th colspan="">Medida</th>
                                                         <th colspan="">Color</th>
-                                                        <th colspan="">Estado</th>
-                                                        <th colspan="">Operatividad</th>
+                                                        <th colspan="">Est</th>
+                                                        <th colspan="">Op</th>
                                                  
-                                                        <th colspan="">Observacion 1</th>
-                                                        <th>Codigo de Verificación</th>
+                                                        <th colspan="">Observacion</th>
+                                                        <th>Codigo 2019</th>
                                                   
                                                         <th colspan="2">Acciones</th>
                                                        
@@ -386,10 +550,11 @@
                                                     <tbody>
                                                         {% for base1 in base1 %}
                                                     <tr>
+                                                        <td>{{base1.item}}</td>
                                                         <td>{{base1.base0_fk.codigo_interno}}</td>
                                                         <td>{{base1.base0_fk.codigo_sbn}}</td>
                                                         <td>{{base1.base0_fk.descripcion}}</td>
-                                                        <td>{{base1.base0_fk.detalle}}</td>
+                                              
                                                         <td>{{base1.base0_fk.mar}}</td>
                                                         <td>{{base1.base0_fk.modelo}}</td>
                                                         <td>{{base1.base0_fk.serie}}</td>

@@ -127,6 +127,6 @@ STATICFILES_DIRS = (
 
 #STATIC_ROOT = r'C:\Users\USER\Documents\Freelance\Sistema Inventario\Inventario\static'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/MIMP/buscar-usuario?nombres=*'
 LOGOUT_REDIRECT_URL = 'login'
 LOGOUT_URL = 'logout'

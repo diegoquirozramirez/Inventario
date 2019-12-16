@@ -17,7 +17,7 @@
                                                         <table class="mb-0 table table-bordered">
                                                                 <thead>
                                                                 <tr>
-                                                                    <th colspan="4">Datos</th>
+                                                                
                                                                     <input type="hidden" name="dni" value="{{dni}}"> 
                                                                     <input type="hidden" name="nombre" value="{{nombre}}"> 
                                                                     <input type="hidden" name="tipo" value="{{tipo}}"> 
@@ -27,40 +27,49 @@
                                                                 </thead>
                 
                                                                 <tbody>
-                                                                <tr>
-                                                                    <th scope="row">Usuario</th>
-                                                                    <td colspan="4">{{usu.nom_final_usuario}}</td>
-                                                                    <th scope="row">Tipo de Documento</th>
-                                                                    <td colspan="">{{usu.t_doc_usuario.tipo_doc}}</td>
-                                                               
+                                                                <tr >
+                                                                    <td colspan="7" rowspan="2"></td>
+                                                                    <td colspan="">
+                                                                        <strong>FOLIO:    {{num_ficha.num_ficha}}</strong> 
+                                                                        <tr>
+                                                                            <td><strong>FECHA:    {{num_ficha.fecha_ficha|date:"d/m/y"}}</strong></td>
+                                                                        </tr>
+                                                                       
+                                                                    </td>
+                                                                    
                                                                 </tr>
-                                                           
-                                                                    <tr>
-                                                                        <th scope="row">DNI</th>
-                                                                        <td>{{usu.numero_doc_usuario}}</td>
-                                                                        <th scope="row">Modalidad</th>
-                                                                        <td colspan="2">{{usu.moda_usuario.modalidad_contratacion}}</td>
-                                                                        
-                                                                    </tr> 
-                                                                    <tr>
-                                                                        <th>Ambiente</th>
-                                                                        <td colspan="3">
-                                                                            {% if ambi %}
-                                                                            <select name="ambiente" id="" class="form-control">
-                                                                                {% for ambi in ambi %}
-                                                                                    <option value="{{ambi.sede_ambiente}}">{{ambi}}</option>
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                                
-                                                                            {% endif %}
-                                                                        </td>
-                                                                    </tr>
+                                                                <tr>
+                                                                    <th>USUARIO RESPONSABLE</th>
+                                                                    <td colspan="3">{{num_ficha.idusuario.nom_final_usuario}}</td>
+                                                                    <th>SEDE</th>
+                                                                    <td colspan="3">{{num_ficha.sede}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>DNI</th>
+                                                                    <td>{{num_ficha.idusuario.numero_doc_usuario}}</td>
+                                                                    <th>MODALIDAD</th>
+                                                                    <td>{{num_ficha.idusuario.moda_usuario.modalidad_contratacion}}</td>
+                                                                    <th>PISO</th>
+                                                                    <td colspan="3">{{num_ficha.piso}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>DIRECCION</th>
+                                                                    <td colspan="3"></td>
+                                                                    <th>CODIGO AMBIENTE</th>
+                                                                    <td>{{num_ficha.cod_ambiente}}</td>
+                                                                    <th>AMBIENTE</th>
+                                                                    <td>{{num_ficha.ambiente}}</td>                                        
+                                                                </tr>
+                                                              
                                                             </tbody>
                                                         </table>
-                                                <table class="mb-0 table table-bordered">
+
+                                                        <hr color="black">
+
+                                                        <table class="mb-0 table table-bordered">
                                                     <thead>
                                                     <tr>
-                                                        <th colspan="8">Resultado</th> <!--input type="hidden" name="codigo_interno" value="{{cod_interno}}"> <input type="hidden" value="{{codigo}}" name="codigo_sbn"--> 
+                                                        <th colspan="10">Datos del Bien Registrado</th> <!--input type="hidden" name="codigo_interno" value="{{cod_interno}}"> <input type="hidden" value="{{codigo}}" name="codigo_sbn"--> 
                                                         <input type="hidden" name="dni" value="{{dni}}"> 
                                                         <input type="hidden" name="nombre" value="{{nombre}}"> 
                                                         <input type="hidden" name="tipo" value="{{tipo}}"> 
@@ -71,74 +80,106 @@
                                                     
                                                     
                                                      <tbody>
-                                                
-                                                    <tr>
-                                                        <th scope="row">Codigo SBN</th>
-                                                        <td colspan="2">{{codigo_sbn_base0.codigo_sbn}}</td>
-                                                        <th scope="row" >Código Interno</th>
-                                                        <td colspan="2">{{codigo_sbn_base0.codigo_interno}}</td>
-                                                      
-                                                    </tr>    
-                                               <tr>
-                                                  <td colspan="4"><br></td>
-                                               </tr>
+                                                        <tr>
+                                                            <th>Descripcion</th>
+                                                            <td colspan="">
+                                                                
+                                                                {{form.descripcion}}
+                                                          
+                                                                <!--input type="text" name="descripcion" value="{{cata}}" id="id_descripcion" maxlength="60"  class="form-control" id="disabledInput" -->
+                                                                <!--input type="text" name="" value="{{base0.descripcion}}" class="form-control"-->
+                                                            </td>
+                                                          
+                                                               
+                                                            </td>
+                                                            <th>Marca</th> 
+                                                            <td colspan="">
+                                                                    {{form.mar}}   
+                                                            </td>
+                                                            <th>Modelo</th>
+                                                            <td colspan="">{{form.modelo}} </td>
+                                                            <th>Serie</th>
+                                                            <td colspan="">
+                                                                    {{form.serie}}   
+                                                              </td>
+                                                              <th>Medida</th>
+                                                              <td colspan="">{{form.medida}} </td>
+                                                        </tr>
+    
+                                                        <tr>
+                                                        
+                                                            <th>Operatividad</th>
+                                                            <td colspan="">{{form.op}}   </td>
+                                                            <th>Estado</th>
+                                                            <td colspan="">{{form.est}} </td>
+                                                       
+                                                            <th>Color</th>
+                                                            <td colspan="">{{form.col}}  </td>
+                                                            <th>Observacion</th>
+                                                            <td colspan="2">{{form.observacion1}}</td>
+                                                            <input type="hidden" name="id" value="{{id}}">
+                                                            <td> <button type="submit"  style="float: right;" class="btn btn-secondary form-control">Actualizar</button>  </td>
+                                                           
+                                                        </tr>
+                                                       
                                              
-                                                    <tr>
+                                             
+                                                    <!--tr>
                                                         <th>Descripcion</th>
                                                         <td colspan="2">
                                                             {{form.descripcion}}
-                                                            <!--input type="text" name="" value="{{base0.descripcion}}" class="form-control"-->
+                                                           
                                                         </td>
                                                         <th>Observacion 1</th>
                                                         <td colspan="4">
                                                             {{form.observacion1}}
-                                                            <!--input type="text" name="" value="{{base0.observacion1}}" class="form-control"-->
+                                                          
                                                         </td>
                                                     </tr>
                                                      <tr>
                                                         <th>Detalle</th>
-                                                        <td colspan="2">{{form.detalle}}<!--input type="text" name="" value="{{base0.detalle}}" class="form-control"--></td>
+                                                        <td colspan="2">{{form.detalle}}/td>
                                                         <th>Observacion 2</th>
-                                                        <td colspan="4">{{form.observacion2}}<!--input type="text" name="" value="{{base0.observacion2}}" class="form-control"--></td>
+                                                        <td colspan="4">{{form.observacion2}}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Marca</th> 
                                                         <td colspan="2">
                                                                 {{form.mar}}   
-                                                            <!--input type="text" name="" value="{{base0.mar}}"class="form-control"--></td>
+                                                            </td>
                                                         <th>Observacion 3</th>
-                                                        <td colspan="4">{{form.observacion3}}  <!--input type="text" name="" value="{{base0.observacion3}}" class="form-control"--></td>
+                                                        <td colspan="4">{{form.observacion3}}  </td>
                                                     </tr>
                                                     <tr>
                                                         <th>Modelo</th>
-                                                        <td colspan="2">{{form.modelo}}   <!--input type="text" name="" value="{{base0.modelo}}" class="form-control"--></td>
+                                                        <td colspan="2">{{form.modelo}}</td>
                                                         <th>Estado</th>
-                                                        <td colspan="3">{{form.est}}   <!--input type="text" name="" value="{{base0.est}}" class="form-control"--></td>
+                                                        <td colspan="3">{{form.est}}  </td>
                                                        
                                                     </tr>
                                                     <tr>
                                                         <th>Serie</th>
                                                         <td colspan="2">
                                                                 {{form.serie}}   
-                                                            <!--input type="text" name="" value="{{base0.serie}}" class="form-control"--></td>
+                                                      /td>
                                                         <th>Operatividad</th>
-                                                        <td colspan="3">{{form.op}}   <!--input type="text" name="" value="{{base0.op}}" class="form-control"--></td>
+                                                        <td colspan="3">{{form.op}}  </td>
                                                        
                                                     </tr>
                                                     <tr>
                                                         <th>Medida</th>
-                                                        <td colspan="2">{{form.medida}}   <!--input type="text" name="" value="{{base0.medida}}" class="form-control"--></td>
+                                                        <td colspan="2">{{form.medida}}   </td>
                                                         <th>Placa</th>
-                                                        <td colspan="3">{{form.placa}}   <!--input type="text" name="" value="{{base0.placa}}" class="form-control"--></td>
+                                                        <td colspan="3">{{form.placa}} </td>
                                                     </tr>
                                                     <tr>
                                                         <th>Color</th>
-                                                        <td colspan="2">{{form.col}}   <!--input type="text" name="" value="{{base0.col}}" class="form-control"--></td>
+                                                        <td colspan="2">{{form.col}}  </td>
                                                         <th>Motor</th>
-                                                        <td colspan="3">{{form.motor}}   <!--input type="text" name="" value="{{base0.motor}}" class="form-control"--></td>
-                                                    </tr>
+                                                        <td colspan="3">{{form.motor}} </td>
+                                                    </tr-->
 
-                                                    <tr>
+                                                    <!--tr>
                                                         <td>
                                                             <input type="hidden" name="id" value="{{id}}">
                                                            
@@ -146,7 +187,7 @@
                                                     </tr>
                                                         <tr>
                                                             <input type="submit" value="Actulizar" style="float: right;" class="btn btn-primary">  
-                                                        </tr>
+                                                        </tr-->
                                             
                                            
                                                     </tbody>
@@ -155,6 +196,15 @@
                                              
                                                 </table>
                                                 </form>
+                                                <script type="text/javascript">
+                                                    $(document).ready(function() {
+                                                        $("form").keypress(function(e) {
+                                                            if (e.which == 13) {
+                                                                return false;
+                                                            }
+                                                        });
+                                                    });
+                                                    </script>
                                             </div>
                                         </div>
                                     </div>

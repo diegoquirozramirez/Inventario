@@ -66,7 +66,11 @@ urlpatterns = [
     path('ficha/get-ficha/', inventario.get_ficha, name="get-ficha"),
     path('usuario/get-usuario/', inventario.get_usuario, name="get-usuario"),
 
-    path('exportar-hoja-pdf/<int:pk>', exportar.exportHojaPDF, name="exportar-hoja-pdf"),
+    path('exportar-hoja-pdf/', exportar.exportHojaPDF, name="exportar-hoja-pdf"),
+    path('viewFicha', inventario.viewFicha, name="viewFicha"),
+    path('viewFichaBienes', inventario.viewFichaBienes, name="viewFichaBienes"),
+    path('direccioj/get-direccion/', inventario.get_direccion, name="get-direccion"),
+    
 
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

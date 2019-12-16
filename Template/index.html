@@ -15,6 +15,7 @@
     
     {% load static from staticfiles %}
 <link href="{% static 'style/main.css' %}" rel="stylesheet">
+
 </head>
 <body style="font-size: 0.8em;">
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -30,23 +31,154 @@
                 <div class="app-header-left">
                     
                     <ul class="header-menu nav">
+                        
                         <li class="nav-item">
-                            <a href="{% url 'home' %}" class="nav-link">
-                                <i class="nav-link-icon fa fa-edit"> </i>
-                                Inicio
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'registar-usuario' %}" class="nav-link">
+                            <!--a href="{% url 'registar-usuario' %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
                                 <i class="nav-link-icon fa fa-edit"> </i>
                                 Nueva Hoja
+                            </a-->
+                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
+                                <i class="nav-link-icon fa fa-edit"> </i>
+                                Nueva Hoja
+                                <i class="fa fa-angle-down ml-2 opacity-8"></i>
                             </a>
+                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right" style="width: 40%; float: right; margin-left: 100px;" >
+                                <form class="needs-validation" id="search" novalidate action="{% url 'buscar-usuario' %}" style="margin-left: 50px;">                              
+                                     <span><strong>Obligatorio (*)</strong></span>
+                                    <div class="form-row" style="width: 90%;">
+                                                <!--div class="col-md-12 mb-3">
+                                                    <label for="validationCustom01">Número de Documento (*)</label>
+                                                        <input type="text" name="dni"  class="form-control" id="dni" maxlength="8" minlength="8"  >                                                      
+                                                        <script type="text/javascript">
+                                                            document.getElementById('dni').focus()
+                                                        </script>
+                                                        <div class="valid-feedback">
+                                                        Bien!
+                                                    </div>
+                                                </div-->
+                                         
+
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="validationCustom01">Nombre Completo del Usuario (*)</label>
+                                                    <input type="text" name="nombres" id="nombres" required class="form-control" style="text-transform:uppercase" onkeyup="javascript:this.value=this.value.toUpperCase();" required>                                                      
+                                                    <div class="valid-feedback">
+                                                        Bien!
+                                                    </div>
+                                                   
+                                                </div>
+
+
+                                                <div class="col-md-12 mb-3">
+                                                    <label ></label>
+                                                    <input type="submit"  class="btn btn-primary form-control" style="height: 50px;" value="Buscar">                                                     
+                                                  
+                                                </div>
+                                        
+                                    </div>
+                                    
+                                </form>
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $("form").keypress(function(e) {
+                                            if (e.which == 13) {
+                                                return false;
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <script>
+                                                   
+                                    $(function() {
+                                        $("#nombres").autocomplete({
+                                        source: "/usuario/get-usuario/",
+                                        select: function (event, ui) { //item selected
+                                            AutoCompleteSelectHandler(event, ui)
+                                        },
+                                        minLength: 2,
+                                        });
+                                    });
+
+                                    function AutoCompleteSelectHandler(event, ui)
+                                    {
+                                        var selectedObj = ui.item;
+                                    }
+                                </script>
+        
+                            <script>
+                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                (function() {
+                                    'use strict';
+                                    window.addEventListener('load', function() {
+                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                        var forms = document.getElementsByClassName('needs-validation');
+                                        // Loop over them and prevent submission
+                                        var validation = Array.prototype.filter.call(forms, function(form) {
+                                            form.addEventListener('submit', function(event) {
+                                                if (form.checkValidity() === false) {
+                                                    event.preventDefault();
+                                                    event.stopPropagation();
+                                                }
+                                                form.classList.add('was-validated');
+                                            }, false);
+                                        });
+                                    }, false);
+                                })();
+                            </script>
+                            </div>
                         </li>
                         <li class="btn-group nav-item">
-                            <a href="{% url 'buscar-ficha' %}" class="nav-link">
-                                <i class="nav-link-icon fa fa-edit"></i>
-                                Consultar Ficha
-                            </a>
+                            <!--a href="{% url 'buscar-ficha' %}" class="nav-link"-->
+                       
+                                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
+                                    <i class="nav-link-icon fa fa-edit"> </i>
+                                    Consultar Ficha
+                                    <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                </a>
+                                <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right" style="width: 40%; float: right; margin-left: 80px;" >
+                                    <form class="needs-validation" id="search" novalidate action="{% url 'consultar-ficha' %}" style="margin-left: 40px;">                              
+                                         <span><strong>Obligatorio (*)</strong></span>
+                                        <div class="form-row" style="width: 90%;">
+                                                    
+                                             
+    
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="validationCustom01">Número de Ficha (*)</label>
+                                                        <input type="text" id="num_ficha" name="num_ficha" placeholder="Número de Ficha" class="form-control" maxlength="9"  required />                                                   
+                                                        <div class="valid-feedback">
+                                                            Bien!
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <script>
+
+                                                        $(function() {
+                                                        $("#num_ficha").autocomplete({
+                                                        source: "/ficha/get-ficha/",
+                                                        select: function (event, ui) { //item selected
+                                                            AutoCompleteSelectHandler(event, ui)
+                                                        },
+                                                        minLength: 2,
+                                                        });
+                                                        });
+                                                        
+                                                        function AutoCompleteSelectHandler(event, ui)
+                                                        {
+                                                        var selectedObj = ui.item;
+                                                        }
+                                                        
+                                                        </script>
+    
+    
+                                                    <div class="col-md-12 mb-3">
+                                                        <label ></label>
+                                                        <input type="submit"  class="btn btn-primary form-control" style="height: 50px;" value="Consultar">                                                     
+                                                      
+                                                    </div>
+                                            
+                                        </div>
+                                        </form>
+                                        </div>
+                            
                         </li>
                         <li class="dropdown nav-item">
                             <a href="javascript:void(0);" class="nav-link">
@@ -96,7 +228,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>        </div>
+                    </div>     
+                </div>
             </div>
         </div>   
     
